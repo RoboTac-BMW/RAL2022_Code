@@ -1,4 +1,13 @@
-# Pytorch Implementation of PointNet and PointNet++ 
+# Test branch for model PointNet trained with coral loss
+## Parameters:
+
+Total Loss: Classification_loss + 0.5 * Coral_loss
+Coral_loss param: fc-1 (1024), 10 points
+Training param: learning rate 0.001, epoch 100, batch size 8
+
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
 
 This repo is implementation for [PointNet](http://openaccess.thecvf.com/content_cvpr_2017/papers/Qi_PointNet_Deep_Learning_CVPR_2017_paper.pdf) and [PointNet++](http://papers.nips.cc/paper/7095-pointnet-deep-hierarchical-feature-learning-on-point-sets-in-a-metric-space.pdf) in pytorch.
 
