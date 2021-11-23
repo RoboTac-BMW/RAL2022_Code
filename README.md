@@ -2,7 +2,9 @@
 ## Parameters:
 
 Total Loss: Classification_loss + 0.5 * Coral_loss
+
 Coral_loss param: fc-1 (1024), 10 points
+
 Training param: learning rate 0.001, epoch 100, batch size 8
 
 ------------------------------------------------------------------
