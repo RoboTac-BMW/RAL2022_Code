@@ -674,3 +674,97 @@
 2021-12-09 08:20:36,330 - Model - INFO - Test Instance Accuracy: 0.917763, Class Accuracy: 0.917622
 2021-12-09 08:20:36,330 - Model - INFO - Best Instance Accuracy: 0.928728, Class Accuracy: 0.928055
 2021-12-09 08:20:36,330 - Model - INFO - End of training...
+2022-01-14 09:55:16,423 - Model - INFO - PARAMETER ...
+2022-01-14 09:55:16,423 - Model - INFO - Namespace(DA_method='coral', SO3_Rotation=False, alpha=1.0, batch_size=8, decay_rate=0.0001, epoch=20, gpu='0', lamda=0.5, learning_rate=0.01, log_dir='pointnet_cls_Model10_norm_z', model='pointnet_cls', num_category=10, num_point=1024, num_sparse_point=30, optimizer='Adam', process_data=False, use_cpu=False, use_normals=True, use_uniform_sample=False)
+2022-01-14 09:55:16,423 - Model - INFO - Load dataset ...
+2022-01-14 09:55:19,464 - Model - INFO - Use pretrain model
+2022-01-14 09:55:19,465 - Model - INFO - Start training...
+2022-01-14 09:55:19,465 - Model - INFO - Epoch 1 (143/162):
+2022-01-14 09:58:22,082 - Model - INFO - Train Instance Accuracy: 0.840863
+2022-01-14 09:58:48,361 - Model - INFO - Test Instance Accuracy: 0.873904, Class Accuracy: 0.871564
+2022-01-14 09:58:48,361 - Model - INFO - Best Instance Accuracy: 0.873904, Class Accuracy: 0.871564
+2022-01-14 09:58:48,361 - Model - INFO - Save model...
+2022-01-14 09:58:48,362 - Model - INFO - Saving at log/classification/pointnet_cls_Model10_norm_z/checkpoints/best_model.pth
+2022-01-14 09:58:48,436 - Model - INFO - Epoch 2 (144/162):
+2022-01-14 10:01:47,901 - Model - INFO - Train Instance Accuracy: 0.857681
+2022-01-14 10:02:13,926 - Model - INFO - Test Instance Accuracy: 0.880482, Class Accuracy: 0.880322
+2022-01-14 10:02:13,926 - Model - INFO - Best Instance Accuracy: 0.880482, Class Accuracy: 0.880322
+2022-01-14 10:02:13,926 - Model - INFO - Save model...
+2022-01-14 10:02:13,926 - Model - INFO - Saving at log/classification/pointnet_cls_Model10_norm_z/checkpoints/best_model.pth
+2022-01-14 10:02:14,005 - Model - INFO - Epoch 3 (145/162):
+2022-01-14 10:05:03,910 - Model - INFO - Train Instance Accuracy: 0.869980
+2022-01-14 10:05:29,932 - Model - INFO - Test Instance Accuracy: 0.893640, Class Accuracy: 0.897444
+2022-01-14 10:05:29,933 - Model - INFO - Best Instance Accuracy: 0.893640, Class Accuracy: 0.897444
+2022-01-14 10:05:29,933 - Model - INFO - Save model...
+2022-01-14 10:05:29,933 - Model - INFO - Saving at log/classification/pointnet_cls_Model10_norm_z/checkpoints/best_model.pth
+2022-01-14 10:05:30,016 - Model - INFO - Epoch 4 (146/162):
+2022-01-14 10:08:22,920 - Model - INFO - Train Instance Accuracy: 0.866215
+2022-01-14 10:08:49,879 - Model - INFO - Test Instance Accuracy: 0.781798, Class Accuracy: 0.783437
+2022-01-14 10:08:49,879 - Model - INFO - Best Instance Accuracy: 0.893640, Class Accuracy: 0.897444
+2022-01-14 10:08:49,879 - Model - INFO - Epoch 5 (147/162):
+2022-01-14 10:11:57,736 - Model - INFO - Train Instance Accuracy: 0.862450
+2022-01-14 10:12:25,085 - Model - INFO - Test Instance Accuracy: 0.861842, Class Accuracy: 0.858810
+2022-01-14 10:12:25,086 - Model - INFO - Best Instance Accuracy: 0.893640, Class Accuracy: 0.897444
+2022-01-14 10:12:25,086 - Model - INFO - Epoch 6 (148/162):
+2022-01-14 10:15:30,281 - Model - INFO - Train Instance Accuracy: 0.867470
+2022-01-14 10:15:57,202 - Model - INFO - Test Instance Accuracy: 0.891447, Class Accuracy: 0.889296
+2022-01-14 10:15:57,202 - Model - INFO - Best Instance Accuracy: 0.893640, Class Accuracy: 0.897444
+2022-01-14 10:15:57,202 - Model - INFO - Epoch 7 (149/162):
+2022-01-14 10:19:02,226 - Model - INFO - Train Instance Accuracy: 0.868223
+2022-01-14 10:19:30,929 - Model - INFO - Test Instance Accuracy: 0.862939, Class Accuracy: 0.860533
+2022-01-14 10:19:30,930 - Model - INFO - Best Instance Accuracy: 0.893640, Class Accuracy: 0.897444
+2022-01-14 10:19:30,930 - Model - INFO - Epoch 8 (150/162):
+2022-01-14 10:22:25,362 - Model - INFO - Train Instance Accuracy: 0.875000
+2022-01-14 10:22:52,296 - Model - INFO - Test Instance Accuracy: 0.871711, Class Accuracy: 0.871551
+2022-01-14 10:22:52,296 - Model - INFO - Best Instance Accuracy: 0.893640, Class Accuracy: 0.897444
+2022-01-14 10:22:52,296 - Model - INFO - Epoch 9 (151/162):
+2022-01-14 10:25:56,847 - Model - INFO - Train Instance Accuracy: 0.873745
+2022-01-14 10:26:24,264 - Model - INFO - Test Instance Accuracy: 0.805921, Class Accuracy: 0.797517
+2022-01-14 10:26:24,264 - Model - INFO - Best Instance Accuracy: 0.893640, Class Accuracy: 0.897444
+2022-01-14 10:26:24,265 - Model - INFO - Epoch 10 (152/162):
+2022-01-14 10:29:24,387 - Model - INFO - Train Instance Accuracy: 0.878765
+2022-01-14 10:29:54,311 - Model - INFO - Test Instance Accuracy: 0.856360, Class Accuracy: 0.857601
+2022-01-14 10:29:54,312 - Model - INFO - Best Instance Accuracy: 0.893640, Class Accuracy: 0.897444
+2022-01-14 10:29:54,312 - Model - INFO - Epoch 11 (153/162):
+2022-01-14 10:33:00,263 - Model - INFO - Train Instance Accuracy: 0.876255
+2022-01-14 10:33:26,993 - Model - INFO - Test Instance Accuracy: 0.853070, Class Accuracy: 0.858219
+2022-01-14 10:33:26,994 - Model - INFO - Best Instance Accuracy: 0.893640, Class Accuracy: 0.897444
+2022-01-14 10:33:26,994 - Model - INFO - Epoch 12 (154/162):
+2022-01-14 10:36:25,638 - Model - INFO - Train Instance Accuracy: 0.876004
+2022-01-14 10:36:52,391 - Model - INFO - Test Instance Accuracy: 0.901316, Class Accuracy: 0.903016
+2022-01-14 10:36:52,391 - Model - INFO - Best Instance Accuracy: 0.901316, Class Accuracy: 0.903016
+2022-01-14 10:36:52,391 - Model - INFO - Save model...
+2022-01-14 10:36:52,391 - Model - INFO - Saving at log/classification/pointnet_cls_Model10_norm_z/checkpoints/best_model.pth
+2022-01-14 10:36:52,477 - Model - INFO - Epoch 13 (155/162):
+2022-01-14 10:39:56,466 - Model - INFO - Train Instance Accuracy: 0.884538
+2022-01-14 10:40:24,692 - Model - INFO - Test Instance Accuracy: 0.876096, Class Accuracy: 0.874638
+2022-01-14 10:40:24,693 - Model - INFO - Best Instance Accuracy: 0.901316, Class Accuracy: 0.903016
+2022-01-14 10:40:24,693 - Model - INFO - Epoch 14 (156/162):
+2022-01-14 10:43:35,392 - Model - INFO - Train Instance Accuracy: 0.882279
+2022-01-14 10:44:02,384 - Model - INFO - Test Instance Accuracy: 0.850877, Class Accuracy: 0.840907
+2022-01-14 10:44:02,385 - Model - INFO - Best Instance Accuracy: 0.901316, Class Accuracy: 0.903016
+2022-01-14 10:44:02,385 - Model - INFO - Epoch 15 (157/162):
+2022-01-14 10:47:10,915 - Model - INFO - Train Instance Accuracy: 0.887550
+2022-01-14 10:47:37,530 - Model - INFO - Test Instance Accuracy: 0.881579, Class Accuracy: 0.874648
+2022-01-14 10:47:37,531 - Model - INFO - Best Instance Accuracy: 0.901316, Class Accuracy: 0.903016
+2022-01-14 10:47:37,531 - Model - INFO - Epoch 16 (158/162):
+2022-01-14 10:50:34,782 - Model - INFO - Train Instance Accuracy: 0.885040
+2022-01-14 10:51:02,267 - Model - INFO - Test Instance Accuracy: 0.841009, Class Accuracy: 0.842797
+2022-01-14 10:51:02,268 - Model - INFO - Best Instance Accuracy: 0.901316, Class Accuracy: 0.903016
+2022-01-14 10:51:02,268 - Model - INFO - Epoch 17 (159/162):
+2022-01-14 10:53:57,462 - Model - INFO - Train Instance Accuracy: 0.879016
+2022-01-14 10:54:24,261 - Model - INFO - Test Instance Accuracy: 0.888158, Class Accuracy: 0.884726
+2022-01-14 10:54:24,262 - Model - INFO - Best Instance Accuracy: 0.901316, Class Accuracy: 0.903016
+2022-01-14 10:54:24,262 - Model - INFO - Epoch 18 (160/162):
+2022-01-14 10:57:36,250 - Model - INFO - Train Instance Accuracy: 0.891817
+2022-01-14 10:58:02,954 - Model - INFO - Test Instance Accuracy: 0.882675, Class Accuracy: 0.879712
+2022-01-14 10:58:02,955 - Model - INFO - Best Instance Accuracy: 0.901316, Class Accuracy: 0.903016
+2022-01-14 10:58:02,955 - Model - INFO - Epoch 19 (161/162):
+2022-01-14 11:01:08,875 - Model - INFO - Train Instance Accuracy: 0.876757
+2022-01-14 11:01:35,468 - Model - INFO - Test Instance Accuracy: 0.895833, Class Accuracy: 0.893292
+2022-01-14 11:01:35,468 - Model - INFO - Best Instance Accuracy: 0.901316, Class Accuracy: 0.903016
+2022-01-14 11:01:35,468 - Model - INFO - Epoch 20 (162/162):
+2022-01-14 11:04:41,707 - Model - INFO - Train Instance Accuracy: 0.892319
+2022-01-14 11:05:09,606 - Model - INFO - Test Instance Accuracy: 0.895833, Class Accuracy: 0.891860
+2022-01-14 11:05:09,607 - Model - INFO - Best Instance Accuracy: 0.901316, Class Accuracy: 0.903016
+2022-01-14 11:05:09,607 - Model - INFO - End of training...
