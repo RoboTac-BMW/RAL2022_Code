@@ -164,7 +164,8 @@ def main(args):
     activation = {}
     def get_activation(name):
         def hook(model, input, output):
-            activation [name] = output[0].detach()
+            # activation [name] = output[0].detach()
+            activation [name] = output.detach()
         return hook
 
     '''MODEL LOADING'''
@@ -277,17 +278,17 @@ def main(args):
             pred, trans_feat = classifier(points)
             # loss = criterion(pred, target.long(), trans_feat)
 
-            classifier.feat.register_forward_hook(get_activation('feat'))
+            classifier.fc2.register_forward_hook(get_activation('fc2'))
             output_dense = classifier(points)
-            feature_dense = activation['feat']
+            feature_dense = activation['fc2']
 
-            classifier.feat.register_forward_hook(get_activation('feat'))
+            classifier.fc2.register_forward_hook(get_activation('fc2'))
             output_DA = classifier(points_DA)
-            feature_DA = activation['feat']
+            feature_DA = activation['fc2']
             # print(output.size())
             # print("----------------------")
             # print(feature_dense.size())
-            # print(feature_coral.size())
+            # print(feature_DA.size())
 
             # change the loss here for testing!!!
             # loss = criterion_coral(pred, target.long(), trans_feat, feature_dense, feature_coral)
