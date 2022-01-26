@@ -173,7 +173,7 @@ class get_coral_mmd_loss(get_mmd_loss):
 # KL Loss. Total Loss = alpha * Classification + gamma * KL
 class get_KL_loss(torch.nn.Module):
     def __init__(self, DA_alpha=10, DA_gamma=0.5,  mat_diff_loss_scale=0.001):
-        super(get_loss, self).__init__()
+        super(get_KL_loss, self).__init__()
         self.mat_diff_loss_scale = mat_diff_loss_scale
         self.DA_alpha = DA_alpha
         self.DA_gamma = DA_gamma
