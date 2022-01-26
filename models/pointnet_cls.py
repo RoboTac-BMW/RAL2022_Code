@@ -151,7 +151,7 @@ class get_coral_mmd_loss(get_mmd_loss):
         super(get_coral_mmd_loss, self).__init__(DA_alpha, DA_lamda,
                                                  mat_diff_loss_scale,
                                                  kernel_mul, kernel_num)
-        self.DA_beta = DA_beta
+        self.DA_lamda = DA_lamda
 
     def forward(self, pred, target, trans_feat, feature_dense, feature_sparse):
         loss = F.nll_loss(pred, target)
