@@ -39,10 +39,11 @@ def parse_args():
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
     parser.add_argument('--num_sparse_point', type=int, default=30, help='Point Number for domain loss')
     parser.add_argument('--SO3_Rotation', action='store_true', default=False, help='arbitrary rotation in SO3')
-    parser.add_argument('--DA_method', type=str, default="coral", help='choose the DA loss function')
+    parser.add_argument('--DA_method', type=str, default="coral_mmd", help='choose the DA loss function')
     parser.add_argument('--alpha', type=float, default=10, help='set the value of classification loss')
     parser.add_argument('--lamda', type=float, default=0.5, help='set the value of CORAL loss')
     parser.add_argument('--beta', type=float, default=0.5, help='set the value of MMD loss')
+    parser.add_argument('--gamma', type=float, default=0.5, help='set the value of KL loss')
     return parser.parse_args()
 
 
@@ -181,10 +182,12 @@ def main(args):
     if args.DA_method == "coral":
         criterion_DA = model.get_coral_loss(DA_alpha=args.alpha, DA_lamda=args.lamda)
     elif args.DA_method == "mmd":
-        criterion_DA = model.get_mmd_loss(DA_alpha=args.alpha, DA_lamda=args.lamda)
+        criterion_DA = model.get_mmd_loss(DA_alpha=args.alpha, DA_beta=args.beta)
     elif args.DA_method == "coral_mmd":
         criterion_DA = model.get_coral_mmd_loss(DA_alpha=args.alpha, DA_beta=args.beta,
                                                 DA_lamda=args.lamda)
+    elif args.DA_method == "KL":
+        criterion_DA = model.get_KL_loss(DA_alpha=args.alpha, DA_gamma=args.gamma)
     else:
         raise NameError("Wrong input for DA method name!")
 
