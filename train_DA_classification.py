@@ -281,13 +281,13 @@ def main(args):
             pred, trans_feat = classifier(points)
             # loss = criterion(pred, target.long(), trans_feat)
 
-            classifier.fc2.register_forward_hook(get_activation('fc2'))
+            classifier.fc1.register_forward_hook(get_activation('fc1'))
             output_dense = classifier(points)
-            feature_dense = activation['fc2']
+            feature_dense = activation['fc1']
 
-            classifier.fc2.register_forward_hook(get_activation('fc2'))
+            classifier.fc1.register_forward_hook(get_activation('fc1'))
             output_DA = classifier(points_DA)
-            feature_DA = activation['fc2']
+            feature_DA = activation['fc1']
             # print(output.size())
             # print("----------------------")
             # print(feature_dense.size())
