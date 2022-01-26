@@ -162,7 +162,7 @@ class get_coral_mmd_loss(get_mmd_loss):
         super(get_coral_mmd_loss, self).__init__(DA_alpha, DA_lamda,
                                                  mat_diff_loss_scale,
                                                  kernel_mul, kernel_num)
-        self.DA_beta = DA_beta
+        self.DA_lamda = DA_lamda
 
     def forward(self, pred, target, trans_feat, feature_dense, feature_sparse):
         loss = F.nll_loss(pred, target)
@@ -195,6 +195,7 @@ class get_KL_loss(torch.nn.Module):
         KL_loss = F.kl_div(feature_dense, feature_sparse)
         total_loss = self.DA_alpha * loss + mat_diff_loss * self.mat_diff_loss_scale + self.DA_gamma * KL_loss
         return total_loss
+
 
 # Multilayer Loss
 class get_multiLayer_loss(get_coral_mmd_loss):
