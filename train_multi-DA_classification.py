@@ -39,11 +39,10 @@ def parse_args():
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
     parser.add_argument('--num_sparse_point', type=int, default=30, help='Point Number for domain loss')
     parser.add_argument('--SO3_Rotation', action='store_true', default=False, help='arbitrary rotation in SO3')
-    parser.add_argument('--DA_method', type=str, default="coral_mmd", help='choose the DA loss function')
+    parser.add_argument('--DA_method', type=str, default="multi_coral_mmd", help='choose the DA loss function')
     parser.add_argument('--alpha', type=float, default=10, help='set the value of classification loss')
     parser.add_argument('--lamda', type=float, default=0.5, help='set the value of CORAL loss')
     parser.add_argument('--beta', type=float, default=0.5, help='set the value of MMD loss')
-    parser.add_argument('--gamma', type=float, default=0.5, help='set the value of KL loss')
     return parser.parse_args()
 
 
@@ -161,7 +160,7 @@ def main(args):
     domainAdaptationDataLoader = torch.utils.data.DataLoader(domain_adaptation_dataset, batch_size=args.batch_size, shuffle=True, num_workers=10, drop_last=True)
     testDataLoader = torch.utils.data.DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=10)
 
-    '''Output conv layers'''
+    '''Output middle layers'''
     activation = {}
     def get_activation(name):
         def hook(model, input, output):
@@ -182,12 +181,13 @@ def main(args):
     if args.DA_method == "coral":
         criterion_DA = model.get_coral_loss(DA_alpha=args.alpha, DA_lamda=args.lamda)
     elif args.DA_method == "mmd":
-        criterion_DA = model.get_mmd_loss(DA_alpha=args.alpha, DA_beta=args.beta)
+        criterion_DA = model.get_mmd_loss(DA_alpha=args.alpha, DA_lamda=args.lamda)
     elif args.DA_method == "coral_mmd":
         criterion_DA = model.get_coral_mmd_loss(DA_alpha=args.alpha, DA_beta=args.beta,
                                                 DA_lamda=args.lamda)
-    elif args.DA_method == "KL":
-        criterion_DA = model.get_KL_loss(DA_alpha=args.alpha, DA_gamma=args.gamma)
+    elif args.DA_method == "multi_coral_mmd":
+        criterion_DA = model.get_multiLayer_loss(DA_alpha=args.alpha, DA_beta=args.beta,
+                                                 DA_lamda=args.lamda)
     else:
         raise NameError("Wrong input for DA method name!")
 
@@ -247,8 +247,6 @@ def main(args):
             # print(param.requires_grad)
 
 
-        classifier = classifier.train()
-
         scheduler.step()
         # for batch_id, data in tqdm(enumerate(trainDataLoader, 0), total=len(trainDataLoader), smoothing=0.9):
         for batch_id, (data, data_DA) in tqdm(
@@ -281,22 +279,35 @@ def main(args):
             pred, trans_feat = classifier(points)
             # loss = criterion(pred, target.long(), trans_feat)
 
+            # Multi-layer Loss
+            ###############################################################################################
+            # FC1
+            classifier.fc1.register_forward_hook(get_activation('fc1'))
+            output_dense_1 = classifier(points)
+            feature_dense_1 = activation['fc1']
+            # print(feature_dense_1.size())
+
+            classifier.fc1.register_forward_hook(get_activation('fc1'))
+            output_DA_1 = classifier(points_DA)
+            feature_DA_1 = activation['fc1']
+            # print(feature_DA_1.size())
+
+            # FC2
             classifier.fc2.register_forward_hook(get_activation('fc2'))
-            output_dense = classifier(points)
-            feature_dense = activation['fc2']
+            output_dense_2 = classifier(points)
+            feature_dense_2 = activation['fc2']
+            # print(feature_dense_2.size())
 
             classifier.fc2.register_forward_hook(get_activation('fc2'))
-            output_DA = classifier(points_DA)
-            feature_DA = activation['fc2']
-            # print(output.size())
-            # print("----------------------")
-            # print(feature_dense.size())
-            # print(feature_DA.size())
+            output_DA_2 = classifier(points_DA)
+            feature_DA_2 = activation['fc2']
+            # print(feature_DA_2.size())
 
             # change the loss here for testing!!!
-            # loss = criterion_coral(pred, target.long(), trans_feat, feature_dense, feature_coral)
-            loss = criterion_DA(pred, target.long(), trans_feat, feature_dense, feature_DA)
 
+            loss = criterion_DA(pred, target.long(), trans_feat,
+                                feature_dense_1, feature_DA_1, feature_dense_2, feature_DA_2)
+            ################################################################################################
             pred_choice = pred.data.max(1)[1]
 
             correct = pred_choice.eq(target.long().data).cpu().sum()
