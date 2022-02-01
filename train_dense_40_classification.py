@@ -121,13 +121,13 @@ def main(args):
 
     '''DATA LOADING'''
     log_string('Load dataset ...')
-    # data_path = 'data/modelnet40_normal_resampled/'
-    if num_class == 10:
+    if args.num_category == 10:
         data_path = Path("mesh_data/ModelNet10")
-    elif num_class == 40:
+    elif args.num_category == 40:
         data_path = Path("mesh_data/ModelNet40")
     else:
-        raise ValueError("nor a valid category input")
+        raise ValueError("Not a valid category input")
+    # data_path = 'data/modelnet40_normal_resampled/'
 
     train_transforms = transforms.Compose([
         PointSampler(args.num_point, with_normal=args.use_normals),
@@ -157,7 +157,7 @@ def main(args):
     '''MODEL LOADING'''
     model = importlib.import_module(args.model)
     shutil.copy('./models/%s.py' % args.model, str(exp_dir))
-    shutil.copy('models/pointnet_utils.py', str(exp_dir))
+    shutil.copy('models/pointnet_cls.py', str(exp_dir))
     shutil.copy('./train_dense_40_classification.py', str(exp_dir))
     # shutil.copy('./train_dense_classification.py', str(exp_dir))
 

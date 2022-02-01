@@ -21,7 +21,7 @@ def parse_args():
     parser.add_argument('--use_cpu', action='store_true', default=False, help='use cpu mode')
     parser.add_argument('--gpu', type=str, default='0', help='specify gpu device')
     parser.add_argument('--batch_size', type=int, default=8, help='batch size in training')
-    parser.add_argument('--num_category', default=10, type=int, choices=[10, 40],  help='training on ModelNet10/40')
+    parser.add_argument('--num_category', default=40, type=int, choices=[10, 40],  help='training on ModelNet10/40')
     parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
     parser.add_argument('--log_dir', type=str, required=True, help='Experiment root')
     parser.add_argument('--use_normals', action='store_true', default=True, help='use normals')
@@ -91,12 +91,13 @@ def main(args):
 
     '''DATA LOADING'''
     log_string('Load dataset ...')
-    if num_class == 10:
+    if args.num_category == 10:
         data_path = Path("mesh_data/ModelNet10")
-    elif num_class == 40:
+    elif args.num_category == 40:
         data_path = Path("mesh_data/ModelNet40")
     else:
-        raise ValueError("nor a valid category input")
+        raise ValueError("Not a valid category input")
+>>>>>>> 107abf69b7816df4abda0979be8f61a9f6a4b14b
     # data_path = 'data/modelnet40_normal_resampled/'
     # data_path = Path("mesh_data/ModelNet10")
 
