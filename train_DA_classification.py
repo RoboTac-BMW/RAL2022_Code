@@ -123,8 +123,14 @@ def main(args):
 
     '''DATA LOADING'''
     log_string('Load dataset ...')
+    if num_class == 10:
+        data_path = Path("mesh_data/ModelNet10")
+    elif num_class == 40:
+        data_path = Path("mesh_data/ModelNet40")
+    else:
+        raise ValueError("nor a valid category input")
     # data_path = 'data/modelnet40_normal_resampled/'
-    data_path = Path("mesh_data/ModelNet10")
+    # data_path = Path("mesh_data/ModelNet10")
 
     train_transforms = transforms.Compose([
         PointSampler(args.num_point, with_normal=args.use_normals),
