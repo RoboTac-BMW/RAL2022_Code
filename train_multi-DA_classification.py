@@ -1,8 +1,3 @@
-"""
-Author: Benny
-Date: Nov 2019
-"""
-
 import os
 import sys
 import torch
@@ -33,8 +28,8 @@ def parse_args():
     parser.add_argument('--batch_size', type=int, default=8, help='batch size in training')
     parser.add_argument('--model', default='pointnet_cls', help='model name [default: pointnet_cls]')
     parser.add_argument('--num_category', default=40, type=int, choices=[10, 40],  help='training on ModelNet10/40')
-    parser.add_argument('--epoch', default=100, type=int, help='number of epoch in training')
-    parser.add_argument('--learning_rate', default=0.001, type=float, help='learning rate in training')
+    parser.add_argument('--epoch', default=20, type=int, help='number of epoch in training')
+    parser.add_argument('--learning_rate', default=0.01, type=float, help='learning rate in training')
     parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
     parser.add_argument('--optimizer', type=str, default='Adam', help='optimizer for training')
     parser.add_argument('--log_dir', type=str, default=None, help='experiment root')
@@ -42,11 +37,17 @@ def parse_args():
     parser.add_argument('--use_normals', action='store_true', default=True, help='use normals')
     parser.add_argument('--process_data', action='store_true', default=False, help='save data offline')
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
+    parser.add_argument('--num_sparse_point', type=int, default=30, help='Point Number for domain loss')
     parser.add_argument('--SO3_Rotation', action='store_true', default=False, help='arbitrary rotation in SO3')
+    parser.add_argument('--DA_method', type=str, default="multi_coral_mmd", help='choose the DA loss function')
+    parser.add_argument('--alpha', type=float, default=10, help='set the value of classification loss')
+    parser.add_argument('--lamda', type=float, default=0.5, help='set the value of CORAL loss')
+    parser.add_argument('--beta', type=float, default=0.5, help='set the value of MMD loss')
     return parser.parse_args()
 
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
 
 def inplace_relu(m):
     classname = m.__class__.__name__
@@ -54,7 +55,7 @@ def inplace_relu(m):
         m.inplace=True
 
 
-def test(model, loader, num_class=40):
+def test(model, loader, num_class=10):
     mean_correct = []
     class_acc = np.zeros((num_class, 3))
     classifier = model.eval()
@@ -90,7 +91,7 @@ def main(args):
 
     '''HYPER PARAMETER'''
     os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
-    num_class = args.num_category
+
     '''CREATE DIR'''
     timestr = str(datetime.datetime.now().strftime('%Y-%m-%d_%H-%M'))
     exp_dir = Path('./log/')
@@ -128,9 +129,18 @@ def main(args):
     else:
         raise ValueError("Not a valid category input")
     # data_path = 'data/modelnet40_normal_resampled/'
+    # data_path = Path("mesh_data/ModelNet10")
 
     train_transforms = transforms.Compose([
         PointSampler(args.num_point, with_normal=args.use_normals),
+            Normalize(),
+            RandRotation_z(with_normal=args.use_normals, SO3=args.SO3_Rotation),
+            RandomNoise(),
+            ToTensor()
+            ])
+
+    domain_adaptation_transforms = transforms.Compose([
+        PointSampler(args.num_sparse_point, with_normal=args.use_normals),
             Normalize(),
             RandRotation_z(with_normal=args.use_normals, SO3=args.SO3_Rotation),
             RandomNoise(),
@@ -149,25 +159,50 @@ def main(args):
     # test_dataset = ModelNetDataLoader(root=data_path, args=args, split='test', process_data=args.process_data)
 
     train_dataset = PointCloudData(data_path, transform=train_transforms)
+    domain_adaptation_dataset = PointCloudData(data_path, transform=domain_adaptation_transforms)
     test_dataset = PointCloudData(data_path, valid=True, folder='test', transform=test_transforms)
 
     trainDataLoader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=10, drop_last=True)
+    domainAdaptationDataLoader = torch.utils.data.DataLoader(domain_adaptation_dataset, batch_size=args.batch_size, shuffle=True, num_workers=10, drop_last=True)
     testDataLoader = torch.utils.data.DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=10)
 
+    '''Output middle layers'''
+    activation = {}
+    def get_activation(name):
+        def hook(model, input, output):
+            # activation [name] = output[0].detach()
+            activation [name] = output.detach()
+        return hook
+
     '''MODEL LOADING'''
+    num_class = args.num_category
     model = importlib.import_module(args.model)
     shutil.copy('./models/%s.py' % args.model, str(exp_dir))
     shutil.copy('models/pointnet_cls.py', str(exp_dir))
-    shutil.copy('./train_dense_40_classification.py', str(exp_dir))
+    shutil.copy('./train_multi-DA_classification.py', str(exp_dir))
     # shutil.copy('./train_dense_classification.py', str(exp_dir))
 
     classifier = model.get_model(num_class, normal_channel=args.use_normals)
     criterion = model.get_loss()
+    if args.DA_method == "coral":
+        criterion_DA = model.get_coral_loss(DA_alpha=args.alpha, DA_lamda=args.lamda)
+    elif args.DA_method == "mmd":
+        criterion_DA = model.get_mmd_loss(DA_alpha=args.alpha, DA_lamda=args.lamda)
+    elif args.DA_method == "coral_mmd":
+        criterion_DA = model.get_coral_mmd_loss(DA_alpha=args.alpha, DA_beta=args.beta,
+                                                DA_lamda=args.lamda)
+    elif args.DA_method == "multi_coral_mmd":
+        criterion_DA = model.get_multiLayer_loss(DA_alpha=args.alpha, DA_beta=args.beta,
+                                                 DA_lamda=args.lamda)
+    else:
+        raise NameError("Wrong input for DA method name!")
+
     classifier.apply(inplace_relu)
 
     if not args.use_cpu:
         classifier = classifier.cuda()
         criterion = criterion.cuda()
+        criterion_DA = criterion_DA.cuda()
 
     try:
         checkpoint = torch.load(str(exp_dir) + '/checkpoints/best_model.pth')
@@ -177,6 +212,13 @@ def main(args):
     except:
         log_string('No existing model, starting training from scratch...')
         start_epoch = 0
+
+    # Test parameters
+    print("Test Parameters .........................")
+    # for name, param in classifier.named_parameters():
+    #     print(name)
+    #     print(type(name))
+    #     print(str(param.requires_grad))
 
     if args.optimizer == 'Adam':
         optimizer = torch.optim.Adam(
@@ -203,12 +245,24 @@ def main(args):
     for epoch in range(start_epoch, end_epoch):
         log_string('Epoch %d (%d/%s):' % (global_epoch + 1, epoch + 1, end_epoch))
         mean_correct = []
-        classifier = classifier.train()
+        # Test Freeze Conv
+        for name, param in classifier.named_parameters():
+            if "feat" in name:
+                param.requires_grad = False
+            # print(name)
+            # print(param.requires_grad)
+
 
         scheduler.step()
-        for batch_id, data in tqdm(enumerate(trainDataLoader, 0), total=len(trainDataLoader), smoothing=0.9):
+        # for batch_id, data in tqdm(enumerate(trainDataLoader, 0), total=len(trainDataLoader), smoothing=0.9):
+        for batch_id, (data, data_DA) in tqdm(
+                enumerate(zip(trainDataLoader,domainAdaptationDataLoader), 0),
+                total=len(trainDataLoader),
+                smoothing=0.9):
+
             optimizer.zero_grad()
             points, target = data['pointcloud'].to(device).float(), data['category'].to(device)
+            points_DA = data_DA['pointcloud'].to(device).float()
 
             points = points.data.cpu().numpy()
             points = provider.random_point_dropout(points)
@@ -217,15 +271,54 @@ def main(args):
             points = torch.Tensor(points)
             points = points.transpose(2, 1)
 
+            points_DA = points_DA.data.cpu().numpy()
+            points_DA = provider.random_point_dropout(points_DA)
+            points_DA[:, :, 0:3] = provider.random_scale_point_cloud(points_DA[:, :, 0:3])
+            points_DA[:, :, 0:3] = provider.shift_point_cloud(points_DA[:, :, 0:3])
+            points_DA = torch.Tensor(points_DA)
+            points_DA = points_DA.transpose(2, 1)
+
             if not args.use_cpu:
                 points, target = points.cuda(), target.cuda()
+                points_DA = points_DA.cuda()
 
             pred, trans_feat = classifier(points)
-            loss = criterion(pred, target.long(), trans_feat)
+            # loss = criterion(pred, target.long(), trans_feat)
+
+            # Multi-layer Loss
+            ###############################################################################################
+            # FC1
+            classifier.fc1.register_forward_hook(get_activation('fc1'))
+            output_dense_1 = classifier(points)
+            feature_dense_1 = activation['fc1']
+            # print(feature_dense_1.size())
+
+            classifier.fc1.register_forward_hook(get_activation('fc1'))
+            output_DA_1 = classifier(points_DA)
+            feature_DA_1 = activation['fc1']
+            # print(feature_DA_1.size())
+
+            # FC2
+            classifier.fc2.register_forward_hook(get_activation('fc2'))
+            output_dense_2 = classifier(points)
+            feature_dense_2 = activation['fc2']
+            # print(feature_dense_2.size())
+
+            classifier.fc2.register_forward_hook(get_activation('fc2'))
+            output_DA_2 = classifier(points_DA)
+            feature_DA_2 = activation['fc2']
+            # print(feature_DA_2.size())
+
+            # change the loss here for testing!!!
+
+            loss = criterion_DA(pred, target.long(), trans_feat,
+                                feature_dense_1, feature_DA_1, feature_dense_2, feature_DA_2)
+            ################################################################################################
             pred_choice = pred.data.max(1)[1]
 
             correct = pred_choice.eq(target.long().data).cpu().sum()
             mean_correct.append(correct.item() / float(points.size()[0]))
+
             loss.backward()
             optimizer.step()
             global_step += 1
@@ -247,6 +340,8 @@ def main(args):
 
             if (instance_acc >= best_instance_acc):
                 logger.info('Save model...')
+                # print("This is a better model, but the model will not be saved")
+                # logger.info('Model will not be saved in this training')
                 savepath = str(checkpoints_dir) + '/best_model.pth'
                 log_string('Saving at %s' % savepath)
                 state = {
