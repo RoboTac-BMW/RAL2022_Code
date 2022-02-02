@@ -97,7 +97,6 @@ def main(args):
         data_path = Path("mesh_data/ModelNet40")
     else:
         raise ValueError("Not a valid category input")
->>>>>>> 107abf69b7816df4abda0979be8f61a9f6a4b14b
     # data_path = 'data/modelnet40_normal_resampled/'
     # data_path = Path("mesh_data/ModelNet10")
 
