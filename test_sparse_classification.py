@@ -91,8 +91,14 @@ def main(args):
 
     '''DATA LOADING'''
     log_string('Load dataset ...')
+    if args.num_category == 10:
+        data_path = Path("mesh_data/ModelNet10")
+    elif args.num_category == 40:
+        data_path = Path("mesh_data/ModelNet40")
+    else:
+        raise ValueError("Not a valid category input")
     # data_path = 'data/modelnet40_normal_resampled/'
-    data_path = Path("mesh_data/ModelNet10")
+    # data_path = Path("mesh_data/ModelNet10")
 
     test_transforms = transforms.Compose([
             PointSampler(args.num_point, with_normal=args.use_normals),
