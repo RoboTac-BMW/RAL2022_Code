@@ -10,6 +10,8 @@ import importlib
 import shutil
 import argparse
 
+import torch.nn as nn
+
 from pathlib import Path
 from tqdm import tqdm
 # from data_utils.OFFDataLoader import *
@@ -26,7 +28,6 @@ def parse_args():
     parser.add_argument('--gpu', type=str, default='0', help='specify gpu device')
     parser.add_argument('--batch_size', type=int, default=8, help='batch size in training')
     parser.add_argument('--model', default='pointnet_cls', help='model name [default: pointnet_cls]')
-    # parser.add_argument('--num_category', default=10, type=int, choices=[10, 40],  help='training on ModelNet10/40')
     parser.add_argument('--num_category', default=14, type=int, help='training on real dataset')
     parser.add_argument('--epoch', default=100, type=int, help='number of epoch in training')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='learning rate in training')
@@ -147,14 +148,19 @@ def main(args):
         classifier = classifier.cuda()
         criterion = criterion.cuda()
 
-    try:
-        checkpoint = torch.load(str(exp_dir) + '/checkpoints/best_model.pth')
-        start_epoch = checkpoint['epoch']
-        classifier.load_state_dict(checkpoint['model_state_dict'])
-        log_string('Use pretrain model')
-    except:
-        log_string('No existing model, starting training from scratch...')
-        start_epoch = 0
+    # Load pretrained model with ModelNet40:
+    checkpoint = torch.load(str(exp_dir) + '/checkpoints/best_model.pth')
+    print("Loading pre-trained Model")
+    start_epoch = checkpoint['epoch']
+    pretrained_dict = checkpoint['model_state_dict']
+    # Manually modify the last fc layer to 40, otherwise cannot load pretrained model
+    classifier.fc3 = nn.Linear(256, 40).to(device)
+    classifier.load_state_dict(pretrained_dict)
+    # And change fc3 back
+    classifier.fc3 = nn.Linear(256, args.num_category).to(device)
+
+    log_string('Use pretrain model')
+
 
     if args.optimizer == 'Adam':
         optimizer = torch.optim.Adam(
