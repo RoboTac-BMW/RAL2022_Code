@@ -61,20 +61,9 @@ class get_model(nn.Module):
 
     def forward(self, x):
         x, trans, trans_feat = self.feat(x)
-        # print("PointNet size")
-        # print(x.size())
-        # print(trans.size())
-        # print(trans_feat.size())
-        # print("----------")
         x = F.relu(self.bn1(self.fc1(x)))
-        # print("fc1")
-        # print(x.size())
         x = F.relu(self.bn2(self.dropout(self.fc2(x))))
-        # print("fc2")
-        # print(x.size())
         x = self.fc3(x)
-        # print("fc3")
-        # print(x.size())
         x = F.log_softmax(x, dim=1)
         return x, trans_feat
 
