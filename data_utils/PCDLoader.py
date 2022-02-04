@@ -86,8 +86,6 @@ class PCDPointCloudData(Dataset):
     def __getitem__(self, idx):
         pcd_path = self.files[idx]['pcd_path']
         category = self.files[idx]['category']
-        print(pcd_path)
-
         point_cloud = o3d.io.read_point_cloud(filename=str(pcd_path))
         point_cloud.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(
                                   radius=0.1, max_nn=16))
