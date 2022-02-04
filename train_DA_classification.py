@@ -181,7 +181,7 @@ def main(args):
     model = importlib.import_module(args.model)
     shutil.copy('./models/%s.py' % args.model, str(exp_dir))
     shutil.copy('models/pointnet_cls.py', str(exp_dir))
-    shutil.copy('./train_dense_classification.py', str(exp_dir))
+    shutil.copy('./train_DA_classification.py', str(exp_dir))
     # shutil.copy('./train_dense_classification.py', str(exp_dir))
 
     classifier = model.get_model(num_class, normal_channel=args.use_normals)
