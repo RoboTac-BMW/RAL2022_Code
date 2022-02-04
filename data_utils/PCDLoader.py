@@ -56,15 +56,23 @@ def normalize_pointcloud(pointcloud):
         return  norm_pointcloud
 
 
-class PointCloudData(Dataset):
-    def __init__(self, root_dir, num_point=1024, sample_method='random', rotation='z'):
+class PCDPointCloudData(Dataset):
+    def __init__(self, root_dir,
+                 folder='train',
+                 valid=False,
+                 num_point=1024,
+                 sample_method='random',
+                 rotation='z'):
+
         self.root_dir = root_dir
+        self.valid = valid
+        self.folder = folder
         self.num_point = num_point
         self.classes = find_classes(Path(root_dir))
         self.files = []
 
         for category in self.classes.keys():
-            new_dir = self.root_dir/Path(category)
+            new_dir = self.root_dir/Path(category)/folder
             for file in os.listdir(new_dir):
                 if file.endswith('.pcd'):
                     sample = {}
@@ -111,17 +119,19 @@ class PointCloudData(Dataset):
         pointcloud_np = pointcloud_np[sel_pts_idx]
         # print(self.classes[category])
 
-        return pointcloud_np, self.classes[category]
+        # return pointcloud_np, self.classes[category]
+        return {'pointcloud': pointcloud_np,
+                'category': self.classes[category]}
 
 
 if __name__ == '__main__':
 
-    path_dir = "/home/airocs/Desktop/visual_data_pcd/"
+    path_dir = "/home/airocs/cong_workspace/tools/Pointnet_Pointnet2_pytorch/data/visual_data_pcd/"
     # a = find_classes(path_dir)
     # print(type(a))
     # print(len(a))
     # print(a[0])
-    pointcloud_data = PointCloudData(path_dir)
+    pointcloud_data = PCDPointCloudData(path_dir)
     # pointcloud_data.testFunc(100)
 
 
