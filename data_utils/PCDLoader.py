@@ -33,7 +33,7 @@ def rand_rotation(pointcloud, with_normal=True, SO3=False):
     rot_matrix_with_normal = np.concatenate((tmp_matrix, tmp_matrix_2), axis=0)
     if with_normal is True:
         rot_pointcloud = rot_matrix_with_normal.dot(pointcloud.T).T
-    else:                                          # up=[-0.0694, -0.9768, 0.2024])
+    else:
 
         rot_pointcloud = rot_matrix.dot(pointcloud.T).T
     return  rot_pointcloud
