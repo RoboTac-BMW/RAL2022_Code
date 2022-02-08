@@ -58,7 +58,7 @@ def normalize_pointcloud(pointcloud):
 
 class PCDPointCloudData(Dataset):
     def __init__(self, root_dir,
-                 folder='train',
+                 folder='Train',
                  valid=False,
                  num_point=1024,
                  sample_method='random',
