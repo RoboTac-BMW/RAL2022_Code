@@ -3,6 +3,8 @@ import numpy as np
 import os
 import random
 from pathlib import Path
+import math
+from scipy.spatial.transform import Rotation as R
 
 
 def find_classes(root_dir):
@@ -38,19 +40,22 @@ def generate_rotated_PC(root_dir):
     classes = find_classes(root_dir)
 
     for category in classes.keys():
+        print(category)
         new_dir = root_dir/Path(category)
         for file in os.listdir(new_dir):
             if file.endswith('pcd'):
-                pc_o3d = o3d.io.read_point_cloud(filename=str(file))
+                pc_o3d = o3d.io.read_point_cloud(filename=str(new_dir/file))
                 pc_np = np.asarray(pc_o3d.points).astype(np.float32)
-                for i in range(3):
+                for i in range(4):
                     pc_rotated = rand_rotation(pc_np)
-                    new_file_name = str(file)[:-4] + '_' + str(i) + '.pcd'
+                    new_file_name = str(new_dir/file)[:-4] + '_' + str(i) + '.pcd'
+                    print(new_file_name)
                     new_pcd = o3d.geometry.PointCloud()
                     new_pcd.points = o3d.utility.Vector3dVector(pc_rotated)
                     o3d.io.write_point_cloud(new_file_name, new_pcd)
 
                 break
+        break
 
 
 if __name__ == "__main__":
