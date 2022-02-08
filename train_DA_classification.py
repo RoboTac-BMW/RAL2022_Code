@@ -39,10 +39,11 @@ def parse_args():
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
     parser.add_argument('--num_sparse_point', type=int, default=30, help='Point Number for domain loss')
     parser.add_argument('--SO3_Rotation', action='store_true', default=False, help='arbitrary rotation in SO3')
-    parser.add_argument('--DA_method', type=str, default="coral", help='choose the DA loss function')
+    parser.add_argument('--DA_method', type=str, default="coral_mmd", help='choose the DA loss function')
     parser.add_argument('--alpha', type=float, default=10, help='set the value of classification loss')
     parser.add_argument('--lamda', type=float, default=0.5, help='set the value of CORAL loss')
     parser.add_argument('--beta', type=float, default=0.5, help='set the value of MMD loss')
+    parser.add_argument('--gamma', type=float, default=0.5, help='set the value of KL loss')
     return parser.parse_args()
 
 
@@ -122,8 +123,14 @@ def main(args):
 
     '''DATA LOADING'''
     log_string('Load dataset ...')
+    if args.num_category == 10:
+        data_path = Path("mesh_data/ModelNet10")
+    elif args.num_category == 40:
+        data_path = Path("mesh_data/ModelNet40")
+    else:
+        raise ValueError("Not a valid category input")
     # data_path = 'data/modelnet40_normal_resampled/'
-    data_path = Path("mesh_data/ModelNet10")
+    # data_path = Path("mesh_data/ModelNet10")
 
     train_transforms = transforms.Compose([
         PointSampler(args.num_point, with_normal=args.use_normals),
@@ -164,15 +171,16 @@ def main(args):
     activation = {}
     def get_activation(name):
         def hook(model, input, output):
-            activation [name] = output[0].detach()
+            # activation [name] = output[0].detach()
+            activation [name] = output.detach()
         return hook
 
     '''MODEL LOADING'''
     num_class = args.num_category
     model = importlib.import_module(args.model)
     shutil.copy('./models/%s.py' % args.model, str(exp_dir))
-    shutil.copy('models/pointnet2_utils.py', str(exp_dir))
-    shutil.copy('./train_dense_classification.py', str(exp_dir))
+    shutil.copy('models/pointnet_cls.py', str(exp_dir))
+    shutil.copy('./train_DA_classification.py', str(exp_dir))
     # shutil.copy('./train_dense_classification.py', str(exp_dir))
 
     classifier = model.get_model(num_class, normal_channel=args.use_normals)
@@ -180,10 +188,12 @@ def main(args):
     if args.DA_method == "coral":
         criterion_DA = model.get_coral_loss(DA_alpha=args.alpha, DA_lamda=args.lamda)
     elif args.DA_method == "mmd":
-        criterion_DA = model.get_mmd_loss(DA_alpha=args.alpha, DA_lamda=args.lamda)
+        criterion_DA = model.get_mmd_loss(DA_alpha=args.alpha, DA_beta=args.beta)
     elif args.DA_method == "coral_mmd":
         criterion_DA = model.get_coral_mmd_loss(DA_alpha=args.alpha, DA_beta=args.beta,
                                                 DA_lamda=args.lamda)
+    elif args.DA_method == "KL":
+        criterion_DA = model.get_KL_loss(DA_alpha=args.alpha, DA_gamma=args.gamma)
     else:
         raise NameError("Wrong input for DA method name!")
 
@@ -277,17 +287,17 @@ def main(args):
             pred, trans_feat = classifier(points)
             # loss = criterion(pred, target.long(), trans_feat)
 
-            classifier.feat.register_forward_hook(get_activation('feat'))
+            classifier.fc2.register_forward_hook(get_activation('fc2'))
             output_dense = classifier(points)
-            feature_dense = activation['feat']
+            feature_dense = activation['fc2']
 
-            classifier.feat.register_forward_hook(get_activation('feat'))
+            classifier.fc2.register_forward_hook(get_activation('fc2'))
             output_DA = classifier(points_DA)
-            feature_DA = activation['feat']
+            feature_DA = activation['fc2']
             # print(output.size())
             # print("----------------------")
             # print(feature_dense.size())
-            # print(feature_coral.size())
+            # print(feature_DA.size())
 
             # change the loss here for testing!!!
             # loss = criterion_coral(pred, target.long(), trans_feat, feature_dense, feature_coral)
