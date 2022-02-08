@@ -14,8 +14,7 @@ def find_classes(root_dir):
     return classes
 
 
-def rand_rotation(pointcloud, with_normal=False, SO3=False):
-    assert len(pointcloud.shape) == 2
+def rand_rotation_matrix(with_normal=False, SO3=False):
     roll, pitch, yaw = np.random.rand(3)*np.pi*2
     if SO3 is False:
         pitch, roll = 0.0, 0.0
@@ -28,11 +27,9 @@ def rand_rotation(pointcloud, with_normal=False, SO3=False):
     # [[R,0],[0,R]]
     rot_matrix_with_normal = np.concatenate((tmp_matrix, tmp_matrix_2), axis=0)
     if with_normal is True:
-        rot_pointcloud = rot_matrix_with_normal.dot(pointcloud.T).T
+        return rot_matrix_with_normal
     else:
-
-        rot_pointcloud = rot_matrix.dot(pointcloud.T).T
-    return  rot_pointcloud
+        return rot_matrix
 
 
 def generate_rotated_PC(root_dir):
@@ -45,21 +42,20 @@ def generate_rotated_PC(root_dir):
         for file in os.listdir(new_dir):
             if file.endswith('pcd'):
                 pc_o3d = o3d.io.read_point_cloud(filename=str(new_dir/file))
-                pc_np = np.asarray(pc_o3d.points).astype(np.float32)
+                # pc_np = np.asarray(pc_o3d.points).astype(np.float32)
                 for i in range(4):
-                    pc_rotated = rand_rotation(pc_np)
-                    new_file_name = str(new_dir/file)[:-4] + '_' + str(i) + '.pcd'
+                    # pc_rotated = rand_rotation(pc_np)
+                    new_file_name = str(new_dir/file)[:-4] + '_' + str(i+1) + '.pcd'
                     print(new_file_name)
-                    new_pcd = o3d.geometry.PointCloud()
-                    new_pcd.points = o3d.utility.Vector3dVector(pc_rotated)
-                    o3d.io.write_point_cloud(new_file_name, new_pcd)
-
-                break
-        break
+                    rand_R = rand_rotation_matrix()
+                    # print(rand_R)
+                    # print(type(rand_R))
+                    pc_o3d.rotate(rand_R)
+                    o3d.io.write_point_cloud(new_file_name, pc_o3d)
 
 
 if __name__ == "__main__":
-    generate_rotated_PC("/home/airocs/Desktop/rotate_visual_data_pcd")
+    generate_rotated_PC("/home/airocs/Desktop/Rotated_visual_data_pcd")
 
 
 
