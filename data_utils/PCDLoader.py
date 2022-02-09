@@ -60,7 +60,7 @@ class PCDPointCloudData(Dataset):
     def __init__(self, root_dir,
                  folder='Train',
                  num_point=1024,
-                 random_num=True,
+                 random_num=False,
                  list_num_point=[1024],
                  rotation='z'):
 
