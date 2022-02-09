@@ -12,7 +12,8 @@ import argparse
 
 from pathlib import Path
 from tqdm import tqdm
-from data_utils.OFFDataLoader import *
+# from data_utils.OFFDataLoader import *
+from data_utils.PCDLoader import *
 # from path import Path
 # from data_utils.ModelNetDataLoader import ModelNetDataLoader
 
@@ -38,8 +39,7 @@ def parse_args():
     parser.add_argument('--process_data', action='store_true', default=False, help='save data offline')
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
     parser.add_argument('--num_sparse_point', type=int, default=50, help='Point Number for domain loss')
-    parser.add_argument('--random_choose_sparse', type=bool, default=True, help='Random select num_sparse_point from input list_num_sparse')
-    parser.add_argument('--list_num_sparse_point', type=list, default=[50], help='The list of num_sparse_point choices')
+    parser.add_argument('--random_choose_sparse', type=bool, default=True, help='Random select num_sparse_point from [10,20,30,40,50]')
     parser.add_argument('--SO3_Rotation', action='store_true', default=False, help='arbitrary rotation in SO3')
     parser.add_argument('--DA_method', type=str, default="multi_coral_mmd", help='choose the DA loss function')
     parser.add_argument('--alpha', type=float, default=10, help='set the value of classification loss')
@@ -132,7 +132,7 @@ def main(args):
     if args.random_choose_sparse is True:
         domain_adaptation_dataset = PCDPointCloudData(data_path, folder='Train',
                                                       random_num=True,
-                                                      list_num_point=args.list_num_sparse_point)
+                                                      list_num_point=[10,20,30,40,50])
     else:
         domain_adaptation_dataset = PCDPointCloudData(data_path, folder='Train',
                                                       num_point=args.num_sparse_point)
