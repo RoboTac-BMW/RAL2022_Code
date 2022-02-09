@@ -128,8 +128,8 @@ def main(args):
         raise ValueError("Not a valid category input")
     """
 
-    train_dataset = PCDPointCloudData(data_path, folder='Train', valid=False)
-    test_dataset = PCDPointCloudData(data_path, folder='Test', valid=False)
+    train_dataset = PCDPointCloudData(data_path, folder='Train')
+    test_dataset = PCDPointCloudData(data_path, folder='Test')
 
     trainDataLoader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=10, drop_last=True)
     testDataLoader = torch.utils.data.DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=10)
