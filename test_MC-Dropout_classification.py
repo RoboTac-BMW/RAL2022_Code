@@ -4,6 +4,7 @@ import argparse
 import numpy as np
 import os
 import torch
+import torch.nn as nn
 import logging
 from tqdm import tqdm
 import sys
@@ -98,12 +99,13 @@ def get_monte_carlo_predictions(model,
 
     dropout_predictions = np.empty((0, n_samples, n_classes))
     softmax = nn.Softmax(dim=1)
-    for i in range(forward_passes):
+    for i in tqdm(range(forward_passes)):
+        # print(i)
         predictions = np.empty((0, n_classes))
         model.eval()
         classifier = model.eval()
         enable_dropout(model)
-        for i, data in enumerate(data_loader):
+        for i, data in tqdm(enumerate(data_loader), total=len(data_loader)):
             if not args.use_cpu:
                 points, target = data['pointcloud'].to(device).float(), data['category'].to(device)
 
@@ -112,13 +114,17 @@ def get_monte_carlo_predictions(model,
 
             with torch.no_grad():
                 # output = model(image)
-                output = classifier(points)
+                output, _ = classifier(points)
                 output = softmax(output) # shape (n_samples, n_classes)
+                # print(output)
             predictions = np.vstack((predictions, output.cpu().numpy()))
 
         dropout_predictions = np.vstack((dropout_predictions,
                                          predictions[np.newaxis, :, :]))
-        print(dropout_predictions)
+        # print(dropout_predictions)
+    mean = np.mean(dropout_predictions, axis=0)
+    print(mean.shape)
+    print(mean[100])
         # dropout predictions - shape (forward_passes, n_samples, n_classes)
 
 def main(args):
@@ -159,7 +165,7 @@ def main(args):
     model_name = os.listdir(experiment_dir + '/logs')[0].split('.')[0]
     model = importlib.import_module(model_name)
 
-    classifier = model.get_model(num_class, normal_channel=args.use_normals, dropout=True)
+    classifier = model.get_model(num_class, normal_channel=args.use_normals, mc_dropout=True)
     if not args.use_cpu:
         classifier = classifier.cuda()
 
@@ -169,7 +175,7 @@ def main(args):
     # with torch.no_grad():
     #     instance_acc, class_acc = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
     #     log_string('Test Instance Accuracy: %f, Class Accuracy: %f' % (instance_acc, class_acc))
-    get_monte_carlo_predictions(classifier, testDataLoader, 10, 15, 47 )
+    get_monte_carlo_predictions(classifier, testDataLoader, forward_passes=1, n_classes=15, n_samples=372 )
 
 
 if __name__ == '__main__':
