@@ -44,7 +44,7 @@ def compute_covariance(input_data):
 
 # PointNet Classification
 class get_model(nn.Module):
-    def __init__(self, k=40, normal_channel=True):
+    def __init__(self, k=40, normal_channel=True, dropout=False):
         super(get_model, self).__init__()
         if normal_channel:
             channel = 6
@@ -63,8 +63,12 @@ class get_model(nn.Module):
         x, trans, trans_feat = self.feat(x)
         x = F.relu(self.bn1(self.fc1(x)))
         x = F.relu(self.bn2(self.dropout(self.fc2(x))))
-        x = self.fc3(x)
-        x = F.log_softmax(x, dim=1)
+
+        if dropout is False:
+            x = self.fc3(x)
+            x = F.log_softmax(x, dim=1)
+        else:
+            x = self.fc3(self.dropout(x))
         return x, trans_feat
 
 
