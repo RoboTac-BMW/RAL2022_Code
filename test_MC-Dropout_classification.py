@@ -31,6 +31,7 @@ def parse_args():
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
     parser.add_argument('--num_votes', type=int, default=3, help='Aggregate classification scores with voting')
     parser.add_argument('--SO3_Rotation', action='store_true', default=False, help='arbitrary rotation in SO3')
+    parser.add_argument('--pcd_dir', type=str, default=None, help='The path of the tactile pcd')
     return parser.parse_args()
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -75,7 +76,7 @@ def test(model, loader, num_class=15, vote_num=1):
     instance_acc = np.mean(mean_correct)
     return instance_acc, class_acc
 
-def get_monte_carlo_predictions(model,
+def get_monte_carlo_predictions_Dataset(model,
                                 data_loader,
                                 forward_passes,
                                 n_classes,
@@ -127,6 +128,62 @@ def get_monte_carlo_predictions(model,
     print(mean[100])
         # dropout predictions - shape (forward_passes, n_samples, n_classes)
 
+
+def get_monte_carlo_predictions(model,
+                                data_loader,
+                                forward_passes,
+                                n_samples,
+                                n_classes=15):
+    """ Function to get the monte-carlo samples and uncertainty estimates
+    through multiple forward passes
+
+    Parameters
+    ----------
+    data_loader : object
+        data loader object from the data loader module
+    forward_passes : int
+        number of monte-carlo samples/forward passes
+    model : object
+        keras model
+    n_classes : int
+        number of classes in the dataset
+    n_samples : int
+        number of samples in the test set
+    """
+
+    dropout_predictions = np.empty((0, n_samples, n_classes))
+    softmax = nn.Softmax(dim=1)
+    for i in tqdm(range(forward_passes)):
+        # print(i)
+        predictions = np.empty((0, n_classes))
+        model.eval()
+        classifier = model.eval()
+        enable_dropout(model)
+        for i, data in tqdm(enumerate(data_loader), total=len(data_loader)):
+
+            points = data.to(device).float()
+            points = points.transpose(2,1)
+
+            with torch.no_grad():
+                output, _ = classifier(points)
+                output = softmax(output) # shape (n_samples, n_classes)
+                # print(output)
+            predictions = np.vstack((predictions, output.cpu().numpy()))
+
+        dropout_predictions = np.vstack((dropout_predictions,
+                                         predictions[np.newaxis, :, :]))
+    mean = np.mean(dropout_predictions, axis=0)
+    print(mean.shape)
+    print(mean[0])
+    print(type(mean[0]))
+    # mean = np.mean(dropout_predictions, axis=0)
+    # print(mean.shape)
+    # print(mean[100])
+        # dropout predictions - shape (forward_passes, n_samples, n_classes)
+
+
+
+
 def main(args):
     def log_string(str):
         logger.info(str)
@@ -175,7 +232,10 @@ def main(args):
     # with torch.no_grad():
     #     instance_acc, class_acc = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
     #     log_string('Test Instance Accuracy: %f, Class Accuracy: %f' % (instance_acc, class_acc))
-    get_monte_carlo_predictions(classifier, testDataLoader, forward_passes=1, n_classes=15, n_samples=372 )
+
+    pcd_dataset = PCDTest(args.pcd_dir, sub_sample=True, sample_num=30)
+    pcdDataLoader = torch.utils.data.DataLoader(pcd_dataset, batch_size=args.batch_size, shuffle=False, num_workers=10)
+    get_monte_carlo_predictions(classifier, pcdDataLoader, forward_passes=5, n_samples=25, n_classes=15)
 
 
 if __name__ == '__main__':
