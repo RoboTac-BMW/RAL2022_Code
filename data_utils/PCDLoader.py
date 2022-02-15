@@ -116,7 +116,7 @@ class PCDPointCloudData(Dataset):
 
         # centralize and normalize point cloud
         pointcloud_np = normalize_pointcloud(pointcloud_np)
-        pointcloud_np = rand_rotation(pointcloud_np)
+        pointcloud_np = rand_rotation(pointcloud_np, with_normal=self.est_normal)
         # print(pointcloud_np.shape)
 
         # random select points
