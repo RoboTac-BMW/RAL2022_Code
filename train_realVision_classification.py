@@ -29,6 +29,7 @@ def parse_args():
     parser.add_argument('--batch_size', type=int, default=8, help='batch size in training')
     parser.add_argument('--model', default='pointnet_cls', help='model name [default: pointnet_cls]')
     parser.add_argument('--num_category', default=15, type=int, help='training on real dataset')
+    parser.add_argument('--num_ModelNet', default=40, type=int, choices=[10,40], help='Pre-trained num_category')
     parser.add_argument('--epoch', default=100, type=int, help='number of epoch in training')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='learning rate in training')
     parser.add_argument('--num_point', type=int, default=1024, help='Visual Point Number')
@@ -146,7 +147,7 @@ def main(args):
     start_epoch = checkpoint['epoch']
     pretrained_dict = checkpoint['model_state_dict']
     # Manually modify the last fc layer to 40, otherwise cannot load pretrained model
-    classifier.fc3 = nn.Linear(256, 40).to(device)
+    classifier.fc3 = nn.Linear(256, args.num_ModelNet).to(device)
     classifier.load_state_dict(pretrained_dict)
     # And change fc3 back
     classifier.fc3 = nn.Linear(256, args.num_category).to(device)
