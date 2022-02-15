@@ -60,6 +60,7 @@ class PCDPointCloudData(Dataset):
     def __init__(self, root_dir,
                  folder='Train',
                  num_point=1024,
+                 est_normal=True,
                  random_num=False,
                  list_num_point=[1024],
                  rotation='z'):
@@ -67,6 +68,7 @@ class PCDPointCloudData(Dataset):
         self.root_dir = root_dir
         self.folder = folder
         self.num_point = num_point
+        self.est_normal = est_normal
         self.random_num = random_num
         self.list_num_point = list_num_point
         self.classes = find_classes(Path(root_dir))
@@ -88,23 +90,29 @@ class PCDPointCloudData(Dataset):
         pcd_path = self.files[idx]['pcd_path']
         category = self.files[idx]['category']
         point_cloud = o3d.io.read_point_cloud(filename=str(pcd_path))
-        point_cloud.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(
-                                  radius=0.1, max_nn=16))
-        point_cloud.normalize_normals()
 
-        # align the normal vectors to z axis
-        o3d.geometry.PointCloud.orient_normals_to_align_with_direction(
-            point_cloud,
-            orientation_reference=np.array([0., 0., 1.])
-        )
+        if self.est_normal is True:
+            point_cloud.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(
+                                      radius=0.1, max_nn=16))
+            point_cloud.normalize_normals()
 
-        # draw point cloud
-        # o3d.visualization.draw_geometries([point_cloud], point_show_normal=True)
+            # align the normal vectors to z axis
+            o3d.geometry.PointCloud.orient_normals_to_align_with_direction(
+                point_cloud,
+                orientation_reference=np.array([0., 0., 1.])
+            )
 
-        # convert to numpy
-        points = np.asarray(point_cloud.points).astype(np.float32)
-        norms = np.asarray(point_cloud.normals).astype(np.float32)
-        pointcloud_np = np.concatenate((points, norms), axis=1)
+            # draw point cloud
+            # o3d.visualization.draw_geometries([point_cloud], point_show_normal=True)
+
+            # convert to numpy
+            points = np.asarray(point_cloud.points).astype(np.float32)
+            norms = np.asarray(point_cloud.normals).astype(np.float32)
+            pointcloud_np = np.concatenate((points, norms), axis=1)
+
+        else:
+            points = np.asarray(point_cloud.points).astype(np.float32)
+            pointcloud_np = points
 
         # centralize and normalize point cloud
         pointcloud_np = normalize_pointcloud(pointcloud_np)
@@ -112,6 +120,7 @@ class PCDPointCloudData(Dataset):
         # print(pointcloud_np.shape)
 
         # random select points
+        # TODO
         if self.random_num is False:
             sample_size = self.num_point
         else:
