@@ -29,13 +29,14 @@ def parse_args():
     parser.add_argument('--batch_size', type=int, default=8, help='batch size in training')
     parser.add_argument('--model', default='pointnet_cls', help='model name [default: pointnet_cls]')
     parser.add_argument('--num_category', default=15, type=int, help='training on real dataset')
+    parser.add_argument('--num_ModelNet', default=40, type=int, choices=[10,40], help='Pre-trained num_category')
     parser.add_argument('--epoch', default=100, type=int, help='number of epoch in training')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='learning rate in training')
     parser.add_argument('--num_point', type=int, default=1024, help='Visual Point Number')
     parser.add_argument('--optimizer', type=str, default='Adam', help='optimizer for training')
     parser.add_argument('--log_dir', type=str, default=None, help='experiment root')
     parser.add_argument('--decay_rate', type=float, default=1e-4, help='decay rate')
-    parser.add_argument('--use_normals', action='store_true', default=True, help='use normals')
+    parser.add_argument('--use_normals', action='store_true', default=False, help='use normals')
     parser.add_argument('--process_data', action='store_true', default=False, help='save data offline')
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
     parser.add_argument('--SO3_Rotation', action='store_true', default=False, help='arbitrary rotation in SO3')
@@ -120,8 +121,15 @@ def main(args):
     data_path = 'data/visual_data_pcd/'
 
 
-    train_dataset = PCDPointCloudData(data_path, folder='Train', num_point=args.num_point)
-    test_dataset = PCDPointCloudData(data_path, folder='Test', num_point=args.num_point)
+    train_dataset = PCDPointCloudData(data_path,
+                                      folder='Train',
+                                      num_point=args.num_point,
+                                      est_normal=args.use_normals)
+
+    test_dataset = PCDPointCloudData(data_path,
+                                     folder='Test',
+                                     num_point=args.num_point,
+                                     est_normal=args.use_normals)
 
     trainDataLoader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=10, drop_last=True)
     testDataLoader = torch.utils.data.DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=10)
@@ -146,7 +154,7 @@ def main(args):
     start_epoch = checkpoint['epoch']
     pretrained_dict = checkpoint['model_state_dict']
     # Manually modify the last fc layer to 40, otherwise cannot load pretrained model
-    classifier.fc3 = nn.Linear(256, 40).to(device)
+    classifier.fc3 = nn.Linear(256, args.num_ModelNet).to(device)
     classifier.load_state_dict(pretrained_dict)
     # And change fc3 back
     classifier.fc3 = nn.Linear(256, args.num_category).to(device)
