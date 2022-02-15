@@ -127,15 +127,66 @@ class PCDPointCloudData(Dataset):
         return {'pointcloud': pointcloud_np,
                 'category': self.classes[category]}
 
+class PCDTest(Dataset):
+    def __init__(self, pcd_dir, sub_sample=False, sample_num=None, est_normal=True,
+                 radius=0.1, max_nn=16):
+
+        self.pcd_dir = pcd_dir
+        self.sub_sample = sub_sample
+        self.sample_num = sample_num
+        self.est_normal = est_normal
+        self.radius = radius
+        self.max_nn = max_nn
+        self.files = []
+
+        for file in os.listdir(pcd_dir):
+            if file.endswith('.pcd'):
+                sample = {}
+                sample['pcd_path'] = Path(pcd_dir)/file
+                self.files.append(sample)
+
+    def __len__(self):
+        return len(self.files)
+
+
+    def __getitem__(self,idx):
+        pcd_path = self.files[idx]['pcd_path']
+        point_cloud = o3d.io.read_point_cloud(filename=str(pcd_path))
+        if self.est_normal is True:
+            point_cloud.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(
+                                      radius=self.radius, max_nn=self.max_nn))
+            point_cloud.normalize_normals()
+
+        o3d.geometry.PointCloud.orient_normals_to_align_with_direction(
+            point_cloud,
+            orientation_reference=np.array([0., 0., 1.])
+        )
+
+        points = np.asarray(point_cloud.points).astype(np.float32)
+        norms = np.asarray(point_cloud.normals).astype(np.float32)
+        pointcloud_np = np.concatenate((points, norms), axis=1)
+
+        pointcloud_np = normalize_pointcloud(pointcloud_np)
+
+        if self.sub_sample is True:
+            sel_pts_idx = np.random.choice(pointcloud_np.shape[0],
+                                           size=self.sample_num,
+                                           replace=False).reshape(-1)
+            pointcloud_np = pointcloud_np[sel_pts_idx]
+
+        return pointcloud_np
+
+
 
 if __name__ == '__main__':
 
-    path_dir = "/home/airocs/cong_workspace/tools/Pointnet_Pointnet2_pytorch/data/visual_data_pcd/"
+    path_dir = "/home/airocs/cong_workspace/tools/Pointnet_Pointnet2_pytorch/data/visual_data_pcd/can/Test"
     # a = find_classes(path_dir)
     # print(type(a))
     # print(len(a))
     # print(a[0])
-    pointcloud_data = PCDPointCloudData(path_dir)
+    # pointcloud_data = PCDPointCloudData(path_dir)
+    pointcloud_data = PCDTest(path_dir)
     # pointcloud_data.testFunc(100)
 
 
