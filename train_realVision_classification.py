@@ -28,7 +28,8 @@ def parse_args():
     parser.add_argument('--gpu', type=str, default='0', help='specify gpu device')
     parser.add_argument('--batch_size', type=int, default=8, help='batch size in training')
     parser.add_argument('--model', default='pointnet_cls', help='model name [default: pointnet_cls]')
-    parser.add_argument('--num_category', default=14, type=int, help='training on real dataset')
+    parser.add_argument('--num_category', default=15, type=int, help='training on real dataset')
+    parser.add_argument('--num_ModelNet', default=40, type=int, choices=[10,40], help='Pre-trained num_category')
     parser.add_argument('--epoch', default=100, type=int, help='number of epoch in training')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='learning rate in training')
     parser.add_argument('--num_point', type=int, default=1024, help='Visual Point Number')
@@ -50,7 +51,7 @@ def inplace_relu(m):
         m.inplace=True
 
 
-def test(model, loader, num_class=14):
+def test(model, loader, num_class=15):
     mean_correct = []
     class_acc = np.zeros((num_class, 3))
     classifier = model.eval()
@@ -119,17 +120,9 @@ def main(args):
     log_string('Load dataset ...')
     data_path = 'data/visual_data_pcd/'
 
-    """
-    if args.num_category == 10:
-        data_path = Path("mesh_data/ModelNet10")
-    elif args.num_category == 40:
-        data_path = Path("mesh_data/ModelNet40")
-    else:
-        raise ValueError("Not a valid category input")
-    """
 
-    train_dataset = PCDPointCloudData(data_path, folder='Train', valid=False)
-    test_dataset = PCDPointCloudData(data_path, folder='Test', valid=False)
+    train_dataset = PCDPointCloudData(data_path, folder='Train', num_point=args.num_point)
+    test_dataset = PCDPointCloudData(data_path, folder='Test', num_point=args.num_point)
 
     trainDataLoader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=10, drop_last=True)
     testDataLoader = torch.utils.data.DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=10)
@@ -154,7 +147,7 @@ def main(args):
     start_epoch = checkpoint['epoch']
     pretrained_dict = checkpoint['model_state_dict']
     # Manually modify the last fc layer to 40, otherwise cannot load pretrained model
-    classifier.fc3 = nn.Linear(256, 40).to(device)
+    classifier.fc3 = nn.Linear(256, args.num_ModelNet).to(device)
     classifier.load_state_dict(pretrained_dict)
     # And change fc3 back
     classifier.fc3 = nn.Linear(256, args.num_category).to(device)

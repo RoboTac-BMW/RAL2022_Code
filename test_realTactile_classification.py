@@ -9,6 +9,7 @@ from tqdm import tqdm
 import sys
 import importlib
 from path import Path
+from data_utils.PCDLoader import *
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = BASE_DIR
@@ -21,7 +22,8 @@ def parse_args():
     parser.add_argument('--use_cpu', action='store_true', default=False, help='use cpu mode')
     parser.add_argument('--gpu', type=str, default='0', help='specify gpu device')
     parser.add_argument('--batch_size', type=int, default=8, help='batch size in training')
-    parser.add_argument('--num_category', default=10, type=int, choices=[10, 40],  help='training on ModelNet10/40')
+    # parser.add_argument('--num_category', default=10, type=int, choices=[10, 40],  help='training on ModelNet10/40')
+    parser.add_argument('--num_category', default=15, type=int, help='training on real dataset')
     parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
     parser.add_argument('--log_dir', type=str, required=True, help='Experiment root')
     parser.add_argument('--use_normals', action='store_true', default=True, help='use normals')
@@ -32,7 +34,7 @@ def parse_args():
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-def test(model, loader, num_class=10, vote_num=1):
+def test(model, loader, num_class=15, vote_num=1):
     mean_correct = []
     classifier = model.eval()
     class_acc = np.zeros((num_class, 3))
@@ -91,25 +93,12 @@ def main(args):
 
     '''DATA LOADING'''
     log_string('Load dataset ...')
-    if args.num_category == 10:
-        data_path = Path("mesh_data/ModelNet10")
-    elif args.num_category == 40:
-        data_path = Path("mesh_data/ModelNet40")
-    else:
-        raise ValueError("Not a valid category input")
+    data_path = 'data/visual_data_pcd/'
     # data_path = 'data/modelnet40_normal_resampled/'
     # data_path = Path("mesh_data/ModelNet10")
 
-    test_transforms = transforms.Compose([
-            PointSampler(args.num_point, with_normal=args.use_normals),
-            Normalize(),
-            RandRotation_z(with_normal=args.use_normals, SO3=args.SO3_Rotation),
-            RandomNoise(),
-            ToTensor()
-            ])
 
-    # test_dataset = ModelNetDataLoader(root=data_path, args=args, split='test', process_data=False)
-    test_dataset = PointCloudData(data_path, valid=True, folder='test', transform=test_transforms)
+    test_dataset = PCDPointCloudData(data_path, folder='Test', num_point=args.num_point)
     testDataLoader = torch.utils.data.DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=10)
 
     '''MODEL LOADING'''
