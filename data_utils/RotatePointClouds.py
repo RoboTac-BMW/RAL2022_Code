@@ -54,8 +54,42 @@ def generate_rotated_PC(root_dir):
                     o3d.io.write_point_cloud(new_file_name, pc_o3d)
 
 
+def generate_subsampled_PC(root_dir):
+    root_dir = Path(root_dir)
+    classes = find_classes(root_dir)
+
+    for category in classes.keys():
+        print(category)
+        new_dir = root_dir/Path(category)
+        for file in os.listdir(new_dir):
+            if file.endswith('pcd'):
+                pc_o3d = o3d.io.read_point_cloud(filename=str(new_dir/file))
+                point_np = np.asarray(pc_o3d.points).astype(np.float32)
+                point_num = point_np.shape[0]
+                # print(point_np.shape)
+                min_num = int(0.8 * point_num)
+                if min_num < 50:
+                    min_num = 50
+
+                for i in range(3):
+                    new_file_name = str(new_dir/file)[:-4] + '_' + str(i+1) + '.pcd'
+                    print(new_file_name)
+                    sample_pt_num = random.randint(min_num, point_num)
+                    sel_ptx_idx = np.random.choice(point_np.shape[0],
+                                                   size=sample_pt_num,
+                                                   replace=False).reshape(-1)
+                    sampled_pointcloud = point_np[sel_ptx_idx]
+                    print(sampled_pointcloud.shape)
+                    new_pcd = o3d.geometry.PointCloud()
+                    new_pcd.points = o3d.utility.Vector3dVector(sampled_pointcloud)
+                    o3d.io.write_point_cloud(new_file_name, new_pcd)
+
+
+
 if __name__ == "__main__":
-    generate_rotated_PC("/home/airocs/Desktop/Rotated_visual_data_pcd")
+    # generate_rotated_PC("/home/airocs/Desktop/Rotated_visual_data_pcd")
+    generate_subsampled_PC("/home/airocs/Desktop/sampled_tactile_data_set")
+    generate_rotated_PC("/home/airocs/Desktop/sampled_tactile_data_set")
 
 
 
