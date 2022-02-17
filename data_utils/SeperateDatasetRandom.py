@@ -52,7 +52,8 @@ def seperate_dataset(root_dir, num_test):
 
 
 if __name__ == "__main__":
-    seperate_dataset("/home/airocs/Desktop/Dataset/Rotated_visual_data_pcd/", 25)
+    # seperate_dataset("/home/airocs/Desktop/Dataset/Rotated_visual_data_pcd/", 25)
+    seperate_dataset("/home/airocs/Desktop/sampled_tactile_data_set", 20)
 
 
 
