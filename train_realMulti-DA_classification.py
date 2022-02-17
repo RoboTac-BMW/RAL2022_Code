@@ -129,15 +129,25 @@ def main(args):
 
 
 
-    train_dataset = PCDPointCloudData(visual_data_path, folder='Train', num_point=args.num_point)
-    test_dataset = PCDPointCloudData(visual_data_path, folder='Test', num_point=args.num_point)
+    train_dataset = PCDPointCloudData(visual_data_path,
+                                      folder='Train',
+                                      num_point=args.num_point,
+                                      est_normal=args.use_normals)
+
+    test_dataset = PCDPointCloudData(visual_data_path,
+                                     folder='Test',
+                                     num_point=args.num_point,
+                                     est_normal=args.use_normals)
+
     if args.random_choose_sparse is True: # TODO
         domain_adaptation_dataset = PCDPointCloudData(tactile_data_path, folder='Train',
                                                       random_num=True,
                                                       list_num_point=[10,20,30,40,50])
     else:
-        domain_adaptation_dataset = PCDPointCloudData(tactile_data_path, folder='Train',
-                                                      num_point=args.num_sparse_point)
+        domain_adaptation_dataset = PCDPointCloudData(tactile_data_path,
+                                                      folder='Train',
+                                                      num_point=args.num_sparse_point,
+                                                      est_normal=args.use_normals)
 
     trainDataLoader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=10, drop_last=True)
     domainAdaptationDataLoader = torch.utils.data.DataLoader(domain_adaptation_dataset, batch_size=args.batch_size, shuffle=True, num_workers=10, drop_last=True)
