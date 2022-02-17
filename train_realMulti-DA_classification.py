@@ -131,7 +131,7 @@ def main(args):
 
     train_dataset = PCDPointCloudData(visual_data_path, folder='Train', num_point=args.num_point)
     test_dataset = PCDPointCloudData(visual_data_path, folder='Test', num_point=args.num_point)
-    if args.random_choose_sparse is True:
+    if args.random_choose_sparse is True: # TODO
         domain_adaptation_dataset = PCDPointCloudData(tactile_data_path, folder='Train',
                                                       random_num=True,
                                                       list_num_point=[10,20,30,40,50])
