@@ -34,7 +34,6 @@ def rand_rotation(pointcloud, with_normal=True, SO3=False):
     if with_normal is True:
         rot_pointcloud = rot_matrix_with_normal.dot(pointcloud.T).T
     else:
-
         rot_pointcloud = rot_matrix.dot(pointcloud.T).T
     return  rot_pointcloud
 
@@ -46,7 +45,7 @@ def normalize_pointcloud(pointcloud):
         norm_pointcloud /= np.max(np.linalg.norm(norm_pointcloud, axis=1)) # normalize
         return norm_pointcloud
 
-    else: # with normals
+    elif pointcloud.shape[1] == 6: # with normals
         pointcloud_tmp, pointcloud_norm = np.split(pointcloud, 2, axis=1)
         # translate points to origin
         norm_pointcloud_tmp = pointcloud_tmp - np.mean(pointcloud_tmp, axis=0)
@@ -55,12 +54,15 @@ def normalize_pointcloud(pointcloud):
         norm_pointcloud = np.concatenate((norm_pointcloud_tmp, pointcloud_norm), axis=1)
         return  norm_pointcloud
 
+    else:
+        raise ValueError("Wrong PointCloud Input")
+
 
 class PCDPointCloudData(Dataset):
     def __init__(self, root_dir,
                  folder='Train',
                  num_point=1024,
-                 est_normal=True,
+                 est_normal=False,
                  random_num=False,
                  list_num_point=[1024],
                  rotation='z'):
