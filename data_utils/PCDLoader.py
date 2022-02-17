@@ -149,7 +149,7 @@ class PCDPointCloudData(Dataset):
                 'category': self.classes[category]}
 
 class PCDTest(Dataset):
-    def __init__(self, pcd_dir, sub_sample=False, sample_num=None, est_normal=True,
+    def __init__(self, pcd_dir, sub_sample=False, sample_num=None, est_normal=False,
                  radius=0.1, max_nn=16):
 
         self.pcd_dir = pcd_dir
@@ -173,6 +173,7 @@ class PCDTest(Dataset):
     def __getitem__(self,idx):
         pcd_path = self.files[idx]['pcd_path']
         point_cloud = o3d.io.read_point_cloud(filename=str(pcd_path))
+        """
         if self.est_normal is True:
             point_cloud.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(
                                       radius=self.radius, max_nn=self.max_nn))
@@ -186,7 +187,10 @@ class PCDTest(Dataset):
         points = np.asarray(point_cloud.points).astype(np.float32)
         norms = np.asarray(point_cloud.normals).astype(np.float32)
         pointcloud_np = np.concatenate((points, norms), axis=1)
+        """
 
+        points = np.asarray(point_cloud.points).astype(np.float32)
+        pointcloud_np = points
         pointcloud_np = normalize_pointcloud(pointcloud_np)
 
         if self.sub_sample is True:

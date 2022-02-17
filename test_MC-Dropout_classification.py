@@ -209,7 +209,7 @@ def main(args):
 
     '''DATA LOADING'''
     log_string('Load dataset ...')
-    data_path = 'data/visual_data_pcd/'
+    data_path = 'data/tactile_data_pcd/'
     # data_path = 'data/modelnet40_normal_resampled/'
     # data_path = Path("mesh_data/ModelNet10")
 
@@ -233,9 +233,9 @@ def main(args):
     #     instance_acc, class_acc = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
     #     log_string('Test Instance Accuracy: %f, Class Accuracy: %f' % (instance_acc, class_acc))
 
-    pcd_dataset = PCDTest(args.pcd_dir, sub_sample=True, sample_num=30)
+    pcd_dataset = PCDTest(args.pcd_dir, sub_sample=False)
     pcdDataLoader = torch.utils.data.DataLoader(pcd_dataset, batch_size=args.batch_size, shuffle=False, num_workers=10)
-    get_monte_carlo_predictions(classifier, pcdDataLoader, forward_passes=5, n_samples=25, n_classes=15)
+    get_monte_carlo_predictions(classifier, pcdDataLoader, forward_passes=5, n_samples=11825, n_classes=15)
 
 
 if __name__ == '__main__':
