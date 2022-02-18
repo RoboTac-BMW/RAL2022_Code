@@ -72,6 +72,7 @@ def test(model, loader, num_class=15):
         pred_choice = pred.data.max(1)[1]
 
         for cat in np.unique(target.cpu()):
+            print(cat)
             classacc = pred_choice[target == cat].eq(target[target == cat].long().data).cpu().sum()
             class_acc[cat, 0] += classacc.item() / float(points[target == cat].size()[0])
             class_acc[cat, 1] += 1
@@ -146,7 +147,8 @@ def main(args):
     else:
         domain_adaptation_dataset = PCDPointCloudData(tactile_data_path,
                                                       folder='Train',
-                                                      num_point=args.num_sparse_point,
+                                                      # num_point=args.num_sparse_point,
+                                                      sample=False,
                                                       est_normal=args.use_normals)
 
     trainDataLoader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=10, drop_last=True)
