@@ -325,6 +325,7 @@ def main(args):
             running_loss += loss.item()
             if batch_id % 100 == 99:
                  print("Training loss {} ".format(loss.item()/100))
+                 log_string("Training loss {} ".format(loss.item()/100))
                  running_loss = 0.0
 
 
