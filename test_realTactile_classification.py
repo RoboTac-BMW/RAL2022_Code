@@ -12,6 +12,12 @@ import importlib
 from path import Path
 from data_utils.PCDLoader import *
 
+import matplotlib.pyplot as plt
+import seaborn as sn
+import pandas as pd
+
+from datetime import datetime
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = BASE_DIR
 sys.path.append(os.path.join(ROOT_DIR, 'models'))
@@ -41,8 +47,8 @@ def test(model, loader, num_class=15, vote_num=1):
     classifier = model.eval()
     class_acc = np.zeros((num_class, 3))
     print(len(loader))
-    all_preds=[]
-    all_labels=[]
+    y_pred = []
+    y_true = []
 
     for j, data in tqdm(enumerate(loader), total=len(loader)):
         if not args.use_cpu:
@@ -62,10 +68,15 @@ def test(model, loader, num_class=15, vote_num=1):
         # print(pred.data.max(1)[1])
         pred_choice = pred.data.max(1)[1]
 
+        # pred for confusion matrix
+        pred_conf = (torch.max(torch.exp(pred), 1)[1]).data.cpu().numpy()
+        y_pred.extend(pred_conf)
+        y_true.extend(target.data.cpu())
+
         for cat in np.unique(target.cpu()):
             classacc = pred_choice[target == cat].eq(target[target == cat].long().data).cpu().sum()
             # print("------------------------------------------------------")
-            print("cat", cat)
+            # print("cat", cat)
             # print("pred_choice", pred_choice)
             # print(cat)
             # print(type(pred_choice))
@@ -89,15 +100,18 @@ def test(model, loader, num_class=15, vote_num=1):
         correct = pred_choice.eq(target.long().data).cpu().sum()
         mean_correct.append(correct.item() / float(points.size()[0]))
 
-        all_preds += list(pred.cpu().numpy())
-        all_labels += list(target.cpu().numpy())
 
     # print(mean_correct)
     class_acc[:, 2] = class_acc[:, 0] / class_acc[:, 1]
     class_acc = np.mean(class_acc[:, 2])
     instance_acc = np.mean(mean_correct)
-    print(instance_acc)
-    return instance_acc, class_acc, all_preds, all_labels
+    # print(instance_acc)
+    # Draw Confusion Matrix
+    # print(y_true)
+    # print(y_pred)
+    cf_matrix = confusion_matrix(y_true, y_pred, normalize='true')
+    # print(cf_matrix)
+    return instance_acc, class_acc, cf_matrix
     # return instance_acc, class_acc
 
 
@@ -135,8 +149,10 @@ def main(args):
 
     test_dataset = PCDPointCloudData(tactile_data_path,
                                      folder='Train',
+                                     sample_method='Voxel',
                                      num_point=args.num_point,
                                      sample=args.sample_point,
+                                     est_normal=args.use_normals,
                                      rotation=False)
     testDataLoader = torch.utils.data.DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=10)
 
@@ -152,15 +168,23 @@ def main(args):
     checkpoint = torch.load(str(experiment_dir) + '/checkpoints/best_model.pth')
     classifier.load_state_dict(checkpoint['model_state_dict'])
 
+    # Load labels:
+    classes = find_classes(tactile_data_path)
+    print(classes)
+    print(classes.keys)
+
+
     with torch.no_grad():
         # instance_acc, class_acc = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
-        instance_acc, class_acc, all_preds, all_labels = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
+        instance_acc, class_acc, cf_matrix = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
         log_string('Test Instance Accuracy: %f, Class Accuracy: %f' % (instance_acc, class_acc))
-        # print(all_labels)
-        # print(all_preds)
-        # cm = confusion_matrix(all_labels, all_preds)
-        # print(cm)
 
+        # Draw confusion matrix
+        df_cm = pd.DataFrame(cf_matrix/np.sum(cf_matrix) *10,
+                             index = [i for i in classes.keys()], columns = [i for i in classes.keys()])
+        plt.figure(figsize = (12,7))
+        sn.heatmap(df_cm, annot=True)
+        plt.savefig(experiment_dir + '/' + str(datetime.now()) + '.png')
 
 if __name__ == '__main__':
     args = parse_args()

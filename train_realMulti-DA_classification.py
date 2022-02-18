@@ -228,6 +228,7 @@ def main(args):
     global_step = 0
     best_instance_acc = 0.0
     best_class_acc = 0.0
+    running_loss = 0.0
 
     '''TRANING'''
     logger.info('Start training...')
@@ -311,6 +312,12 @@ def main(args):
             loss.backward()
             optimizer.step()
             global_step += 1
+
+            # Print the loss
+            running_loss += loss.item()
+            if batch_id % 1000 == 999:
+                print("Training loss {} ".format(running_loss / 1000))
+
 
         train_instance_acc = np.mean(mean_correct)
         log_string('Train Instance Accuracy: %f' % train_instance_acc)
