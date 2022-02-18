@@ -41,8 +41,8 @@ def test(model, loader, num_class=15, vote_num=1):
     classifier = model.eval()
     class_acc = np.zeros((num_class, 3))
     print(len(loader))
-    all_preds=[]
-    all_labels=[]
+    y_pred = []
+    y_true = []
 
     for j, data in tqdm(enumerate(loader), total=len(loader)):
         if not args.use_cpu:
@@ -62,10 +62,15 @@ def test(model, loader, num_class=15, vote_num=1):
         # print(pred.data.max(1)[1])
         pred_choice = pred.data.max(1)[1]
 
+        # pred for confusion matrix
+        pred_conf = (torch.max(torch.exp(pred), 1)[1]).data.cpu().numpy()
+        y_pred.extend(pred_conf)
+        y_true.extend(target)
+
         for cat in np.unique(target.cpu()):
             classacc = pred_choice[target == cat].eq(target[target == cat].long().data).cpu().sum()
             # print("------------------------------------------------------")
-            print("cat", cat)
+            # print("cat", cat)
             # print("pred_choice", pred_choice)
             # print(cat)
             # print(type(pred_choice))
@@ -89,15 +94,16 @@ def test(model, loader, num_class=15, vote_num=1):
         correct = pred_choice.eq(target.long().data).cpu().sum()
         mean_correct.append(correct.item() / float(points.size()[0]))
 
-        all_preds += list(pred.cpu().numpy())
-        all_labels += list(target.cpu().numpy())
 
     # print(mean_correct)
     class_acc[:, 2] = class_acc[:, 0] / class_acc[:, 1]
     class_acc = np.mean(class_acc[:, 2])
     instance_acc = np.mean(mean_correct)
-    print(instance_acc)
-    return instance_acc, class_acc, all_preds, all_labels
+    # print(instance_acc)
+    # Draw Confusion Matrix
+    cf_matrix = confusion_matrix(y_true, y_pred)
+    print(cf_matrix)
+    return instance_acc, class_acc
     # return instance_acc, class_acc
 
 
@@ -156,7 +162,7 @@ def main(args):
 
     with torch.no_grad():
         # instance_acc, class_acc = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
-        instance_acc, class_acc, all_preds, all_labels = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
+        instance_acc, class_acc = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
         log_string('Test Instance Accuracy: %f, Class Accuracy: %f' % (instance_acc, class_acc))
         # print(all_labels)
         # print(all_preds)
