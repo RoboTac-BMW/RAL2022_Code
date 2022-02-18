@@ -132,13 +132,20 @@ def main(args):
 
     train_dataset = PCDPointCloudData(visual_data_path,
                                       folder='Train',
+                                      sample_method='Voxel',
                                       num_point=args.num_point,
+                                      sample=True,
+                                      rotation=False,
                                       est_normal=args.use_normals)
 
     test_dataset = PCDPointCloudData(visual_data_path,
                                      folder='Test',
+                                     sample_method='Voxel',
                                      num_point=args.num_point,
+                                     sample=True,
+                                     rotation=False,
                                      est_normal=args.use_normals)
+
 
     if args.random_choose_sparse is True: # TODO
         domain_adaptation_dataset = PCDPointCloudData(tactile_data_path, folder='Train',
