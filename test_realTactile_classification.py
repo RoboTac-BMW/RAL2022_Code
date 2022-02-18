@@ -12,6 +12,12 @@ import importlib
 from path import Path
 from data_utils.PCDLoader import *
 
+import matplotlib.pyplot as plt
+import seaborn as sn
+import pandas as pd
+
+from datetime import datetime
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = BASE_DIR
 sys.path.append(os.path.join(ROOT_DIR, 'models'))
@@ -65,7 +71,7 @@ def test(model, loader, num_class=15, vote_num=1):
         # pred for confusion matrix
         pred_conf = (torch.max(torch.exp(pred), 1)[1]).data.cpu().numpy()
         y_pred.extend(pred_conf)
-        y_true.extend(target)
+        y_true.extend(target.data.cpu())
 
         for cat in np.unique(target.cpu()):
             classacc = pred_choice[target == cat].eq(target[target == cat].long().data).cpu().sum()
@@ -101,9 +107,11 @@ def test(model, loader, num_class=15, vote_num=1):
     instance_acc = np.mean(mean_correct)
     # print(instance_acc)
     # Draw Confusion Matrix
-    cf_matrix = confusion_matrix(y_true, y_pred)
-    print(cf_matrix)
-    return instance_acc, class_acc
+    # print(y_true)
+    # print(y_pred)
+    cf_matrix = confusion_matrix(y_true, y_pred, normalize='true')
+    # print(cf_matrix)
+    return instance_acc, class_acc, cf_matrix
     # return instance_acc, class_acc
 
 
@@ -160,15 +168,23 @@ def main(args):
     checkpoint = torch.load(str(experiment_dir) + '/checkpoints/best_model.pth')
     classifier.load_state_dict(checkpoint['model_state_dict'])
 
+    # Load labels:
+    classes = find_classes(tactile_data_path)
+    print(classes)
+    print(classes.keys)
+
+
     with torch.no_grad():
         # instance_acc, class_acc = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
-        instance_acc, class_acc = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
+        instance_acc, class_acc, cf_matrix = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
         log_string('Test Instance Accuracy: %f, Class Accuracy: %f' % (instance_acc, class_acc))
-        # print(all_labels)
-        # print(all_preds)
-        # cm = confusion_matrix(all_labels, all_preds)
-        # print(cm)
 
+        # Draw confusion matrix
+        df_cm = pd.DataFrame(cf_matrix/np.sum(cf_matrix) *10,
+                             index = [i for i in classes.keys()], columns = [i for i in classes.keys()])
+        plt.figure(figsize = (12,7))
+        sn.heatmap(df_cm, annot=True)
+        plt.savefig(experiment_dir + '/' + str(datetime.now()) + '.png')
 
 if __name__ == '__main__':
     args = parse_args()
