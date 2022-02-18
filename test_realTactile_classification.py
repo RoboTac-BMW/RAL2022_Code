@@ -25,7 +25,8 @@ def parse_args():
     parser.add_argument('--batch_size', type=int, default=1, help='batch size in training')
     # parser.add_argument('--num_category', default=10, type=int, choices=[10, 40],  help='training on ModelNet10/40')
     parser.add_argument('--num_category', default=15, type=int, help='training on real dataset')
-    parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
+    parser.add_argument('--sample_point', type=bool, default=False,  help='Sampling on tacitle data')
+    parser.add_argument('--num_point', type=int, default=None, help='Point Number')
     parser.add_argument('--log_dir', type=str, required=True, help='Experiment root')
     parser.add_argument('--use_normals', action='store_true', default=False, help='use normals')
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
@@ -63,8 +64,8 @@ def test(model, loader, num_class=15, vote_num=1):
 
         for cat in np.unique(target.cpu()):
             classacc = pred_choice[target == cat].eq(target[target == cat].long().data).cpu().sum()
-            print("------------------------------------------------------")
-            # print("cat", cat)
+            # print("------------------------------------------------------")
+            print("cat", cat)
             # print("pred_choice", pred_choice)
             # print(cat)
             # print(type(pred_choice))
@@ -81,8 +82,10 @@ def test(model, loader, num_class=15, vote_num=1):
             # print(points[target==cat].size())
             # print(points[target==cat].size()[0])
             # print(float(points[target==cat].size()[0]))
-            class_acc[cat-1, 0] += classacc.item() / float(points[target == cat].size()[0])
-            class_acc[cat-1, 1] += 1
+            # class_acc[cat-1, 0] += classacc.item() / float(points[target == cat].size()[0])
+            # class_acc[cat-1, 1] += 1
+            class_acc[cat, 0] += classacc.item() / float(points[target == cat].size()[0])
+            class_acc[cat, 1] += 1
         correct = pred_choice.eq(target.long().data).cpu().sum()
         mean_correct.append(correct.item() / float(points.size()[0]))
 
@@ -123,15 +126,17 @@ def main(args):
 
     '''DATA LOADING'''
     log_string('Load dataset ...')
-    tactile_data_path = 'data/tactile_data_pcd/'
+    # tactile_data_path = 'data/tactile_data_pcd/'
+    tactile_data_path = 'data/test_tactile_data_pcd/'
+    # tactile_data_path = 'data/visual_data_pcd/'
     # data_path = 'data/modelnet40_normal_resampled/'
     # data_path = Path("mesh_data/ModelNet10")
 
 
     test_dataset = PCDPointCloudData(tactile_data_path,
-                                     folder='Test',
+                                     folder='Train',
                                      num_point=args.num_point,
-                                     sample=False,
+                                     sample=args.sample_point,
                                      rotation=False)
     testDataLoader = torch.utils.data.DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=10)
 
@@ -151,8 +156,8 @@ def main(args):
         # instance_acc, class_acc = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
         instance_acc, class_acc, all_preds, all_labels = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
         log_string('Test Instance Accuracy: %f, Class Accuracy: %f' % (instance_acc, class_acc))
-        print(all_labels)
-        print(all_preds)
+        # print(all_labels)
+        # print(all_preds)
         # cm = confusion_matrix(all_labels, all_preds)
         # print(cm)
 
