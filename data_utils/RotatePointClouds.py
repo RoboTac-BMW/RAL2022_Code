@@ -151,7 +151,12 @@ if __name__ == "__main__":
     # generate_normals("/home/airocs/Desktop/sampled_tactile_data_set")
     # generate_subsampled_PC("/home/airocs/Desktop/sampled_tactile_data_set", folder="Train",
     #                        min_num=50, times=1, sample='Uniform', replace=True)
-    generate_subsampled_PC("/home/airocs/Desktop/sampled_tactile_data_set", folder="Test", min_num=30, times=5)
+    # generate_subsampled_PC("/home/airocs/Desktop/sampled_tactile_data_set", folder="Test", min_num=30, times=5)
+
+
+    #### Test
+    generate_rotated_PC("/home/airocs/cong_workspace/tools/Pointnet_Pointnet2_pytorch/data/test_tactile_data_pcd", times=10)
+
 
 
 

@@ -38,7 +38,7 @@ def parse_args():
     parser.add_argument('--use_normals', action='store_true', default=False, help='use normals')
     parser.add_argument('--process_data', action='store_true', default=False, help='save data offline')
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
-    parser.add_argument('--num_sparse_point', type=int, default=50, help='Point Number for domain loss')
+    parser.add_argument('--num_sparse_point', type=int, default=None, help='Point Number for domain loss')
     parser.add_argument('--random_choose_sparse', type=bool, default=False, help='Random select num_sparse_point from [10,20,30,40,50]')
     parser.add_argument('--SO3_Rotation', action='store_true', default=False, help='arbitrary rotation in SO3')
     parser.add_argument('--DA_method', type=str, default="multi_coral_mmd", help='choose the DA loss function')
@@ -72,6 +72,7 @@ def test(model, loader, num_class=15):
         pred_choice = pred.data.max(1)[1]
 
         for cat in np.unique(target.cpu()):
+            # print(cat)
             classacc = pred_choice[target == cat].eq(target[target == cat].long().data).cpu().sum()
             class_acc[cat, 0] += classacc.item() / float(points[target == cat].size()[0])
             class_acc[cat, 1] += 1
@@ -125,7 +126,7 @@ def main(args):
     '''DATA LOADING'''
     log_string('Load dataset ...')
     visual_data_path = 'data/visual_data_pcd/'
-    tactile_data_path = 'data/tactile_data_pcd/'
+    tactile_data_path = 'data/test_tactile_data_pcd/'
 
 
 
@@ -146,7 +147,10 @@ def main(args):
     else:
         domain_adaptation_dataset = PCDPointCloudData(tactile_data_path,
                                                       folder='Train',
+                                                      sample_method='Voxel',
                                                       num_point=args.num_sparse_point,
+                                                      sample=True,
+                                                      rotation=False,
                                                       est_normal=args.use_normals)
 
     trainDataLoader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=10, drop_last=True)
