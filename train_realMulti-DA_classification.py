@@ -177,6 +177,7 @@ def main(args):
     model = importlib.import_module(args.model)
     shutil.copy('./models/%s.py' % args.model, str(exp_dir))
     shutil.copy('models/pointnet_cls.py', str(exp_dir))
+    shutil.copy('data_utils/PCDLoader.py', str(exp_dir))
     shutil.copy('./train_realMulti-DA_classification.py', str(exp_dir))
     # shutil.copy('./train_dense_classification.py', str(exp_dir))
 
@@ -322,7 +323,9 @@ def main(args):
 
             # Print the loss
             running_loss += loss.item()
-            print("Training loss {} ".format(running_loss / 1000))
+            if batch_id % 100 == 99:
+                 print("Training loss {} ".format(loss.item()/100))
+                 running_loss = 0.0
 
 
         train_instance_acc = np.mean(mean_correct)
