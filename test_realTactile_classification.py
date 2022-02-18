@@ -135,8 +135,10 @@ def main(args):
 
     test_dataset = PCDPointCloudData(tactile_data_path,
                                      folder='Train',
+                                     sample_method='Voxel',
                                      num_point=args.num_point,
                                      sample=args.sample_point,
+                                     est_normal=args.use_normals,
                                      rotation=False)
     testDataLoader = torch.utils.data.DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=10)
 
