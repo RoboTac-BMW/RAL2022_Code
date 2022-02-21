@@ -152,7 +152,7 @@ def main(args):
     '''DATA LOADING'''
     log_string('Load dataset ...')
     # tactile_data_path = 'data/tactile_data_pcd/'
-    tactile_data_path = 'data/tactile_pcd_30_Rotation_21_02/'
+    tactile_data_path = 'data/tactile_pcd_10_sampled_21.02/'
     # tactile_data_path = 'data/visual_data_pcd/'
     # data_path = 'data/modelnet40_normal_resampled/'
     # data_path = Path("mesh_data/ModelNet10")
