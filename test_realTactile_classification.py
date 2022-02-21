@@ -50,6 +50,13 @@ def test(model, loader, num_class=15, vote_num=1):
     y_pred = []
     y_true = []
 
+    num_correct = 0
+    num_samples = 0
+    all_pred_new = []
+    all_true_new = []
+    # classes = list(find_classes(data_path).keys())
+    # print(classes)
+
     for j, data in tqdm(enumerate(loader), total=len(loader)):
         if not args.use_cpu:
             # points, target = points.cuda(), target.cuda()
@@ -61,6 +68,21 @@ def test(model, loader, num_class=15, vote_num=1):
         points = points.transpose(2, 1)
         vote_pool = torch.zeros(target.size()[0], num_class).cuda()
 
+        ###################################################################################
+        output_new, _ = classifier(points)
+        _, preds_new = torch.max(output_new.data, 1)
+        # print(preds_new)
+        y_true_new = target.data.cpu().numpy()
+        y_pred_new = preds_new.data.cpu().numpy()
+
+        all_pred_new += list(y_pred_new)
+        all_true_new += list(y_true_new)
+
+        num_correct += (y_pred_new == y_true_new).sum()
+        num_samples += y_pred_new.size
+
+
+        ##################################################################################
         for _ in range(vote_num):
             pred, _ = classifier(points)
             vote_pool += pred
@@ -82,6 +104,9 @@ def test(model, loader, num_class=15, vote_num=1):
         correct = pred_choice.eq(target.long().data).cpu().sum()
         mean_correct.append(correct.item() / float(points.size()[0]))
 
+    print(f'Got {num_correct} / {num_samples} with accuracy {float(num_correct)/float(num_samples)*100:.2f}')
+    cm_new = confusion_matrix(all_true_new, all_pred_new, normalize='true')
+    print(cm_new)
 
     # print(mean_correct)
     class_acc[:, 2] = class_acc[:, 0] / class_acc[:, 1]
@@ -93,7 +118,8 @@ def test(model, loader, num_class=15, vote_num=1):
     # print(y_pred)
     cf_matrix = confusion_matrix(y_true, y_pred, normalize='true')
     # print(cf_matrix)
-    return instance_acc, class_acc, cf_matrix
+    # return instance_acc, class_acc, cf_matrix
+    return instance_acc, class_acc, cm_new
     # return instance_acc, class_acc
 
 
