@@ -110,8 +110,8 @@ def generate_subsampled_PC(root_dir, folder=None, min_num=0.8, times=4, sample='
                 # print(point_np.shape)
                 if(type(min_num) is float):
                     min_num = int(min_num * point_num)
-                    if min_num < 50:
-                        min_num = 50
+                    if min_num < 30:
+                        min_num = 30
 
                 elif (type(min_num) is int):
                     min_num = min_num
@@ -151,11 +151,11 @@ if __name__ == "__main__":
     # generate_normals("/home/airocs/Desktop/sampled_tactile_data_set")
     # generate_subsampled_PC("/home/airocs/Desktop/sampled_tactile_data_set", folder="Train",
     #                        min_num=50, times=1, sample='Uniform', replace=True)
-    # generate_subsampled_PC("/home/airocs/Desktop/sampled_tactile_data_set", folder="Test", min_num=30, times=5)
+    generate_subsampled_PC("/home/airocs/Desktop/Dataset/tactile_pcd_10_sampled_21.02", min_num=30, times=10)
 
 
     #### Test
-    generate_rotated_PC("/home/airocs/cong_workspace/tools/Pointnet_Pointnet2_pytorch/data/test_tactile_data_pcd", times=10)
+    # generate_rotated_PC("/home/airocs/cong_workspace/tools/Pointnet_Pointnet2_pytorch/data/test_tactile_data_pcd", times=10)
 
 
 
