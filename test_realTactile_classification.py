@@ -105,8 +105,11 @@ def test(model, loader, num_class=15, vote_num=1):
         mean_correct.append(correct.item() / float(points.size()[0]))
 
     print(f'Got {num_correct} / {num_samples} with accuracy {float(num_correct)/float(num_samples)*100:.2f}')
-    cf_matrix_new = confusion_matrix(all_true_new, all_pred_new, normalize='pred')
-    print(cf_matrix_new)
+    cf_matrix_new = confusion_matrix(all_true_new, all_pred_new, normalize='true')
+    cf_matrix_old = confusion_matrix(all_true_new, all_pred_new)
+    # print(cf_matrix_new)
+    print(all_true_new)
+    print(all_pred_new)
 
     # print(mean_correct)
     class_acc[:, 2] = class_acc[:, 0] / class_acc[:, 1]
@@ -116,7 +119,7 @@ def test(model, loader, num_class=15, vote_num=1):
     # Draw Confusion Matrix
     # print(y_true)
     # print(y_pred)
-    cf_matrix_old = confusion_matrix(y_true, y_pred, normalize='pred')
+    # cf_matrix_old = confusion_matrix(y_true, y_pred)
     # print(cf_matrix)
     # return instance_acc, class_acc, cf_matrix
     return instance_acc, class_acc, cf_matrix_old, cf_matrix_new
@@ -188,13 +191,13 @@ def main(args):
         log_string('Test Instance Accuracy: %f, Class Accuracy: %f' % (instance_acc, class_acc))
 
         # Draw confusion matrix
-        df_cm = pd.DataFrame(cf_matrix/np.sum(cf_matrix_new) *10,
+        df_cm = pd.DataFrame(cf_matrix_old/np.sum(cf_matrix_new) *10,
                              index = [i for i in classes.keys()], columns = [i for i in classes.keys()])
         plt.figure(figsize = (12,7))
         sn.heatmap(df_cm, annot=True)
         plt.savefig(experiment_dir + '/' + str(datetime.now()) + '.png')
 
-        df_cm = pd.DataFrame(cf_matrix/np.sum(cf_matrix_old) *10,
+        df_cm = pd.DataFrame(cf_matrix_new/np.sum(cf_matrix_old) *10,
                              index = [i for i in classes.keys()], columns = [i for i in classes.keys()])
         plt.figure(figsize = (12,7))
         sn.heatmap(df_cm, annot=True)
