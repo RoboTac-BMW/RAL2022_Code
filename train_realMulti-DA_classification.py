@@ -126,7 +126,7 @@ def main(args):
     '''DATA LOADING'''
     log_string('Load dataset ...')
     visual_data_path = 'data/visual_data_pcd/'
-    tactile_data_path = 'data/tactile_pcd_30_Rotation/'
+    tactile_data_path = 'data/tactile_pcd_30_Rotation_21_02/'
 
 
 
