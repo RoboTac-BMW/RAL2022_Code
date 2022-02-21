@@ -42,9 +42,9 @@ def parse_args():
     parser.add_argument('--random_choose_sparse', type=bool, default=False, help='Random select num_sparse_point from [10,20,30,40,50]')
     parser.add_argument('--SO3_Rotation', action='store_true', default=False, help='arbitrary rotation in SO3')
     parser.add_argument('--DA_method', type=str, default="multi_coral_mmd", help='choose the DA loss function')
-    parser.add_argument('--alpha', type=float, default=10, help='set the value of classification loss')
-    parser.add_argument('--lamda', type=float, default=0.5, help='set the value of CORAL loss')
-    parser.add_argument('--beta', type=float, default=0.5, help='set the value of MMD loss')
+    parser.add_argument('--alpha', type=float, default=20, help='set the value of classification loss')
+    parser.add_argument('--lamda', type=float, default=20, help='set the value of CORAL loss')
+    parser.add_argument('--beta', type=float, default=20, help='set the value of MMD loss')
     return parser.parse_args()
 
 
