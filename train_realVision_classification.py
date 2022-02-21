@@ -138,6 +138,7 @@ def main(args):
     model = importlib.import_module(args.model)
     shutil.copy('./models/%s.py' % args.model, str(exp_dir))
     shutil.copy('models/pointnet_cls.py', str(exp_dir))
+    shutil.copy('data_utils/PCDLoader.py', str(exp_dir))
     shutil.copy('./train_realVision_classification.py', str(exp_dir))
 
     classifier = model.get_model(num_class, normal_channel=args.use_normals)
@@ -178,6 +179,7 @@ def main(args):
     global_step = 0
     best_instance_acc = 0.0
     best_class_acc = 0.0
+    running_loss = 0.0
 
     '''TRANING'''
     logger.info('Start training...')
@@ -218,6 +220,13 @@ def main(args):
             loss.backward()
             optimizer.step()
             global_step += 1
+            # Print the loss
+            running_loss += loss.item()
+            if batch_id % 100 == 99:
+                log_string("Training loss {} ".format(loss.item()/100))
+                running_loss = 0.0
+
+
 
         train_instance_acc = np.mean(mean_correct)
         log_string('Train Instance Accuracy: %f' % train_instance_acc)
