@@ -50,6 +50,13 @@ def test(model, loader, num_class=15, vote_num=1):
     y_pred = []
     y_true = []
 
+    num_correct = 0
+    num_samples = 0
+    all_pred_new = []
+    all_true_new = []
+    # classes = list(find_classes(data_path).keys())
+    # print(classes)
+
     for j, data in tqdm(enumerate(loader), total=len(loader)):
         if not args.use_cpu:
             # points, target = points.cuda(), target.cuda()
@@ -61,6 +68,21 @@ def test(model, loader, num_class=15, vote_num=1):
         points = points.transpose(2, 1)
         vote_pool = torch.zeros(target.size()[0], num_class).cuda()
 
+        ###################################################################################
+        output_new, _ = classifier(points)
+        _, preds_new = torch.max(output_new.data, 1)
+        # print(preds_new)
+        y_true_new = target.data.cpu().numpy()
+        y_pred_new = preds_new.data.cpu().numpy()
+
+        all_pred_new += list(y_pred_new)
+        all_true_new += list(y_true_new)
+
+        num_correct += (y_pred_new == y_true_new).sum()
+        num_samples += y_pred_new.size
+
+
+        ##################################################################################
         for _ in range(vote_num):
             pred, _ = classifier(points)
             vote_pool += pred
@@ -82,6 +104,12 @@ def test(model, loader, num_class=15, vote_num=1):
         correct = pred_choice.eq(target.long().data).cpu().sum()
         mean_correct.append(correct.item() / float(points.size()[0]))
 
+    print(f'Got {num_correct} / {num_samples} with accuracy {float(num_correct)/float(num_samples)*100:.2f}')
+    cf_matrix_new = confusion_matrix(all_true_new, all_pred_new, normalize='true')
+    cf_matrix_old = confusion_matrix(all_true_new, all_pred_new)
+    # print(cf_matrix_new)
+    print(all_true_new)
+    print(all_pred_new)
 
     # print(mean_correct)
     class_acc[:, 2] = class_acc[:, 0] / class_acc[:, 1]
@@ -91,9 +119,10 @@ def test(model, loader, num_class=15, vote_num=1):
     # Draw Confusion Matrix
     # print(y_true)
     # print(y_pred)
-    cf_matrix = confusion_matrix(y_true, y_pred, normalize='true')
+    # cf_matrix_old = confusion_matrix(y_true, y_pred)
     # print(cf_matrix)
-    return instance_acc, class_acc, cf_matrix
+    # return instance_acc, class_acc, cf_matrix
+    return instance_acc, class_acc, cf_matrix_old, cf_matrix_new
     # return instance_acc, class_acc
 
 
@@ -123,16 +152,14 @@ def main(args):
     '''DATA LOADING'''
     log_string('Load dataset ...')
     # tactile_data_path = 'data/tactile_data_pcd/'
-    # tactile_data_path = 'data/test_tactile_data_pcd/'
-    tactile_data_path = 'data/tactile_pcd_30_Rotation/'
-    visual_data_path = 'data/visual_data_pcd'
+    tactile_data_path = 'data/tactile_pcd_10_sampled_21.02/'
     # tactile_data_path = 'data/visual_data_pcd/'
     # data_path = 'data/modelnet40_normal_resampled/'
     # data_path = Path("mesh_data/ModelNet10")
 
 
     test_dataset = PCDPointCloudData(tactile_data_path,
-                                     folder='Train',
+                                     folder='Test',
                                      sample_method='Voxel',
                                      num_point=args.num_point,
                                      sample=args.sample_point,
@@ -160,11 +187,17 @@ def main(args):
 
     with torch.no_grad():
         # instance_acc, class_acc = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
-        instance_acc, class_acc, cf_matrix = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
+        instance_acc, class_acc, cf_matrix_old, cf_matrix_new = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
         log_string('Test Instance Accuracy: %f, Class Accuracy: %f' % (instance_acc, class_acc))
 
         # Draw confusion matrix
-        df_cm = pd.DataFrame(cf_matrix/np.sum(cf_matrix) *10,
+        df_cm = pd.DataFrame(cf_matrix_old/np.sum(cf_matrix_new) *10,
+                             index = [i for i in classes.keys()], columns = [i for i in classes.keys()])
+        plt.figure(figsize = (12,7))
+        sn.heatmap(df_cm, annot=True)
+        plt.savefig(experiment_dir + '/' + str(datetime.now()) + '.png')
+
+        df_cm = pd.DataFrame(cf_matrix_new/np.sum(cf_matrix_old) *10,
                              index = [i for i in classes.keys()], columns = [i for i in classes.keys()])
         plt.figure(figsize = (12,7))
         sn.heatmap(df_cm, annot=True)
