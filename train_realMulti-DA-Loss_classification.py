@@ -345,9 +345,9 @@ def main(args):
                     savepath = str(checkpoints_dir) + '/best_model.pth'
                     log_string('Saving at %s' % savepath)
                     state = {
-                        'epoch': best_epoch,
-                        'instance_acc': instance_acc,
-                        'class_acc': class_acc,
+                        # 'epoch': best_epoch,
+                        # 'instance_acc': instance_acc,
+                        # 'class_acc': class_acc,
                         'model_state_dict': classifier.state_dict(),
                         'optimizer_state_dict': optimizer.state_dict(),
                     }
