@@ -28,7 +28,7 @@ def parse_args():
     parser.add_argument('--gpu', type=str, default='0', help='specify gpu device')
     parser.add_argument('--batch_size', type=int, default=8, help='batch size in training')
     parser.add_argument('--model', default='pointnet_cls', help='model name [default: pointnet_cls]')
-    parser.add_argument('--num_category', default=15, type=int, help='training on real dataset')
+    parser.add_argument('--num_category', default=13, type=int, help='training on real dataset')
     parser.add_argument('--num_ModelNet', default=40, type=int, choices=[10,40], help='Pre-trained num_category')
     parser.add_argument('--epoch', default=100, type=int, help='number of epoch in training')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='learning rate in training')
@@ -51,7 +51,7 @@ def inplace_relu(m):
         m.inplace=True
 
 
-def test(model, loader, num_class=15):
+def test(model, loader, num_class=13):
     mean_correct = []
     class_acc = np.zeros((num_class, 3))
     classifier = model.eval()
@@ -138,6 +138,7 @@ def main(args):
     model = importlib.import_module(args.model)
     shutil.copy('./models/%s.py' % args.model, str(exp_dir))
     shutil.copy('models/pointnet_cls.py', str(exp_dir))
+    shutil.copy('data_utils/PCDLoader.py', str(exp_dir))
     shutil.copy('./train_realVision_classification.py', str(exp_dir))
 
     classifier = model.get_model(num_class, normal_channel=args.use_normals)
@@ -178,6 +179,7 @@ def main(args):
     global_step = 0
     best_instance_acc = 0.0
     best_class_acc = 0.0
+    running_loss = 0.0
 
     '''TRANING'''
     logger.info('Start training...')
@@ -218,6 +220,13 @@ def main(args):
             loss.backward()
             optimizer.step()
             global_step += 1
+            # Print the loss
+            running_loss += loss.item()
+            if batch_id % 100 == 99:
+                log_string("Training loss {} ".format(loss.item()/100))
+                running_loss = 0.0
+
+
 
         train_instance_acc = np.mean(mean_correct)
         log_string('Train Instance Accuracy: %f' % train_instance_acc)

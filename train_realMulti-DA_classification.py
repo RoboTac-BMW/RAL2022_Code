@@ -28,7 +28,7 @@ def parse_args():
     parser.add_argument('--gpu', type=str, default='0', help='specify gpu device')
     parser.add_argument('--batch_size', type=int, default=8, help='batch size in training')
     parser.add_argument('--model', default='pointnet_cls', help='model name [default: pointnet_cls]')
-    parser.add_argument('--num_category', default=15, type=int, help='training on real dataset')
+    parser.add_argument('--num_category', default=13, type=int, help='training on real dataset')
     parser.add_argument('--epoch', default=20, type=int, help='number of epoch in training')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='learning rate in training')
     parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
@@ -57,7 +57,7 @@ def inplace_relu(m):
         m.inplace=True
 
 
-def test(model, loader, num_class=15):
+def test(model, loader, num_class=13):
     mean_correct = []
     class_acc = np.zeros((num_class, 3))
     classifier = model.eval()
@@ -72,6 +72,7 @@ def test(model, loader, num_class=15):
         pred_choice = pred.data.max(1)[1]
 
         for cat in np.unique(target.cpu()):
+            # print(cat)
             classacc = pred_choice[target == cat].eq(target[target == cat].long().data).cpu().sum()
             class_acc[cat, 0] += classacc.item() / float(points[target == cat].size()[0])
             class_acc[cat, 1] += 1
@@ -125,19 +126,26 @@ def main(args):
     '''DATA LOADING'''
     log_string('Load dataset ...')
     visual_data_path = 'data/visual_data_pcd/'
-    tactile_data_path = 'data/tactile_data_pcd/'
+    tactile_data_path = 'data/tactile_pcd_10_sampled_21.02/'
 
 
 
     train_dataset = PCDPointCloudData(visual_data_path,
                                       folder='Train',
+                                      sample_method='Voxel',
                                       num_point=args.num_point,
+                                      sample=True,
+                                      rotation=False,
                                       est_normal=args.use_normals)
 
     test_dataset = PCDPointCloudData(visual_data_path,
                                      folder='Test',
+                                     sample_method='Voxel',
                                      num_point=args.num_point,
+                                     sample=True,
+                                     rotation=False,
                                      est_normal=args.use_normals)
+
 
     if args.random_choose_sparse is True: # TODO
         domain_adaptation_dataset = PCDPointCloudData(tactile_data_path, folder='Train',
@@ -146,7 +154,10 @@ def main(args):
     else:
         domain_adaptation_dataset = PCDPointCloudData(tactile_data_path,
                                                       folder='Train',
+                                                      sample_method='Voxel',
                                                       num_point=args.num_sparse_point,
+                                                      sample=True,
+                                                      rotation=False,
                                                       est_normal=args.use_normals)
 
     trainDataLoader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=10, drop_last=True)
@@ -166,6 +177,7 @@ def main(args):
     model = importlib.import_module(args.model)
     shutil.copy('./models/%s.py' % args.model, str(exp_dir))
     shutil.copy('models/pointnet_cls.py', str(exp_dir))
+    shutil.copy('data_utils/PCDLoader.py', str(exp_dir))
     shutil.copy('./train_realMulti-DA_classification.py', str(exp_dir))
     # shutil.copy('./train_dense_classification.py', str(exp_dir))
 
@@ -224,6 +236,7 @@ def main(args):
     global_step = 0
     best_instance_acc = 0.0
     best_class_acc = 0.0
+    running_loss = 0.0
 
     '''TRANING'''
     logger.info('Start training...')
@@ -270,6 +283,14 @@ def main(args):
             pred, trans_feat = classifier(points)
             # loss = criterion(pred, target.long(), trans_feat)
 
+            # Print Feature
+            ##############################################################################################
+            # classifier.feat.register_forward_hook(get_activation('feat'))
+            # output_conv = classifier(points)
+            # feature_conv = activation['feat'].data.cpu().numpy
+            # feature_norm = np.linalg.norm(feature_conv)
+            # log_string("Feature_Norm {}".format(feature_norm))
+
             # Multi-layer Loss
             ###############################################################################################
             # FC1
@@ -307,6 +328,17 @@ def main(args):
             loss.backward()
             optimizer.step()
             global_step += 1
+
+            # Print the loss
+            running_loss += loss.item()
+            if batch_id % 100 == 99:
+                log_string("fc1 {}".format(classifier.fc1.weight.grad))
+                log_string("fc2 {}".format(classifier.fc2.weight.grad))
+                log_string("fc3 {}".format(classifier.fc3.weight.grad))
+                # print("Training loss {} ".format(loss.item()/100))
+                log_string("Training loss {} ".format(loss.item()/100))
+                running_loss = 0.0
+
 
         train_instance_acc = np.mean(mean_correct)
         log_string('Train Instance Accuracy: %f' % train_instance_acc)
