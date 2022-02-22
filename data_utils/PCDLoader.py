@@ -191,15 +191,15 @@ class PCDPointCloudData(Dataset):
                     'category': self.classes[category]}
 
 class PCDTest(Dataset):
-    def __init__(self, pcd_dir, sub_sample=False, sample_num=None, est_normal=False,
-                 radius=0.1, max_nn=16):
+    def __init__(self, pcd_dir, sub_sample=False,
+                 sample_num=None, est_normal=False,
+                 sample_method='Voxel'):
 
         self.pcd_dir = pcd_dir
         self.sub_sample = sub_sample
         self.sample_num = sample_num
         self.est_normal = est_normal
-        self.radius = radius
-        self.max_nn = max_nn
+        self.sample_method = sample_method
         self.files = []
 
         for file in os.listdir(pcd_dir):
@@ -215,6 +215,10 @@ class PCDTest(Dataset):
     def __getitem__(self,idx):
         pcd_path = self.files[idx]['pcd_path']
         point_cloud = o3d.io.read_point_cloud(filename=str(pcd_path))
+
+        if self.est_normal is True:
+            raise NotImplementedError("Not implemented with normals")
+
         """
         if self.est_normal is True:
             point_cloud.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(
@@ -230,6 +234,11 @@ class PCDTest(Dataset):
         norms = np.asarray(point_cloud.normals).astype(np.float32)
         pointcloud_np = np.concatenate((points, norms), axis=1)
         """
+
+        if selt.sample_method is 'Voxel':
+            point_cloud = point_cloud.voxel_down_sample(voxel_size=0.004)
+        else:
+            raise NotImplementedError("Other sample methods not implemented")
 
         points = np.asarray(point_cloud.points).astype(np.float32)
         pointcloud_np = points

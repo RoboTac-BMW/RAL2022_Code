@@ -24,7 +24,7 @@ def parse_args():
     parser.add_argument('--gpu', type=str, default='0', help='specify gpu device')
     parser.add_argument('--batch_size', type=int, default=8, help='batch size in training')
     # parser.add_argument('--num_category', default=10, type=int, choices=[10, 40],  help='training on ModelNet10/40')
-    parser.add_argument('--num_category', default=15, type=int, help='training on real dataset')
+    parser.add_argument('--num_category', default=13, type=int, help='training on real dataset')
     parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
     parser.add_argument('--log_dir', type=str, required=True, help='Experiment root')
     parser.add_argument('--use_normals', action='store_true', default=True, help='use normals')
@@ -43,7 +43,7 @@ def enable_dropout(model):
         if m.__class__.__name__.startswith('Dropout'):
             m.train()
 
-def test(model, loader, num_class=15, vote_num=1):
+def test(model, loader, num_class=13, vote_num=1):
     mean_correct = []
     classifier = model.eval()
     class_acc = np.zeros((num_class, 3))
@@ -78,8 +78,8 @@ def test(model, loader, num_class=15, vote_num=1):
 
 def get_monte_carlo_predictions_Dataset(model,
                                 data_loader,
-                                forward_passes,
-                                n_classes,
+                                forward_passes=3,
+                                n_classes=13,
                                 n_samples):
     """ Function to get the monte-carlo samples and uncertainty estimates
     through multiple forward passes
@@ -209,7 +209,7 @@ def main(args):
 
     '''DATA LOADING'''
     log_string('Load dataset ...')
-    data_path = 'data/tactile_data_pcd/'
+    MC_data_path = 'data/tactile_data_pcd/'
     # data_path = 'data/modelnet40_normal_resampled/'
     # data_path = Path("mesh_data/ModelNet10")
 
