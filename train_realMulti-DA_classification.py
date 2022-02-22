@@ -332,9 +332,9 @@ def main(args):
             # Print the loss
             running_loss += loss.item()
             if batch_id % 100 == 99:
-                log_string("fc1 {}".format(classifier.fc1.weight.grad))
-                log_string("fc2 {}".format(classifier.fc2.weight.grad))
-                log_string("fc3 {}".format(classifier.fc3.weight.grad))
+                # log_string("fc1 {}".format(classifier.fc1.weight.grad))
+                # log_string("fc2 {}".format(classifier.fc2.weight.grad))
+                # log_string("fc3 {}".format(classifier.fc3.weight.grad))
                 # print("Training loss {} ".format(loss.item()/100))
                 log_string("Training loss {} ".format(loss.item()/100))
                 running_loss = 0.0
