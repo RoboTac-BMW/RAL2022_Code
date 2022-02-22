@@ -43,6 +43,10 @@ def normalize_pointcloud(pointcloud):
     if pointcloud.shape[1] == 3: # without normals
         norm_pointcloud = pointcloud - np.mean(pointcloud, axis=0) # translate to origin
         norm_pointcloud /= np.max(np.linalg.norm(norm_pointcloud, axis=1)) # normalize
+        ###
+        # pcd = o3d.geometry.PointCloud()
+        # pcd.points = o3d.utility.Vector3dVector(norm_pointcloud)
+        # o3d.io.write_point_cloud("/home/airocs/Desktop/test_MCDrop/test.pcd", pcd)
         return norm_pointcloud
 
     elif pointcloud.shape[1] == 6: # with normals
@@ -58,23 +62,58 @@ def normalize_pointcloud(pointcloud):
         raise ValueError("Wrong PointCloud Input")
 
 
+def sub_and_downSample(pointcloud, sample_num):
+    assert len(pointcloud.shape)==2
+    # print("Old shape", pointcloud.shape)
+    if pointcloud.shape[1] == 3:
+        num_point = pointcloud.shape[0]
+
+        while(num_point < int(sample_num)):
+            # print(pointcloud[-1].shape)
+            # print("!!!!!!!!!!!!!!!!!!!!!!!")
+            # print(num_point)
+            # pointcloud = np.concatenate((pointcloud, pointcloud[-1]), axis=0)
+            pointcloud = np.insert(pointcloud,-1, pointcloud[-1], axis=0)
+            num_point = pointcloud.shape[0]
+
+        if(num_point>sample_num):
+            sel_pts_idx = np.random.choice(pointcloud.shape[0],
+                                           size=sample_num,
+                                           replace=False).reshape(-1)
+            pointcloud= pointcloud[sel_pts_idx]
+        # print(pointcloud.shape)
+
+
+        return pointcloud
+
+    else:
+        raise NotImplementedError("Point Cloud shape is not correct! Should be (n*3)")
+
+
+
 class PCDPointCloudData(Dataset):
     def __init__(self, root_dir,
                  folder='Train',
-                 num_point=1024,
-                 est_normal=False,
-                 random_num=False,
-                 list_num_point=[1024],
-                 rotation='z'):
+                 num_point=1024, # numble of point to sample
+                 sample=True, # sample the pc or not
+                 sample_method='Voxel', # Random or Voxel
+                 est_normal=False, # estimate normals or not
+                 random_num=False, # Not Implemented TODO
+                 list_num_point=[1024], # Not Implemented TODO
+                 rotation='z'): # rotation method, False or 'z'
 
         self.root_dir = root_dir
         self.folder = folder
+        self.sample = sample
+        self.sample_method = sample_method
         self.num_point = num_point
         self.est_normal = est_normal
         self.random_num = random_num
         self.list_num_point = list_num_point
+        self.rotation = rotation
         self.classes = find_classes(Path(root_dir))
         self.files = []
+
 
         for category in self.classes.keys():
             new_dir = self.root_dir/Path(category)/folder
@@ -92,8 +131,14 @@ class PCDPointCloudData(Dataset):
         pcd_path = self.files[idx]['pcd_path']
         category = self.files[idx]['category']
         point_cloud = o3d.io.read_point_cloud(filename=str(pcd_path))
+        if self.sample_method == 'Voxel':
+            point_cloud = point_cloud.voxel_down_sample(voxel_size=0.004)
+            # To test
+            # o3d.io.write_point_cloud("/home/airocs/Desktop/test_MCDrop/down_sampled" + str(idx) + ".pcd", point_cloud)
+
 
         if self.est_normal is True:
+            # TODO Add estimate normals before down_sample
             point_cloud.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(
                                       radius=0.1, max_nn=16))
             point_cloud.normalize_normals()
@@ -118,7 +163,12 @@ class PCDPointCloudData(Dataset):
 
         # centralize and normalize point cloud
         pointcloud_np = normalize_pointcloud(pointcloud_np)
-        pointcloud_np = rand_rotation(pointcloud_np, with_normal=self.est_normal)
+        if self.rotation == 'z':
+            pointcloud_np = rand_rotation(pointcloud_np, with_normal=self.est_normal)
+        elif self.rotation is False:
+            pointcloud_np = pointcloud_np
+        else:
+            raise ValueError("Invalid Rotation input")
         # print(pointcloud_np.shape)
 
         # random select points
@@ -126,20 +176,22 @@ class PCDPointCloudData(Dataset):
         if self.random_num is False:
             sample_size = self.num_point
         else:
-            sample_size = random.choice(self.list_num_point)
+            raise NotImplementedError()
+            # sample_size = random.choice(self.list_num_point)
 
-        sel_pts_idx = np.random.choice(pointcloud_np.shape[0],
-                                       size=sample_size,
-                                       replace=False).reshape(-1)
-        pointcloud_np = pointcloud_np[sel_pts_idx]
+        if self.sample is True:
+            pointcloud_np_sampled = sub_and_downSample(pointcloud_np, self.num_point)
         # print(self.classes[category])
 
         # return pointcloud_np, self.classes[category]
-        return {'pointcloud': pointcloud_np,
-                'category': self.classes[category]}
+            return {'pointcloud': pointcloud_np_sampled,
+                    'category': self.classes[category]}
+        else:
+            return {'pointcloud': pointcloud_np,
+                    'category': self.classes[category]}
 
 class PCDTest(Dataset):
-    def __init__(self, pcd_dir, sub_sample=False, sample_num=None, est_normal=True,
+    def __init__(self, pcd_dir, sub_sample=False, sample_num=None, est_normal=False,
                  radius=0.1, max_nn=16):
 
         self.pcd_dir = pcd_dir
@@ -163,6 +215,7 @@ class PCDTest(Dataset):
     def __getitem__(self,idx):
         pcd_path = self.files[idx]['pcd_path']
         point_cloud = o3d.io.read_point_cloud(filename=str(pcd_path))
+        """
         if self.est_normal is True:
             point_cloud.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(
                                       radius=self.radius, max_nn=self.max_nn))
@@ -176,7 +229,10 @@ class PCDTest(Dataset):
         points = np.asarray(point_cloud.points).astype(np.float32)
         norms = np.asarray(point_cloud.normals).astype(np.float32)
         pointcloud_np = np.concatenate((points, norms), axis=1)
+        """
 
+        points = np.asarray(point_cloud.points).astype(np.float32)
+        pointcloud_np = points
         pointcloud_np = normalize_pointcloud(pointcloud_np)
 
         if self.sub_sample is True:
@@ -197,7 +253,7 @@ if __name__ == '__main__':
     # print(len(a))
     # print(a[0])
     # pointcloud_data = PCDPointCloudData(path_dir)
-    pointcloud_data = PCDTest(path_dir)
+    # pointcloud_data = PCDTest(path_dir)
     # pointcloud_data.testFunc(100)
 
 
