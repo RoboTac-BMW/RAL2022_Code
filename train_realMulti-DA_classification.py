@@ -28,7 +28,7 @@ def parse_args():
     parser.add_argument('--gpu', type=str, default='0', help='specify gpu device')
     parser.add_argument('--batch_size', type=int, default=8, help='batch size in training')
     parser.add_argument('--model', default='pointnet_cls', help='model name [default: pointnet_cls]')
-    parser.add_argument('--num_category', default=15, type=int, help='training on real dataset')
+    parser.add_argument('--num_category', default=13, type=int, help='training on real dataset')
     parser.add_argument('--epoch', default=20, type=int, help='number of epoch in training')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='learning rate in training')
     parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
@@ -38,7 +38,7 @@ def parse_args():
     parser.add_argument('--use_normals', action='store_true', default=False, help='use normals')
     parser.add_argument('--process_data', action='store_true', default=False, help='save data offline')
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
-    parser.add_argument('--num_sparse_point', type=int, default=80, help='Point Number for domain loss')
+    parser.add_argument('--num_sparse_point', type=int, default=50, help='Point Number for domain loss')
     parser.add_argument('--random_choose_sparse', type=bool, default=False, help='Random select num_sparse_point from [10,20,30,40,50]')
     parser.add_argument('--SO3_Rotation', action='store_true', default=False, help='arbitrary rotation in SO3')
     parser.add_argument('--DA_method', type=str, default="multi_coral_mmd", help='choose the DA loss function')
@@ -57,7 +57,7 @@ def inplace_relu(m):
         m.inplace=True
 
 
-def test(model, loader, num_class=15):
+def test(model, loader, num_class=13):
     mean_correct = []
     class_acc = np.zeros((num_class, 3))
     classifier = model.eval()
@@ -332,9 +332,9 @@ def main(args):
             # Print the loss
             running_loss += loss.item()
             if batch_id % 100 == 99:
-                log_string("fc1 {}".format(classifier.fc1.weight.grad))
-                log_string("fc2 {}".format(classifier.fc2.weight.grad))
-                log_string("fc3 {}".format(classifier.fc3.weight.grad))
+                # log_string("fc1 {}".format(classifier.fc1.weight.grad))
+                # log_string("fc2 {}".format(classifier.fc2.weight.grad))
+                # log_string("fc3 {}".format(classifier.fc3.weight.grad))
                 # print("Training loss {} ".format(loss.item()/100))
                 log_string("Training loss {} ".format(loss.item()/100))
                 running_loss = 0.0

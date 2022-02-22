@@ -151,7 +151,9 @@ if __name__ == "__main__":
     # generate_normals("/home/airocs/Desktop/sampled_tactile_data_set")
     # generate_subsampled_PC("/home/airocs/Desktop/sampled_tactile_data_set", folder="Train",
     #                        min_num=50, times=1, sample='Uniform', replace=True)
-    generate_subsampled_PC("/home/airocs/Desktop/Dataset/tactile_pcd_10_sampled_21.02", min_num=30, times=10)
+    # generate_subsampled_PC("/home/airocs/Desktop/Dataset/tactile_pcd_10_sampled_21.02", min_num=50, times=10)
+    generate_rotated_PC("/home/airocs/Desktop/Dataset/visual_pcd_21.02", times=1)
+    generate_subsampled_PC("/home/airocs/Desktop/Dataset/visual_pcd_21.02", times=5, min_num=1024)
 
 
     #### Test

@@ -75,6 +75,7 @@ if __name__ == "__main__":
     # seperate_dataset("/home/airocs/Desktop/Dataset/Rotated_visual_data_pcd/", 25)
     # seperate_dataset("/home/airocs/Desktop/sampled_tactile_data_set", 20)
     seperate_dataset("/home/prajval/cong_workspace/Pointnet_Pointnet2_pytorch/data/active_vision_pcd_4000", 100, True)
+    # seperate_dataset("/home/airocs/Desktop/Dataset/visual_pcd_21.02", 25)
 
 
 
