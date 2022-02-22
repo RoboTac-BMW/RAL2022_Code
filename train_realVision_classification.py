@@ -118,7 +118,7 @@ def main(args):
 
     '''DATA LOADING'''
     log_string('Load dataset ...')
-    data_path = 'data/visual_data_pcd/'
+    data_path = 'data/active_vision_pcd_1500/'
 
 
     train_dataset = PCDPointCloudData(data_path,
