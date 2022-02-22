@@ -29,8 +29,8 @@ def parse_args():
     parser.add_argument('--batch_size', type=int, default=8, help='batch size in training')
     parser.add_argument('--model', default='pointnet_cls', help='model name [default: pointnet_cls]')
     parser.add_argument('--num_category', default=12, type=int, help='training on real dataset')
-    parser.add_argument('--num_ModelNet', default=40, type=int, choices=[10,40], help='Pre-trained num_category')
     parser.add_argument('--epoch', default=50, type=int, help='number of epoch in training')
+    parser.add_argument('--num_ModelNet', default=40, type=int, choices=[0,10,40], help='Pre-trained num_category')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='learning rate in training')
     parser.add_argument('--num_point', type=int, default=1024, help='Visual Point Number')
     parser.add_argument('--optimizer', type=str, default='Adam', help='optimizer for training')
@@ -51,7 +51,11 @@ def inplace_relu(m):
         m.inplace=True
 
 
+<<<<<<< HEAD
 def test(model, loader, num_class=12):
+=======
+def test(model, loader, num_class=13):
+>>>>>>> 81959a71886fd40d0979490f8ae0172a347fcf32
     mean_correct = []
     class_acc = np.zeros((num_class, 3))
     classifier = model.eval()
@@ -149,18 +153,29 @@ def main(args):
         classifier = classifier.cuda()
         criterion = criterion.cuda()
 
-    # Load pretrained model with ModelNet40:
-    checkpoint = torch.load(str(exp_dir) + '/checkpoints/best_model.pth')
-    print("Loading pre-trained Model")
-    start_epoch = checkpoint['epoch']
-    pretrained_dict = checkpoint['model_state_dict']
-    # Manually modify the last fc layer to 40, otherwise cannot load pretrained model
-    classifier.fc3 = nn.Linear(256, args.num_ModelNet).to(device)
-    classifier.load_state_dict(pretrained_dict)
-    # And change fc3 back
-    classifier.fc3 = nn.Linear(256, args.num_category).to(device)
+    if args.num_ModelNet is not 0:
+        # Load pretrained model with ModelNet40:
+        checkpoint = torch.load(str(exp_dir) + '/checkpoints/best_model.pth')
+        print("Loading pre-trained Network wieh ModelNet")
+        start_epoch = checkpoint['epoch']
+        pretrained_dict = checkpoint['model_state_dict']
+        # Manually modify the last fc layer to 40, otherwise cannot load pretrained model
+        classifier.fc3 = nn.Linear(256, args.num_ModelNet).to(device)
+        classifier.load_state_dict(pretrained_dict)
+        # And change fc3 back
+        classifier.fc3 = nn.Linear(256, args.num_category).to(device)
 
-    log_string('Use pretrain model')
+        log_string('Use pretrain model')
+
+    else:
+        try:
+            checkpoint = torch.load(str(exp_dir) + '/checkpoints/best_model.pth')
+            start_epoch = checkpoint['epoch']
+            classifier.load_state_dict(checkpoint['model_state_dict'])
+            log_string('Use pretrain model')
+        except:
+            log_string('No existing model, starting training from scratch...')
+            start_epoch = 0
 
 
     if args.optimizer == 'Adam':

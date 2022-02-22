@@ -340,18 +340,18 @@ def main(args):
                 calculate_loss = running_loss/100
                 log_string("Training loss {} ".format(calculate_loss))
 
-                # if calculate_loss < min_loss:
-                #     logger.info('Save model...')
-                #     savepath = str(checkpoints_dir) + '/best_model.pth'
-                #     log_string('Saving at %s' % savepath)
-                #     state = {
-                #         'epoch': best_epoch,
-                #         'instance_acc': instance_acc,
-                #         'class_acc': class_acc,
-                #         'model_state_dict': classifier.state_dict(),
-                #         'optimizer_state_dict': optimizer.state_dict(),
-                #     }
-                #     torch.save(state, savepath)
+                if calculate_loss < min_loss:
+                    logger.info('Save model...')
+                    savepath = str(checkpoints_dir) + '/best_model.pth'
+                    log_string('Saving at %s' % savepath)
+                    state = {
+                        'epoch': best_epoch,
+                        'instance_acc': instance_acc,
+                        'class_acc': class_acc,
+                        'model_state_dict': classifier.state_dict(),
+                        'optimizer_state_dict': optimizer.state_dict(),
+                    }
+                    torch.save(state, savepath)
                 running_loss = 0.0
 
         train_instance_acc = np.mean(mean_correct)
@@ -370,19 +370,19 @@ def main(args):
             log_string('Best Instance Accuracy: %f, Class Accuracy: %f' % (best_instance_acc, best_class_acc))
 
             if (instance_acc >= best_instance_acc):
-                logger.info('Save model...')
-                # print("This is a better model, but the model will not be saved")
-                # logger.info('Model will not be saved in this training')
-                savepath = str(checkpoints_dir) + '/best_model.pth'
-                log_string('Saving at %s' % savepath)
-                state = {
-                    'epoch': best_epoch,
-                    'instance_acc': instance_acc,
-                    'class_acc': class_acc,
-                    'model_state_dict': classifier.state_dict(),
-                    'optimizer_state_dict': optimizer.state_dict(),
-                }
-                torch.save(state, savepath)
+                # logger.info('Save model...')
+                # # print("This is a better model, but the model will not be saved")
+                logger.info('Model will not be saved with vision validation')
+                # savepath = str(checkpoints_dir) + '/best_model.pth'
+                # log_string('Saving at %s' % savepath)
+                # state = {
+                #     'epoch': best_epoch,
+                #     'instance_acc': instance_acc,
+                #     'class_acc': class_acc,
+                #     'model_state_dict': classifier.state_dict(),
+                #     'optimizer_state_dict': optimizer.state_dict(),
+                # }
+                # torch.save(state, savepath)
             global_epoch += 1
 
     logger.info('End of training...')
