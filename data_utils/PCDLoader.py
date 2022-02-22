@@ -191,7 +191,7 @@ class PCDPointCloudData(Dataset):
                     'category': self.classes[category]}
 
 class PCDTest(Dataset):
-    def __init__(self, pcd_path, sub_sample=False,
+    def __init__(self, pcd_path, sub_sample=True,
                  sample_num=None, est_normal=False,
                  sample_method='Voxel'):
 
