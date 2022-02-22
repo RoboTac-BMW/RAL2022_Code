@@ -11,6 +11,7 @@ import sys
 import importlib
 from path import Path
 from data_utils.PCDLoader import *
+from scipy.stats import entropy
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = BASE_DIR
@@ -24,10 +25,10 @@ def parse_args():
     parser.add_argument('--gpu', type=str, default='0', help='specify gpu device')
     parser.add_argument('--batch_size', type=int, default=8, help='batch size in training')
     # parser.add_argument('--num_category', default=10, type=int, choices=[10, 40],  help='training on ModelNet10/40')
-    parser.add_argument('--num_category', default=13, type=int, help='training on real dataset')
+    parser.add_argument('--num_category', default=15, type=int, help='training on real dataset')
     parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
     parser.add_argument('--log_dir', type=str, required=True, help='Experiment root')
-    parser.add_argument('--use_normals', action='store_true', default=True, help='use normals')
+    parser.add_argument('--use_normals', action='store_true', default=False, help='use normals')
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
     parser.add_argument('--num_votes', type=int, default=3, help='Aggregate classification scores with voting')
     parser.add_argument('--SO3_Rotation', action='store_true', default=False, help='arbitrary rotation in SO3')
@@ -43,90 +44,90 @@ def enable_dropout(model):
         if m.__class__.__name__.startswith('Dropout'):
             m.train()
 
-def test(model, loader, num_class=13, vote_num=1):
-    mean_correct = []
-    classifier = model.eval()
-    class_acc = np.zeros((num_class, 3))
+# def test(model, loader, num_class=15, vote_num=1):
+#     mean_correct = []
+#     classifier = model.eval()
+#     class_acc = np.zeros((num_class, 3))
 
-    for j, data in tqdm(enumerate(loader), total=len(loader)):
-        if not args.use_cpu:
-            # points, target = points.cuda(), target.cuda()
-            points, target = data['pointcloud'].to(device).float(), data['category'].to(device)
-            # print("points............")
-            # print(points.size())
+#     for j, data in tqdm(enumerate(loader), total=len(loader)):
+#         if not args.use_cpu:
+#             # points, target = points.cuda(), target.cuda()
+#             points, target = data['pointcloud'].to(device).float(), data['category'].to(device)
+#             # print("points............")
+#             # print(points.size())
 
-        points = points.transpose(2, 1)
-        vote_pool = torch.zeros(target.size()[0], num_class).cuda()
+#         points = points.transpose(2, 1)
+#         vote_pool = torch.zeros(target.size()[0], num_class).cuda()
 
-        for _ in range(vote_num):
-            pred, _ = classifier(points)
-            vote_pool += pred
-        pred = vote_pool / vote_num
-        pred_choice = pred.data.max(1)[1]
+#         for _ in range(vote_num):
+#             pred, _ = classifier(points)
+#             vote_pool += pred
+#         pred = vote_pool / vote_num
+#         pred_choice = pred.data.max(1)[1]
 
-        for cat in np.unique(target.cpu()):
-            classacc = pred_choice[target == cat].eq(target[target == cat].long().data).cpu().sum()
-            class_acc[cat, 0] += classacc.item() / float(points[target == cat].size()[0])
-            class_acc[cat, 1] += 1
-        correct = pred_choice.eq(target.long().data).cpu().sum()
-        mean_correct.append(correct.item() / float(points.size()[0]))
+#         for cat in np.unique(target.cpu()):
+#             classacc = pred_choice[target == cat].eq(target[target == cat].long().data).cpu().sum()
+#             class_acc[cat, 0] += classacc.item() / float(points[target == cat].size()[0])
+#             class_acc[cat, 1] += 1
+#         correct = pred_choice.eq(target.long().data).cpu().sum()
+#         mean_correct.append(correct.item() / float(points.size()[0]))
 
-    class_acc[:, 2] = class_acc[:, 0] / class_acc[:, 1]
-    class_acc = np.mean(class_acc[:, 2])
-    instance_acc = np.mean(mean_correct)
-    return instance_acc, class_acc
+#     class_acc[:, 2] = class_acc[:, 0] / class_acc[:, 1]
+#     class_acc = np.mean(class_acc[:, 2])
+#     instance_acc = np.mean(mean_correct)
+#     return instance_acc, class_acc
 
-def get_monte_carlo_predictions_Dataset(model,
-                                data_loader,
-                                forward_passes=3,
-                                n_classes=13,
-                                n_samples):
-    """ Function to get the monte-carlo samples and uncertainty estimates
-    through multiple forward passes
+# def get_monte_carlo_predictions_Dataset(model,
+#                                         data_loader,
+#                                         forward_passes=3,
+#                                         n_classes=15,
+#                                         n_samples=6000):
+#     """ Function to get the monte-carlo samples and uncertainty estimates
+#     through multiple forward passes
 
-    Parameters
-    ----------
-    data_loader : object
-        data loader object from the data loader module
-    forward_passes : int
-        number of monte-carlo samples/forward passes
-    model : object
-        keras model
-    n_classes : int
-        number of classes in the dataset
-    n_samples : int
-        number of samples in the test set
-    """
+#     Parameters
+#     ----------
+#     data_loader : object
+#         data loader object from the data loader module
+#     forward_passes : int
+#         number of monte-carlo samples/forward passes
+#     model : object
+#         keras model
+#     n_classes : int
+#         number of classes in the dataset
+#     n_samples : int
+#         number of samples in the test set
+#     """
 
-    dropout_predictions = np.empty((0, n_samples, n_classes))
-    softmax = nn.Softmax(dim=1)
-    for i in tqdm(range(forward_passes)):
-        # print(i)
-        predictions = np.empty((0, n_classes))
-        model.eval()
-        classifier = model.eval()
-        enable_dropout(model)
-        for i, data in tqdm(enumerate(data_loader), total=len(data_loader)):
-            if not args.use_cpu:
-                points, target = data['pointcloud'].to(device).float(), data['category'].to(device)
+#     dropout_predictions = np.empty((0, n_samples, n_classes))
+#     softmax = nn.Softmax(dim=1)
+#     for i in tqdm(range(forward_passes)):
+#         # print(i)
+#         predictions = np.empty((0, n_classes))
+#         model.eval()
+#         classifier = model.eval()
+#         enable_dropout(model)
+#         for i, data in tqdm(enumerate(data_loader), total=len(data_loader)):
+#             if not args.use_cpu:
+#                 points, target = data['pointcloud'].to(device).float(), data['category'].to(device)
 
-            points = points.transpose(2,1)
-            # image = image.to(torch.device('cuda'))
+#             points = points.transpose(2,1)
+#             # image = image.to(torch.device('cuda'))
 
-            with torch.no_grad():
-                # output = model(image)
-                output, _ = classifier(points)
-                output = softmax(output) # shape (n_samples, n_classes)
-                # print(output)
-            predictions = np.vstack((predictions, output.cpu().numpy()))
+#             with torch.no_grad():
+#                 # output = model(image)
+#                 output, _ = classifier(points)
+#                 output = softmax(output) # shape (n_samples, n_classes)
+#                 # print(output)
+#             predictions = np.vstack((predictions, output.cpu().numpy()))
 
-        dropout_predictions = np.vstack((dropout_predictions,
-                                         predictions[np.newaxis, :, :]))
-        # print(dropout_predictions)
-    mean = np.mean(dropout_predictions, axis=0)
-    print(mean.shape)
-    print(mean[100])
-        # dropout predictions - shape (forward_passes, n_samples, n_classes)
+#         dropout_predictions = np.vstack((dropout_predictions,
+#                                          predictions[np.newaxis, :, :]))
+#         # print(dropout_predictions)
+#     mean = np.mean(dropout_predictions, axis=0)
+#     print(mean.shape)
+#     print(mean[100])
+#         # dropout predictions - shape (forward_passes, n_samples, n_classes)
 
 
 def get_monte_carlo_predictions(model,
@@ -153,13 +154,13 @@ def get_monte_carlo_predictions(model,
 
     dropout_predictions = np.empty((0, n_samples, n_classes))
     softmax = nn.Softmax(dim=1)
-    for i in tqdm(range(forward_passes)):
+    for i in range(forward_passes):
         # print(i)
         predictions = np.empty((0, n_classes))
         model.eval()
         classifier = model.eval()
         enable_dropout(model)
-        for i, data in tqdm(enumerate(data_loader), total=len(data_loader)):
+        for i, data in enumerate(data_loader):
 
             points = data.to(device).float()
             points = points.transpose(2,1)
@@ -172,10 +173,19 @@ def get_monte_carlo_predictions(model,
 
         dropout_predictions = np.vstack((dropout_predictions,
                                          predictions[np.newaxis, :, :]))
+
+        # print(dropout_predictions)
     mean = np.mean(dropout_predictions, axis=0)
-    print(mean.shape)
-    print(mean[0])
-    print(type(mean[0]))
+    # print(mean.shape)
+    # print(mean[0])
+    prob_sample = mean[0]
+    entr_sample = entropy(prob_sample)
+    return entr_sample
+
+
+
+
+    # print(type(mean[0]))
     # mean = np.mean(dropout_predictions, axis=0)
     # print(mean.shape)
     # print(mean[100])
@@ -204,18 +214,29 @@ def main(args):
     file_handler.setLevel(logging.INFO)
     file_handler.setFormatter(formatter)
     logger.addHandler(file_handler)
-    log_string('PARAMETER ...')
-    log_string(args)
+    # log_string('PARAMETER ...')
+    # log_string(args)
 
     '''DATA LOADING'''
-    log_string('Load dataset ...')
-    MC_data_path = 'data/tactile_data_pcd/'
+    # log_string('Load dataset ...')
+    visual_data_path = '/home/airocs/cong_workspace/tools/Pointnet_Pointnet2_pytorch/data/visual_data_pcd/'
     # data_path = 'data/modelnet40_normal_resampled/'
     # data_path = Path("mesh_data/ModelNet10")
 
+    classes = find_classes(Path(visual_data_path))
+    print(classes)
+    visual_pcd_files = []
 
-    test_dataset = PCDPointCloudData(data_path, folder='Test', num_point=args.num_point)
-    testDataLoader = torch.utils.data.DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=10)
+    for category in classes.keys():
+        new_dir = visual_data_path/Path(category)/'Train'
+        for file in os.listdir(new_dir):
+            if file.endswith('.pcd'):
+                sample = {}
+                sample['pcd_path'] = Path(new_dir/file)
+                sample['category'] = category
+                sample['entropy'] = 0.0
+                visual_pcd_files.append(sample)
+
 
     '''MODEL LOADING'''
     num_class = args.num_category
@@ -233,9 +254,34 @@ def main(args):
     #     instance_acc, class_acc = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
     #     log_string('Test Instance Accuracy: %f, Class Accuracy: %f' % (instance_acc, class_acc))
 
-    pcd_dataset = PCDTest(args.pcd_dir, sub_sample=False)
-    pcdDataLoader = torch.utils.data.DataLoader(pcd_dataset, batch_size=args.batch_size, shuffle=False, num_workers=10)
-    get_monte_carlo_predictions(classifier, pcdDataLoader, forward_passes=5, n_samples=11825, n_classes=15)
+    # Load Samples
+    print("...............................")
+    print(len(visual_pcd_files))
+
+
+    for index, sample in tqdm(enumerate(visual_pcd_files), total=len(visual_pcd_files)):
+        pcd_path = sample['pcd_path']
+        pcd_dataset = PCDTest(pcd_path, sub_sample=True, sample_num=args.num_point)
+        pcdDataLoader = torch.utils.data.DataLoader(pcd_dataset,
+                                                    batch_size=args.batch_size,
+                                                    shuffle=False, num_workers=10)
+
+        entropy_sample = get_monte_carlo_predictions(classifier, pcdDataLoader,
+                                             forward_passes=3, n_samples=1, n_classes=15)
+        sample['entropy'] = entropy_sample
+        if index is 5:
+            break
+
+
+    sorted_sample_list = sorted(visual_pcd_files, key=lambda x: x['entropy'], reverse=True)
+
+    saved_file_path = "/home/airocs/Desktop/active_entropy_files.txt"
+    with open(saved_file_path, 'w') as f:
+        for item in sorted_sample_list:
+            f.write("%s\n" % item)
+
+    print("File saved to %s " % saved_file_path)
+
 
 
 if __name__ == '__main__':

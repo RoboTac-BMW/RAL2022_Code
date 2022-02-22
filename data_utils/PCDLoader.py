@@ -191,22 +191,27 @@ class PCDPointCloudData(Dataset):
                     'category': self.classes[category]}
 
 class PCDTest(Dataset):
-    def __init__(self, pcd_dir, sub_sample=False,
+    def __init__(self, pcd_path, sub_sample=False,
                  sample_num=None, est_normal=False,
                  sample_method='Voxel'):
 
-        self.pcd_dir = pcd_dir
+        # self.pcd_dir = pcd_dir
+        self.pcd_path = pcd_path
         self.sub_sample = sub_sample
         self.sample_num = sample_num
         self.est_normal = est_normal
         self.sample_method = sample_method
         self.files = []
 
-        for file in os.listdir(pcd_dir):
-            if file.endswith('.pcd'):
-                sample = {}
-                sample['pcd_path'] = Path(pcd_dir)/file
-                self.files.append(sample)
+        # for file in os.listdir(pcd_dir):
+        #     if file.endswith('.pcd'):
+        #         sample = {}
+        #         sample['pcd_path'] = Path(pcd_dir)/file
+        #         self.files.append(sample)
+        sample={}
+        sample['pcd_path'] = self.pcd_path
+        self.files.append(sample)
+
 
     def __len__(self):
         return len(self.files)
@@ -235,7 +240,7 @@ class PCDTest(Dataset):
         pointcloud_np = np.concatenate((points, norms), axis=1)
         """
 
-        if selt.sample_method is 'Voxel':
+        if self.sample_method is 'Voxel':
             point_cloud = point_cloud.voxel_down_sample(voxel_size=0.004)
         else:
             raise NotImplementedError("Other sample methods not implemented")
@@ -245,10 +250,7 @@ class PCDTest(Dataset):
         pointcloud_np = normalize_pointcloud(pointcloud_np)
 
         if self.sub_sample is True:
-            sel_pts_idx = np.random.choice(pointcloud_np.shape[0],
-                                           size=self.sample_num,
-                                           replace=False).reshape(-1)
-            pointcloud_np = pointcloud_np[sel_pts_idx]
+            pointcloud_np = sub_and_downSample(pointcloud_np, self.sample_num)
 
         return pointcloud_np
 
