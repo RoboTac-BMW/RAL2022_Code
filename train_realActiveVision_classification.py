@@ -40,6 +40,7 @@ def parse_args():
     parser.add_argument('--process_data', action='store_true', default=False, help='save data offline')
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
     parser.add_argument('--SO3_Rotation', action='store_true', default=False, help='arbitrary rotation in SO3')
+    parser.add_argument('--random_shuffle', action='store_true', default=False, help='random select files from entropy file')
     return parser.parse_args()
 
 
@@ -122,8 +123,9 @@ def main(args):
     active_txt_path = '/home/airocs/Desktop/active_entropy_files.json'
 
     train_dataset = PCDActiveVision(root_dir=data_path,
-                                    active_path=active_txt_path, active_sample_num=1500,
-                                    folder='Train')
+                                    active_path=active_txt_path, active_sample_num=150,
+                                    folder='Train',
+                                    random_shuffle=args.random_shuffle)
 
     # train_dataset = PCDPointCloudData(data_path,
     #                                   folder='Train',
