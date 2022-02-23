@@ -9,6 +9,7 @@ import logging
 from tqdm import tqdm
 import sys
 import importlib
+import json
 from path import Path
 from data_utils.PCDLoader import *
 from scipy.stats import entropy
@@ -219,7 +220,7 @@ def main(args):
 
     '''DATA LOADING'''
     # log_string('Load dataset ...')
-    visual_data_path = '/home/airocs/cong_workspace/tools/Pointnet_Pointnet2_pytorch/data/visual_data_pcd/'
+    visual_data_path = '/home/airocs/Desktop/active_vision_pcd_entropy/'
     # data_path = 'data/modelnet40_normal_resampled/'
     # data_path = Path("mesh_data/ModelNet10")
 
@@ -232,7 +233,7 @@ def main(args):
         for file in os.listdir(new_dir):
             if file.endswith('.pcd'):
                 sample = {}
-                sample['pcd_path'] = Path(new_dir/file)
+                sample['pcd_path'] = str(Path(new_dir/file))
                 sample['category'] = category
                 sample['entropy'] = 0.0
                 visual_pcd_files.append(sample)
@@ -269,16 +270,15 @@ def main(args):
         entropy_sample = get_monte_carlo_predictions(classifier, pcdDataLoader,
                                              forward_passes=3, n_samples=1, n_classes=15)
         sample['entropy'] = entropy_sample
-        if index is 5:
-            break
-
 
     sorted_sample_list = sorted(visual_pcd_files, key=lambda x: x['entropy'], reverse=True)
 
-    saved_file_path = "/home/airocs/Desktop/active_entropy_files.txt"
+    saved_file_path = "/home/airocs/Desktop/active_entropy_files.json"
     with open(saved_file_path, 'w') as f:
         for item in sorted_sample_list:
-            f.write("%s\n" % item)
+            json.dump(item, f)
+            f.write('\n')
+            # f.write("%s\n" % item)
 
     print("File saved to %s " % saved_file_path)
 

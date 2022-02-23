@@ -30,7 +30,7 @@ def parse_args():
     parser.add_argument('--gpu', type=str, default='0', help='specify gpu device')
     parser.add_argument('--batch_size', type=int, default=1, help='batch size in training')
     # parser.add_argument('--num_category', default=10, type=int, choices=[10, 40],  help='training on ModelNet10/40')
-    parser.add_argument('--num_category', default=13, type=int, help='training on real dataset')
+    parser.add_argument('--num_category', default=12, type=int, help='training on real dataset')
     parser.add_argument('--sample_point', type=bool, default=True,  help='Sampling on tacitle data')
     parser.add_argument('--num_point', type=int, default=50, help='Point Number')
     parser.add_argument('--log_dir', type=str, required=True, help='Experiment root')
@@ -42,7 +42,7 @@ def parse_args():
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-def test(model, loader, num_class=13, vote_num=1):
+def test(model, loader, num_class=12, vote_num=1):
     mean_correct = []
     classifier = model.eval()
     class_acc = np.zeros((num_class, 3))

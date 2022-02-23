@@ -29,7 +29,7 @@ def parse_args():
     parser.add_argument('--batch_size', type=int, default=8, help='batch size in training')
     parser.add_argument('--model', default='pointnet_cls', help='model name [default: pointnet_cls]')
     parser.add_argument('--num_category', default=15, type=int, help='training on real dataset')
-    parser.add_argument('--num_ModelNet', default=40, type=int, choices=[0,10,40], help='Pre-trained num_category')
+    parser.add_argument('--num_ModelNet', default=0, type=int, choices=[0,10,40], help='Pre-trained num_category')
     parser.add_argument('--epoch', default=50, type=int, help='number of epoch in training')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='learning rate in training')
     parser.add_argument('--num_point', type=int, default=1024, help='Visual Point Number')
@@ -119,24 +119,21 @@ def main(args):
     '''DATA LOADING'''
     log_string('Load dataset ...')
     data_path = 'data/active_vision_pcd_1500/'
-    active_txt_path = '/home/airocs/Desktop/active_entropy_files.txt'
+    active_txt_path = '/home/airocs/Desktop/active_entropy_files.json'
 
     train_dataset = PCDActiveVision(root_dir=data_path,
                                     active_path=active_txt_path, active_sample_num=1500,
                                     folder='Train')
-    train_dataset = PCDActiveVision(root_dir=data_path,
-                                    active_path=active_txt_path, active_sample_num=1500,
-                                    folder='Test')
 
     # train_dataset = PCDPointCloudData(data_path,
     #                                   folder='Train',
     #                                   num_point=args.num_point,
     #                                   est_normal=args.use_normals)
 
-    # test_dataset = PCDPointCloudData(data_path,
-    #                                  folder='Test',
-    #                                  num_point=args.num_point,
-    #                                  est_normal=args.use_normals)
+    test_dataset = PCDPointCloudData(data_path,
+                                     folder='Test',
+                                     num_point=args.num_point,
+                                     est_normal=args.use_normals)
 
     trainDataLoader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=10, drop_last=True)
     testDataLoader = torch.utils.data.DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=10)
