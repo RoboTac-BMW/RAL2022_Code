@@ -28,7 +28,7 @@ def parse_args():
     parser.add_argument('--gpu', type=str, default='0', help='specify gpu device')
     parser.add_argument('--batch_size', type=int, default=8, help='batch size in training')
     parser.add_argument('--model', default='pointnet_cls', help='model name [default: pointnet_cls]')
-    parser.add_argument('--num_category', default=12, type=int, help='training on real dataset')
+    parser.add_argument('--num_category', default=13, type=int, help='training on real dataset')
     parser.add_argument('--epoch', default=20, type=int, help='number of epoch in training')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='learning rate in training')
     parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
@@ -43,8 +43,8 @@ def parse_args():
     parser.add_argument('--SO3_Rotation', action='store_true', default=False, help='arbitrary rotation in SO3')
     parser.add_argument('--DA_method', type=str, default="multi_coral_mmd", help='choose the DA loss function')
     parser.add_argument('--alpha', type=float, default=10, help='set the value of classification loss')
-    parser.add_argument('--lamda', type=float, default=10, help='set the value of CORAL loss')
-    parser.add_argument('--beta', type=float, default=10, help='set the value of MMD loss')
+    parser.add_argument('--lamda', type=float, default=0.5, help='set the value of CORAL loss')
+    parser.add_argument('--beta', type=float, default=0.5, help='set the value of MMD loss')
     return parser.parse_args()
 
 
@@ -57,7 +57,7 @@ def inplace_relu(m):
         m.inplace=True
 
 
-def test(model, loader, num_class=12):
+def test(model, loader, num_class=13):
     mean_correct = []
     class_acc = np.zeros((num_class, 3))
     classifier = model.eval()
@@ -340,18 +340,18 @@ def main(args):
                 calculate_loss = running_loss/100
                 log_string("Training loss {} ".format(calculate_loss))
 
-                if calculate_loss < min_loss:
-                    logger.info('Save model...')
-                    savepath = str(checkpoints_dir) + '/best_model.pth'
-                    log_string('Saving at %s' % savepath)
-                    state = {
-                        # 'epoch': best_epoch,
-                        # 'instance_acc': instance_acc,
-                        # 'class_acc': class_acc,
-                        'model_state_dict': classifier.state_dict(),
-                        'optimizer_state_dict': optimizer.state_dict(),
-                    }
-                    torch.save(state, savepath)
+                # if calculate_loss < min_loss:
+                #     logger.info('Save model...')
+                #     savepath = str(checkpoints_dir) + '/best_model.pth'
+                #     log_string('Saving at %s' % savepath)
+                #     state = {
+                #         'epoch': best_epoch,
+                #         'instance_acc': instance_acc,
+                #         'class_acc': class_acc,
+                #         'model_state_dict': classifier.state_dict(),
+                #         'optimizer_state_dict': optimizer.state_dict(),
+                #     }
+                #     torch.save(state, savepath)
                 running_loss = 0.0
 
         train_instance_acc = np.mean(mean_correct)
@@ -370,19 +370,19 @@ def main(args):
             log_string('Best Instance Accuracy: %f, Class Accuracy: %f' % (best_instance_acc, best_class_acc))
 
             if (instance_acc >= best_instance_acc):
-                # logger.info('Save model...')
-                # # print("This is a better model, but the model will not be saved")
-                logger.info('Model will not be saved with vision validation')
-                # savepath = str(checkpoints_dir) + '/best_model.pth'
-                # log_string('Saving at %s' % savepath)
-                # state = {
-                #     'epoch': best_epoch,
-                #     'instance_acc': instance_acc,
-                #     'class_acc': class_acc,
-                #     'model_state_dict': classifier.state_dict(),
-                #     'optimizer_state_dict': optimizer.state_dict(),
-                # }
-                # torch.save(state, savepath)
+                logger.info('Save model...')
+                # print("This is a better model, but the model will not be saved")
+                # logger.info('Model will not be saved in this training')
+                savepath = str(checkpoints_dir) + '/best_model.pth'
+                log_string('Saving at %s' % savepath)
+                state = {
+                    'epoch': best_epoch,
+                    'instance_acc': instance_acc,
+                    'class_acc': class_acc,
+                    'model_state_dict': classifier.state_dict(),
+                    'optimizer_state_dict': optimizer.state_dict(),
+                }
+                torch.save(state, savepath)
             global_epoch += 1
 
     logger.info('End of training...')
