@@ -207,13 +207,20 @@ def main(args):
     try:
         checkpoint = torch.load(str(exp_dir) + '/checkpoints/best_model.pth')
         start_epoch = checkpoint['epoch']
-        min_loss = checkpoint['loss']
         classifier.load_state_dict(checkpoint['model_state_dict'])
         log_string('Use pretrain model')
     except:
         log_string('No existing model, starting training from scratch...')
         start_epoch = 0
+
+    try:
+        min_loss = checkpoint['loss']
+        log_string('Loading model with DA loss %f' % min_loss)
+    except:
+        log_string('No DA loss found in the model')
         min_loss = 10000.0
+
+
 
     # Test parameters
     print("Test Parameters .........................")
@@ -350,7 +357,7 @@ def main(args):
                         'epoch': epoch,
                         # 'instance_acc': instance_acc,
                         # 'class_acc': class_acc,
-                        'loss': running_loss,
+                        'loss': calculate_loss,
                         'model_state_dict': classifier.state_dict(),
                         'optimizer_state_dict': optimizer.state_dict(),
                     }
