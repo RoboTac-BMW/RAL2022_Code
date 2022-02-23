@@ -256,9 +256,39 @@ class PCDTest(Dataset):
 
 
 
+class PCDActiveVision(PCDPointCloudData):
+    def __init__(self,
+                 root_dir,
+                 active_path,
+                 active_sample_num=1500,
+                 folder='Train',
+                 num_point=1024,
+                 sample=True,
+                 sample_method='Voxel',
+                 est_normal = False,
+                 random_num = False,
+                 list_num_point = [1024],
+                 rotation='z'):
+
+        super(PCDActiveVision, self).__init__(root_dir, folder, num_point, sample, sample_method,
+                         est_normal, random_num, list_num_point, rotation)
+        self.active_path = active_path
+        self.active_sample_num = active_sample_num
+
+        with open(self.active_path) as file:
+            lines = [line.rstrip() for line in file]
+            for i in range(self.active_sample_num):
+                self.files.append(lines[i])
+
+        # print(self.files)
+        print(len(self.files))
+
+
 if __name__ == '__main__':
 
-    path_dir = "/home/airocs/cong_workspace/tools/Pointnet_Pointnet2_pytorch/data/visual_data_pcd/can/Test"
+    path_dir = "/home/airocs/cong_workspace/tools/Pointnet_Pointnet2_pytorch/data/active_vision_pcd_1500/"
+    active_path = "/home/airocs/Desktop/active_entropy_files.txt"
+    PCDActiveVision(root_dir=path_dir, active_path='/home/airocs/Desktop/active_entropy_files.txt')
     # a = find_classes(path_dir)
     # print(type(a))
     # print(len(a))
