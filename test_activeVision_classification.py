@@ -182,7 +182,7 @@ def main(args):
     classifier.load_state_dict(checkpoint['model_state_dict'])
 
     # Load labels:
-    classes = find_classes(tactile_data_path)
+    classes = find_classes(visual_data_path)
     print(classes)
     print(classes.keys)
 
