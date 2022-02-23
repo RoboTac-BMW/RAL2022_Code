@@ -30,7 +30,7 @@ def parse_args():
     parser.add_argument('--model', default='pointnet_cls', help='model name [default: pointnet_cls]')
     parser.add_argument('--num_category', default=12, type=int, help='training on real dataset')
     parser.add_argument('--epoch', default=20, type=int, help='number of epoch in training')
-    parser.add_argument('--learning_rate', default=0.001, type=float, help='learning rate in training')
+    parser.add_argument('--learning_rate', default=0.0001, type=float, help='learning rate in training')
     parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
     parser.add_argument('--optimizer', type=str, default='Adam', help='optimizer for training')
     parser.add_argument('--log_dir', type=str, default=None, help='experiment root')
@@ -207,13 +207,18 @@ def main(args):
     try:
         checkpoint = torch.load(str(exp_dir) + '/checkpoints/best_model.pth')
         start_epoch = checkpoint['epoch']
-        min_loss = checkpoint['loss']
         classifier.load_state_dict(checkpoint['model_state_dict'])
         log_string('Use pretrain model')
     except:
         log_string('No existing model, starting training from scratch...')
         start_epoch = 0
+
+    try:
+        min_loss = checkpoint['loss']
+    except:
         min_loss = 10000.0
+
+
 
     # Test parameters
     print("Test Parameters .........................")
