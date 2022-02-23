@@ -119,7 +119,7 @@ def main(args):
     '''DATA LOADING'''
     log_string('Load dataset ...')
     data_path = 'data/active_vision_pcd_1500/'
-    active_txt_path = '/home/airocs/Desktop/active_entropy_files.txt'
+    active_txt_path = '/home/airocs/Desktop/active_entropy_files.json'
 
     train_dataset = PCDActiveVision(root_dir=data_path,
                                     active_path=active_txt_path, active_sample_num=1500,

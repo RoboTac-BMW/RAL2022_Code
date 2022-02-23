@@ -282,13 +282,13 @@ class PCDActiveVision(PCDPointCloudData):
             for i in range(self.active_sample_num):
                 print(lines[i])
                 print(type(lines[i]))
-                tmp_str = lines[i].replace("\'", "\"")
-                print(tmp_str)
-                converted_sting=json.loads(tmp_str)
+                # tmp_str = lines[i].replace("\'", "\"")
+                # print(tmp_str)
+                converted_string=json.loads(lines[i])
                 # converted_string = ast.literal_eval(lines[i])
                 print(converted_string)
-                print(type(converted_srting))
-                self.files.append(converted_srting)
+                print(type(converted_string))
+                self.files.append(converted_string)
 
         # print(self.files)
         print(len(self.files))
