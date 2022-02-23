@@ -32,7 +32,7 @@ def parse_args():
     # parser.add_argument('--num_category', default=10, type=int, choices=[10, 40],  help='training on ModelNet10/40')
     parser.add_argument('--num_category', default=15, type=int, help='training on real dataset')
     parser.add_argument('--sample_point', type=bool, default=True,  help='Sampling on tacitle data')
-    parser.add_argument('--num_point', type=int, default=50, help='Point Number')
+    parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
     parser.add_argument('--log_dir', type=str, required=True, help='Experiment root')
     parser.add_argument('--use_normals', action='store_true', default=False, help='use normals')
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
@@ -157,7 +157,7 @@ def main(args):
     # tactile_data_path = 'data/visual_data_pcd/'
     # data_path = 'data/modelnet40_normal_resampled/'
     # data_path = Path("mesh_data/ModelNet10")
-    visual_data_path = Path('/data/Rotated_visual_data_pcd')
+    visual_data_path = Path('data/Rotated_visual_data_pcd')
 
 
     test_dataset = PCDPointCloudData(visual_data_path,
