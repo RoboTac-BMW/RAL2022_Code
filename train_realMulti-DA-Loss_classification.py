@@ -341,6 +341,7 @@ def main(args):
                 log_string("Training loss {} ".format(calculate_loss))
 
                 if calculate_loss < min_loss:
+                    min_loss = calculate_loss
                     logger.info('Save model...')
                     savepath = str(checkpoints_dir) + '/best_model.pth'
                     log_string('Saving at %s' % savepath)
@@ -348,6 +349,7 @@ def main(args):
                         # 'epoch': best_epoch,
                         # 'instance_acc': instance_acc,
                         # 'class_acc': class_acc,
+                        'loss': running_loss,
                         'model_state_dict': classifier.state_dict(),
                         'optimizer_state_dict': optimizer.state_dict(),
                     }
