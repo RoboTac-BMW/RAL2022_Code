@@ -30,9 +30,9 @@ def parse_args():
     parser.add_argument('--gpu', type=str, default='0', help='specify gpu device')
     parser.add_argument('--batch_size', type=int, default=1, help='batch size in training')
     # parser.add_argument('--num_category', default=10, type=int, choices=[10, 40],  help='training on ModelNet10/40')
-    parser.add_argument('--num_category', default=12, type=int, help='training on real dataset')
+    parser.add_argument('--num_category', default=15, type=int, help='training on real dataset')
     parser.add_argument('--sample_point', type=bool, default=True,  help='Sampling on tacitle data')
-    parser.add_argument('--num_point', type=int, default=50, help='Point Number')
+    parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
     parser.add_argument('--log_dir', type=str, required=True, help='Experiment root')
     parser.add_argument('--use_normals', action='store_true', default=False, help='use normals')
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
@@ -42,7 +42,7 @@ def parse_args():
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-def test(model, loader, num_class=12, vote_num=1):
+def test(model, loader, num_class=15, vote_num=1):
     mean_correct = []
     classifier = model.eval()
     class_acc = np.zeros((num_class, 3))
@@ -153,13 +153,14 @@ def main(args):
     '''DATA LOADING'''
     log_string('Load dataset ...')
     # tactile_data_path = 'data/tactile_data_pcd/'
-    tactile_data_path = 'data/tactile_pcd_10_sampled_21.02/'
+    # tactile_data_path = 'data/tactile_pcd_10_sampled_21.02/'
     # tactile_data_path = 'data/visual_data_pcd/'
     # data_path = 'data/modelnet40_normal_resampled/'
     # data_path = Path("mesh_data/ModelNet10")
+    visual_data_path = Path('data/Rotated_visual_data_pcd')
 
 
-    test_dataset = PCDPointCloudData(tactile_data_path,
+    test_dataset = PCDPointCloudData(visual_data_path,
                                      folder='Test',
                                      sample_method='Voxel',
                                      num_point=args.num_point,
@@ -181,7 +182,7 @@ def main(args):
     classifier.load_state_dict(checkpoint['model_state_dict'])
 
     # Load labels:
-    classes = find_classes(tactile_data_path)
+    classes = find_classes(visual_data_path)
     print(classes)
     print(classes.keys)
 
@@ -192,11 +193,11 @@ def main(args):
         log_string('Test Instance Accuracy: %f, Class Accuracy: %f' % (instance_acc, class_acc))
 
         # Draw confusion matrix
-        df_cm = pd.DataFrame(cf_matrix_new *10,
-                             index = [i for i in classes.keys()], columns = [i for i in classes.keys()])
-        plt.figure(figsize = (12,7))
-        sn.heatmap(df_cm, annot=True)
-        plt.savefig(experiment_dir + '/' + str(datetime.now()) + '.png')
+        # df_cm = pd.DataFrame(cf_matrix_new *10,
+        #                      index = [i for i in classes.keys()], columns = [i for i in classes.keys()])
+        # plt.figure(figsize = (12,7))
+        # sn.heatmap(df_cm, annot=True)
+        # plt.savefig(experiment_dir + '/' + str(datetime.now()) + '.png')
 
         # df_cm = pd.DataFrame(cf_matrix_new/np.sum(cf_matrix_old) *10,
         #                      index = [i for i in classes.keys()], columns = [i for i in classes.keys()])
