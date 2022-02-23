@@ -28,7 +28,7 @@ def parse_args():
     parser.add_argument('--gpu', type=str, default='0', help='specify gpu device')
     parser.add_argument('--batch_size', type=int, default=8, help='batch size in training')
     parser.add_argument('--model', default='pointnet_cls', help='model name [default: pointnet_cls]')
-    parser.add_argument('--num_category', default=13, type=int, help='training on real dataset')
+    parser.add_argument('--num_category', default=12, type=int, help='training on real dataset')
     parser.add_argument('--epoch', default=20, type=int, help='number of epoch in training')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='learning rate in training')
     parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
@@ -43,8 +43,8 @@ def parse_args():
     parser.add_argument('--SO3_Rotation', action='store_true', default=False, help='arbitrary rotation in SO3')
     parser.add_argument('--DA_method', type=str, default="multi_coral_mmd", help='choose the DA loss function')
     parser.add_argument('--alpha', type=float, default=10, help='set the value of classification loss')
-    parser.add_argument('--lamda', type=float, default=0.5, help='set the value of CORAL loss')
-    parser.add_argument('--beta', type=float, default=0.5, help='set the value of MMD loss')
+    parser.add_argument('--lamda', type=float, default=10, help='set the value of CORAL loss')
+    parser.add_argument('--beta', type=float, default=10, help='set the value of MMD loss')
     return parser.parse_args()
 
 
@@ -57,7 +57,7 @@ def inplace_relu(m):
         m.inplace=True
 
 
-def test(model, loader, num_class=13):
+def test(model, loader, num_class=12):
     mean_correct = []
     class_acc = np.zeros((num_class, 3))
     classifier = model.eval()
@@ -178,7 +178,7 @@ def main(args):
     shutil.copy('./models/%s.py' % args.model, str(exp_dir))
     shutil.copy('models/pointnet_cls.py', str(exp_dir))
     shutil.copy('data_utils/PCDLoader.py', str(exp_dir))
-    shutil.copy('./train_realMulti-DA_classification.py', str(exp_dir))
+    shutil.copy('./train_realMulti-DA-Loss_classification.py', str(exp_dir))
     # shutil.copy('./train_dense_classification.py', str(exp_dir))
 
     classifier = model.get_model(num_class, normal_channel=args.use_normals)
@@ -207,11 +207,13 @@ def main(args):
     try:
         checkpoint = torch.load(str(exp_dir) + '/checkpoints/best_model.pth')
         start_epoch = checkpoint['epoch']
+        min_loss = checkpoint['loss']
         classifier.load_state_dict(checkpoint['model_state_dict'])
         log_string('Use pretrain model')
     except:
         log_string('No existing model, starting training from scratch...')
         start_epoch = 0
+        min_loss = 10000.0
 
     # Test parameters
     print("Test Parameters .........................")
@@ -237,7 +239,6 @@ def main(args):
     best_instance_acc = 0.0
     best_class_acc = 0.0
     running_loss = 0.0
-    min_loss = 100.0
 
     '''TRANING'''
     logger.info('Start training...')
@@ -318,7 +319,7 @@ def main(args):
 
             # change the loss here for testing!!!
 
-            loss = criterion_DA(pred, target.long(), trans_feat,
+            DA_loss, loss = criterion_DA(pred, target.long(), trans_feat,
                                 feature_dense_1, feature_DA_1, feature_dense_2, feature_DA_2)
             ################################################################################################
             pred_choice = pred.data.max(1)[1]
@@ -331,23 +332,25 @@ def main(args):
             global_step += 1
 
             # Print the loss
-            running_loss += loss.item()
+            running_loss += DA_loss.item()
             if batch_id % 100 == 99:
                 # log_string("fc1 {}".format(classifier.fc1.weight.grad))
                 # log_string("fc2 {}".format(classifier.fc2.weight.grad))
                 # log_string("fc3 {}".format(classifier.fc3.weight.grad))
                 # print("Training loss {} ".format(loss.item()/100))
                 calculate_loss = running_loss/100
-                log_string("Training loss {} ".format(calculate_loss))
+                log_string("Running DA loss {} ".format(calculate_loss))
 
                 if calculate_loss < min_loss:
+                    min_loss = calculate_loss
                     logger.info('Save model...')
                     savepath = str(checkpoints_dir) + '/best_model.pth'
                     log_string('Saving at %s' % savepath)
                     state = {
-                        'epoch': best_epoch,
-                        'instance_acc': instance_acc,
-                        'class_acc': class_acc,
+                        'epoch': epoch,
+                        # 'instance_acc': instance_acc,
+                        # 'class_acc': class_acc,
+                        'loss': running_loss,
                         'model_state_dict': classifier.state_dict(),
                         'optimizer_state_dict': optimizer.state_dict(),
                     }
