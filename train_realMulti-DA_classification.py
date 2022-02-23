@@ -318,7 +318,7 @@ def main(args):
 
             # change the loss here for testing!!!
 
-            loss = criterion_DA(pred, target.long(), trans_feat,
+            _, loss = criterion_DA(pred, target.long(), trans_feat,
                                 feature_dense_1, feature_DA_1, feature_dense_2, feature_DA_2)
             ################################################################################################
             pred_choice = pred.data.max(1)[1]
