@@ -106,10 +106,11 @@ def test(model, loader, num_class=12, vote_num=1):
 
     print(f'Got {num_correct} / {num_samples} with accuracy {float(num_correct)/float(num_samples)*100:.2f}')
     cf_matrix_new = confusion_matrix(all_true_new, all_pred_new, normalize='true')
-    cf_matrix_old = confusion_matrix(all_true_new, all_pred_new)
+    # cf_matrix_old = confusion_matrix(all_true_new, all_pred_new)
     # print(cf_matrix_new)
-    print(all_true_new)
-    print(all_pred_new)
+    # print(all_true_new)
+    # print(all_pred_new)
+    print(confusion_matrix)
 
     # print(mean_correct)
     class_acc[:, 2] = class_acc[:, 0] / class_acc[:, 1]
@@ -122,7 +123,7 @@ def test(model, loader, num_class=12, vote_num=1):
     # cf_matrix_old = confusion_matrix(y_true, y_pred)
     # print(cf_matrix)
     # return instance_acc, class_acc, cf_matrix
-    return instance_acc, class_acc, cf_matrix_old, cf_matrix_new
+    return instance_acc, class_acc, cf_matrix_new
     # return instance_acc, class_acc
 
 
@@ -187,21 +188,21 @@ def main(args):
 
     with torch.no_grad():
         # instance_acc, class_acc = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
-        instance_acc, class_acc, cf_matrix_old, cf_matrix_new = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
+        instance_acc, class_acc, cf_matrix_new = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
         log_string('Test Instance Accuracy: %f, Class Accuracy: %f' % (instance_acc, class_acc))
 
         # Draw confusion matrix
-        df_cm = pd.DataFrame(cf_matrix_old/np.sum(cf_matrix_new) *10,
+        df_cm = pd.DataFrame(cf_matrix_new *10,
                              index = [i for i in classes.keys()], columns = [i for i in classes.keys()])
         plt.figure(figsize = (12,7))
         sn.heatmap(df_cm, annot=True)
         plt.savefig(experiment_dir + '/' + str(datetime.now()) + '.png')
 
-        df_cm = pd.DataFrame(cf_matrix_new/np.sum(cf_matrix_old) *10,
-                             index = [i for i in classes.keys()], columns = [i for i in classes.keys()])
-        plt.figure(figsize = (12,7))
-        sn.heatmap(df_cm, annot=True)
-        plt.savefig(experiment_dir + '/' + str(datetime.now()) + '.png')
+        # df_cm = pd.DataFrame(cf_matrix_new/np.sum(cf_matrix_old) *10,
+        #                      index = [i for i in classes.keys()], columns = [i for i in classes.keys()])
+        # plt.figure(figsize = (12,7))
+        # sn.heatmap(df_cm, annot=True)
+        # plt.savefig(experiment_dir + '/' + str(datetime.now()) + '.png')
 
 if __name__ == '__main__':
     args = parse_args()
