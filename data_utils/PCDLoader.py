@@ -8,6 +8,8 @@ from scipy.spatial.transform import Rotation as R
 
 
 import torch
+import json
+import ast
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, utils
 
@@ -278,9 +280,13 @@ class PCDActiveVision(PCDPointCloudData):
         with open(self.active_path) as file:
             lines = [line.rstrip() for line in file]
             for i in range(self.active_sample_num):
-                self.files.append(lines[i])
+                # print(lines[i])
+                # print(type(lines[i]))
+                converted_string=json.loads(lines[i])
+                # print(converted_string)
+                # print(type(converted_string))
+                self.files.append(converted_string)
 
-        # print(self.files)
         print(len(self.files))
 
 
