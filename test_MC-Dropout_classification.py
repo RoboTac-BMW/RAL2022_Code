@@ -219,7 +219,7 @@ def main(args):
 
     '''DATA LOADING'''
     # log_string('Load dataset ...')
-    visual_data_path = '/home/airocs/cong_workspace/tools/Pointnet_Pointnet2_pytorch/data/visual_data_pcd/'
+    visual_data_path = '/home/airocs/Desktop/active_vision_pcd_entropy/'
     # data_path = 'data/modelnet40_normal_resampled/'
     # data_path = Path("mesh_data/ModelNet10")
 
@@ -269,9 +269,6 @@ def main(args):
         entropy_sample = get_monte_carlo_predictions(classifier, pcdDataLoader,
                                              forward_passes=3, n_samples=1, n_classes=15)
         sample['entropy'] = entropy_sample
-        if index is 5:
-            break
-
 
     sorted_sample_list = sorted(visual_pcd_files, key=lambda x: x['entropy'], reverse=True)
 
