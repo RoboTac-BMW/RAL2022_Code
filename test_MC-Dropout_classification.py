@@ -273,7 +273,7 @@ def main(args):
 
     sorted_sample_list = sorted(visual_pcd_files, key=lambda x: x['entropy'], reverse=True)
 
-    saved_file_path = "/home/airocs/Desktop/active_entropy_files.json"
+    saved_file_path = "/home/airocs/Desktop/active_entropy_files_new.json"
     with open(saved_file_path, 'w') as f:
         for item in sorted_sample_list:
             json.dump(item, f)
