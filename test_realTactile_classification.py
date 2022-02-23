@@ -110,7 +110,7 @@ def test(model, loader, num_class=12, vote_num=1):
     # print(cf_matrix_new)
     # print(all_true_new)
     # print(all_pred_new)
-    print(confusion_matrix)
+    print(cf_matrix_new)
 
     # print(mean_correct)
     class_acc[:, 2] = class_acc[:, 0] / class_acc[:, 1]
