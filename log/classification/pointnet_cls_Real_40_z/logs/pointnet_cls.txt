@@ -1310,390 +1310,390 @@
 2022-02-22 15:25:00,064 - Model - INFO - Use pretrain model
 2022-02-22 15:25:00,065 - Model - INFO - Start training...
 2022-02-22 15:25:00,065 - Model - INFO - Epoch 1 (230/279):
-2022-02-22 15:25:03,255 - Model - INFO - Training loss 0.012174506187438965 
-2022-02-22 15:25:06,313 - Model - INFO - Training loss 0.0034914886951446533 
-2022-02-22 15:25:08,854 - Model - INFO - Training loss 0.0037818798422813416 
+2022-02-22 15:25:03,255 - Model - INFO - Training loss 0.012174506187438965
+2022-02-22 15:25:06,313 - Model - INFO - Training loss 0.0034914886951446533
+2022-02-22 15:25:08,854 - Model - INFO - Training loss 0.0037818798422813416
 2022-02-22 15:25:09,967 - Model - INFO - Train Instance Accuracy: 0.776706
 2022-02-22 15:25:11,810 - Model - INFO - Test Instance Accuracy: 0.934211, Class Accuracy: 0.942336
 2022-02-22 15:25:11,810 - Model - INFO - Best Instance Accuracy: 0.934211, Class Accuracy: 0.942336
 2022-02-22 15:25:11,810 - Model - INFO - Save model...
 2022-02-22 15:25:11,810 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-22 15:25:11,876 - Model - INFO - Epoch 2 (231/279):
-2022-02-22 15:25:15,059 - Model - INFO - Training loss 0.005227715969085694 
-2022-02-22 15:25:18,113 - Model - INFO - Training loss 0.0016815459728240967 
-2022-02-22 15:25:20,962 - Model - INFO - Training loss 0.0011763139069080352 
+2022-02-22 15:25:15,059 - Model - INFO - Training loss 0.005227715969085694
+2022-02-22 15:25:18,113 - Model - INFO - Training loss 0.0016815459728240967
+2022-02-22 15:25:20,962 - Model - INFO - Training loss 0.0011763139069080352
 2022-02-22 15:25:21,867 - Model - INFO - Train Instance Accuracy: 0.887611
 2022-02-22 15:25:23,575 - Model - INFO - Test Instance Accuracy: 0.944079, Class Accuracy: 0.953125
 2022-02-22 15:25:23,576 - Model - INFO - Best Instance Accuracy: 0.944079, Class Accuracy: 0.953125
 2022-02-22 15:25:23,576 - Model - INFO - Save model...
 2022-02-22 15:25:23,576 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-22 15:25:23,656 - Model - INFO - Epoch 3 (232/279):
-2022-02-22 15:25:26,912 - Model - INFO - Training loss 0.00327673614025116 
-2022-02-22 15:25:29,686 - Model - INFO - Training loss 0.000984734296798706 
-2022-02-22 15:25:32,379 - Model - INFO - Training loss 0.0003373918309807777 
+2022-02-22 15:25:26,912 - Model - INFO - Training loss 0.00327673614025116
+2022-02-22 15:25:29,686 - Model - INFO - Training loss 0.000984734296798706
+2022-02-22 15:25:32,379 - Model - INFO - Training loss 0.0003373918309807777
 2022-02-22 15:25:33,624 - Model - INFO - Train Instance Accuracy: 0.903561
 2022-02-22 15:25:35,398 - Model - INFO - Test Instance Accuracy: 0.930921, Class Accuracy: 0.923611
 2022-02-22 15:25:35,398 - Model - INFO - Best Instance Accuracy: 0.944079, Class Accuracy: 0.953125
 2022-02-22 15:25:35,398 - Model - INFO - Epoch 4 (233/279):
-2022-02-22 15:25:38,874 - Model - INFO - Training loss 0.0006077849864959717 
-2022-02-22 15:25:41,316 - Model - INFO - Training loss 0.004159908890724182 
-2022-02-22 15:25:44,372 - Model - INFO - Training loss 0.006474331617355346 
+2022-02-22 15:25:38,874 - Model - INFO - Training loss 0.0006077849864959717
+2022-02-22 15:25:41,316 - Model - INFO - Training loss 0.004159908890724182
+2022-02-22 15:25:44,372 - Model - INFO - Training loss 0.006474331617355346
 2022-02-22 15:25:45,614 - Model - INFO - Train Instance Accuracy: 0.903932
 2022-02-22 15:25:47,325 - Model - INFO - Test Instance Accuracy: 0.967105, Class Accuracy: 0.973090
 2022-02-22 15:25:47,325 - Model - INFO - Best Instance Accuracy: 0.967105, Class Accuracy: 0.973090
 2022-02-22 15:25:47,325 - Model - INFO - Save model...
 2022-02-22 15:25:47,325 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-22 15:25:47,391 - Model - INFO - Epoch 5 (234/279):
-2022-02-22 15:25:50,637 - Model - INFO - Training loss 0.0016382543742656708 
-2022-02-22 15:25:53,112 - Model - INFO - Training loss 0.005220123529434204 
-2022-02-22 15:25:56,556 - Model - INFO - Training loss 0.009787497520446777 
+2022-02-22 15:25:50,637 - Model - INFO - Training loss 0.0016382543742656708
+2022-02-22 15:25:53,112 - Model - INFO - Training loss 0.005220123529434204
+2022-02-22 15:25:56,556 - Model - INFO - Training loss 0.009787497520446777
 2022-02-22 15:25:57,684 - Model - INFO - Train Instance Accuracy: 0.913576
 2022-02-22 15:25:59,456 - Model - INFO - Test Instance Accuracy: 0.960526, Class Accuracy: 0.967014
 2022-02-22 15:25:59,456 - Model - INFO - Best Instance Accuracy: 0.967105, Class Accuracy: 0.973090
 2022-02-22 15:25:59,456 - Model - INFO - Epoch 6 (235/279):
-2022-02-22 15:26:02,768 - Model - INFO - Training loss 0.0002653099410235882 
-2022-02-22 15:26:05,970 - Model - INFO - Training loss 0.00047537073493003845 
-2022-02-22 15:26:08,681 - Model - INFO - Training loss 0.002977788746356964 
+2022-02-22 15:26:02,768 - Model - INFO - Training loss 0.0002653099410235882
+2022-02-22 15:26:05,970 - Model - INFO - Training loss 0.00047537073493003845
+2022-02-22 15:26:08,681 - Model - INFO - Training loss 0.002977788746356964
 2022-02-22 15:26:09,626 - Model - INFO - Train Instance Accuracy: 0.922478
 2022-02-22 15:26:11,381 - Model - INFO - Test Instance Accuracy: 0.970395, Class Accuracy: 0.975694
 2022-02-22 15:26:11,381 - Model - INFO - Best Instance Accuracy: 0.970395, Class Accuracy: 0.975694
 2022-02-22 15:26:11,381 - Model - INFO - Save model...
 2022-02-22 15:26:11,381 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-22 15:26:11,458 - Model - INFO - Epoch 7 (236/279):
-2022-02-22 15:26:15,079 - Model - INFO - Training loss 0.0021670405566692353 
-2022-02-22 15:26:18,004 - Model - INFO - Training loss 0.0066847288608551025 
-2022-02-22 15:26:20,590 - Model - INFO - Training loss 0.0009914585947990418 
+2022-02-22 15:26:15,079 - Model - INFO - Training loss 0.0021670405566692353
+2022-02-22 15:26:18,004 - Model - INFO - Training loss 0.0066847288608551025
+2022-02-22 15:26:20,590 - Model - INFO - Training loss 0.0009914585947990418
 2022-02-22 15:26:21,688 - Model - INFO - Train Instance Accuracy: 0.931009
 2022-02-22 15:26:23,419 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:26:23,419 - Model - INFO - Best Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:26:23,419 - Model - INFO - Save model...
 2022-02-22 15:26:23,419 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-22 15:26:23,487 - Model - INFO - Epoch 8 (237/279):
-2022-02-22 15:26:26,993 - Model - INFO - Training loss 0.001948341429233551 
-2022-02-22 15:26:30,034 - Model - INFO - Training loss 0.0017446435987949372 
-2022-02-22 15:26:33,342 - Model - INFO - Training loss 0.00042496345937252043 
+2022-02-22 15:26:26,993 - Model - INFO - Training loss 0.001948341429233551
+2022-02-22 15:26:30,034 - Model - INFO - Training loss 0.0017446435987949372
+2022-02-22 15:26:33,342 - Model - INFO - Training loss 0.00042496345937252043
 2022-02-22 15:26:34,248 - Model - INFO - Train Instance Accuracy: 0.933605
 2022-02-22 15:26:35,981 - Model - INFO - Test Instance Accuracy: 0.990132, Class Accuracy: 0.991319
 2022-02-22 15:26:35,981 - Model - INFO - Best Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:26:35,981 - Model - INFO - Epoch 9 (238/279):
-2022-02-22 15:26:39,350 - Model - INFO - Training loss 0.011326441764831543 
-2022-02-22 15:26:42,174 - Model - INFO - Training loss 0.0012392328679561614 
-2022-02-22 15:26:44,663 - Model - INFO - Training loss 0.00018688911572098732 
+2022-02-22 15:26:39,350 - Model - INFO - Training loss 0.011326441764831543
+2022-02-22 15:26:42,174 - Model - INFO - Training loss 0.0012392328679561614
+2022-02-22 15:26:44,663 - Model - INFO - Training loss 0.00018688911572098732
 2022-02-22 15:26:45,889 - Model - INFO - Train Instance Accuracy: 0.928412
 2022-02-22 15:26:47,775 - Model - INFO - Test Instance Accuracy: 0.976974, Class Accuracy: 0.980903
 2022-02-22 15:26:47,775 - Model - INFO - Best Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:26:47,775 - Model - INFO - Epoch 10 (239/279):
-2022-02-22 15:26:50,891 - Model - INFO - Training loss 0.002920811176300049 
-2022-02-22 15:26:53,633 - Model - INFO - Training loss 0.0004678571596741676 
-2022-02-22 15:26:56,587 - Model - INFO - Training loss 0.004362692832946777 
+2022-02-22 15:26:50,891 - Model - INFO - Training loss 0.002920811176300049
+2022-02-22 15:26:53,633 - Model - INFO - Training loss 0.0004678571596741676
+2022-02-22 15:26:56,587 - Model - INFO - Training loss 0.004362692832946777
 2022-02-22 15:26:57,862 - Model - INFO - Train Instance Accuracy: 0.931009
 2022-02-22 15:26:59,582 - Model - INFO - Test Instance Accuracy: 0.963816, Class Accuracy: 0.965451
 2022-02-22 15:26:59,582 - Model - INFO - Best Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:26:59,582 - Model - INFO - Epoch 11 (240/279):
-2022-02-22 15:27:02,987 - Model - INFO - Training loss 0.0033674043416976928 
-2022-02-22 15:27:05,757 - Model - INFO - Training loss 0.0034245842695236205 
-2022-02-22 15:27:09,390 - Model - INFO - Training loss 0.0009184017777442932 
+2022-02-22 15:27:02,987 - Model - INFO - Training loss 0.0033674043416976928
+2022-02-22 15:27:05,757 - Model - INFO - Training loss 0.0034245842695236205
+2022-02-22 15:27:09,390 - Model - INFO - Training loss 0.0009184017777442932
 2022-02-22 15:27:10,283 - Model - INFO - Train Instance Accuracy: 0.930267
 2022-02-22 15:27:12,087 - Model - INFO - Test Instance Accuracy: 0.986842, Class Accuracy: 0.989583
 2022-02-22 15:27:12,087 - Model - INFO - Best Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:27:12,087 - Model - INFO - Epoch 12 (241/279):
-2022-02-22 15:27:15,666 - Model - INFO - Training loss 0.00035635128617286685 
-2022-02-22 15:27:18,517 - Model - INFO - Training loss 0.0002411499246954918 
-2022-02-22 15:27:20,927 - Model - INFO - Training loss 0.00018376914784312248 
+2022-02-22 15:27:15,666 - Model - INFO - Training loss 0.00035635128617286685
+2022-02-22 15:27:18,517 - Model - INFO - Training loss 0.0002411499246954918
+2022-02-22 15:27:20,927 - Model - INFO - Training loss 0.00018376914784312248
 2022-02-22 15:27:22,250 - Model - INFO - Train Instance Accuracy: 0.938427
 2022-02-22 15:27:23,973 - Model - INFO - Test Instance Accuracy: 0.990132, Class Accuracy: 0.991319
 2022-02-22 15:27:23,973 - Model - INFO - Best Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:27:23,974 - Model - INFO - Epoch 13 (242/279):
-2022-02-22 15:27:27,537 - Model - INFO - Training loss 0.00433392733335495 
-2022-02-22 15:27:30,019 - Model - INFO - Training loss 0.0004998856037855148 
-2022-02-22 15:27:32,648 - Model - INFO - Training loss 0.005085678696632385 
+2022-02-22 15:27:27,537 - Model - INFO - Training loss 0.00433392733335495
+2022-02-22 15:27:30,019 - Model - INFO - Training loss 0.0004998856037855148
+2022-02-22 15:27:32,648 - Model - INFO - Training loss 0.005085678696632385
 2022-02-22 15:27:33,504 - Model - INFO - Train Instance Accuracy: 0.935831
 2022-02-22 15:27:35,297 - Model - INFO - Test Instance Accuracy: 0.983553, Class Accuracy: 0.986111
 2022-02-22 15:27:35,298 - Model - INFO - Best Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:27:35,298 - Model - INFO - Epoch 14 (243/279):
-2022-02-22 15:27:38,925 - Model - INFO - Training loss 0.0005425457656383514 
-2022-02-22 15:27:41,472 - Model - INFO - Training loss 0.0003628409281373024 
-2022-02-22 15:27:44,023 - Model - INFO - Training loss 0.004710569977760315 
+2022-02-22 15:27:38,925 - Model - INFO - Training loss 0.0005425457656383514
+2022-02-22 15:27:41,472 - Model - INFO - Training loss 0.0003628409281373024
+2022-02-22 15:27:44,023 - Model - INFO - Training loss 0.004710569977760315
 2022-02-22 15:27:45,169 - Model - INFO - Train Instance Accuracy: 0.946217
 2022-02-22 15:27:46,852 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:27:46,852 - Model - INFO - Best Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:27:46,852 - Model - INFO - Save model...
 2022-02-22 15:27:46,852 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-22 15:27:46,917 - Model - INFO - Epoch 15 (244/279):
-2022-02-22 15:27:50,357 - Model - INFO - Training loss 0.0019117680191993714 
-2022-02-22 15:27:53,495 - Model - INFO - Training loss 0.002397034168243408 
-2022-02-22 15:27:56,022 - Model - INFO - Training loss 0.0009693952649831772 
+2022-02-22 15:27:50,357 - Model - INFO - Training loss 0.0019117680191993714
+2022-02-22 15:27:53,495 - Model - INFO - Training loss 0.002397034168243408
+2022-02-22 15:27:56,022 - Model - INFO - Training loss 0.0009693952649831772
 2022-02-22 15:27:57,204 - Model - INFO - Train Instance Accuracy: 0.936202
 2022-02-22 15:27:58,973 - Model - INFO - Test Instance Accuracy: 0.986842, Class Accuracy: 0.989583
 2022-02-22 15:27:58,974 - Model - INFO - Best Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:27:58,974 - Model - INFO - Epoch 16 (245/279):
-2022-02-22 15:28:02,526 - Model - INFO - Training loss 0.004278218448162079 
-2022-02-22 15:28:05,153 - Model - INFO - Training loss 0.0005075111240148545 
-2022-02-22 15:28:08,028 - Model - INFO - Training loss 9.005407802760601e-05 
+2022-02-22 15:28:02,526 - Model - INFO - Training loss 0.004278218448162079
+2022-02-22 15:28:05,153 - Model - INFO - Training loss 0.0005075111240148545
+2022-02-22 15:28:08,028 - Model - INFO - Training loss 9.005407802760601e-05
 2022-02-22 15:28:09,078 - Model - INFO - Train Instance Accuracy: 0.947329
 2022-02-22 15:28:10,815 - Model - INFO - Test Instance Accuracy: 0.986842, Class Accuracy: 0.988715
 2022-02-22 15:28:10,815 - Model - INFO - Best Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:28:10,815 - Model - INFO - Epoch 17 (246/279):
-2022-02-22 15:28:14,465 - Model - INFO - Training loss 0.007733975648880005 
-2022-02-22 15:28:17,234 - Model - INFO - Training loss 0.01050491452217102 
-2022-02-22 15:28:20,225 - Model - INFO - Training loss 0.0002547103725373745 
+2022-02-22 15:28:14,465 - Model - INFO - Training loss 0.007733975648880005
+2022-02-22 15:28:17,234 - Model - INFO - Training loss 0.01050491452217102
+2022-02-22 15:28:20,225 - Model - INFO - Training loss 0.0002547103725373745
 2022-02-22 15:28:21,362 - Model - INFO - Train Instance Accuracy: 0.938056
 2022-02-22 15:28:23,097 - Model - INFO - Test Instance Accuracy: 0.993421, Class Accuracy: 0.994792
 2022-02-22 15:28:23,097 - Model - INFO - Best Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:28:23,098 - Model - INFO - Epoch 18 (247/279):
-2022-02-22 15:28:26,392 - Model - INFO - Training loss 0.0022186610102653504 
-2022-02-22 15:28:29,583 - Model - INFO - Training loss 0.0006459753215312958 
-2022-02-22 15:28:32,527 - Model - INFO - Training loss 0.0002866877615451813 
+2022-02-22 15:28:26,392 - Model - INFO - Training loss 0.0022186610102653504
+2022-02-22 15:28:29,583 - Model - INFO - Training loss 0.0006459753215312958
+2022-02-22 15:28:32,527 - Model - INFO - Training loss 0.0002866877615451813
 2022-02-22 15:28:33,488 - Model - INFO - Train Instance Accuracy: 0.950668
 2022-02-22 15:28:35,182 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:28:35,183 - Model - INFO - Best Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:28:35,183 - Model - INFO - Save model...
 2022-02-22 15:28:35,183 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-22 15:28:35,248 - Model - INFO - Epoch 19 (248/279):
-2022-02-22 15:28:38,613 - Model - INFO - Training loss 6.0977819375693796e-05 
-2022-02-22 15:28:41,182 - Model - INFO - Training loss 0.0004257865995168686 
-2022-02-22 15:28:44,160 - Model - INFO - Training loss 0.011848096847534179 
+2022-02-22 15:28:38,613 - Model - INFO - Training loss 6.0977819375693796e-05
+2022-02-22 15:28:41,182 - Model - INFO - Training loss 0.0004257865995168686
+2022-02-22 15:28:44,160 - Model - INFO - Training loss 0.011848096847534179
 2022-02-22 15:28:44,836 - Model - INFO - Train Instance Accuracy: 0.942507
 2022-02-22 15:28:46,558 - Model - INFO - Test Instance Accuracy: 0.894737, Class Accuracy: 0.896329
 2022-02-22 15:28:46,558 - Model - INFO - Best Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:28:46,558 - Model - INFO - Epoch 20 (249/279):
-2022-02-22 15:28:50,212 - Model - INFO - Training loss 0.00037004712969064714 
-2022-02-22 15:28:52,298 - Model - INFO - Training loss 0.0004002047702670097 
-2022-02-22 15:28:55,205 - Model - INFO - Training loss 0.0038142868876457213 
+2022-02-22 15:28:50,212 - Model - INFO - Training loss 0.00037004712969064714
+2022-02-22 15:28:52,298 - Model - INFO - Training loss 0.0004002047702670097
+2022-02-22 15:28:55,205 - Model - INFO - Training loss 0.0038142868876457213
 2022-02-22 15:28:56,186 - Model - INFO - Train Instance Accuracy: 0.945475
 2022-02-22 15:28:58,009 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:28:58,009 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:28:58,009 - Model - INFO - Save model...
 2022-02-22 15:28:58,009 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-22 15:28:58,081 - Model - INFO - Epoch 21 (250/279):
-2022-02-22 15:29:01,605 - Model - INFO - Training loss 0.0007469700276851654 
-2022-02-22 15:29:04,095 - Model - INFO - Training loss 0.001800806075334549 
-2022-02-22 15:29:06,938 - Model - INFO - Training loss 4.924679175019264e-05 
+2022-02-22 15:29:01,605 - Model - INFO - Training loss 0.0007469700276851654
+2022-02-22 15:29:04,095 - Model - INFO - Training loss 0.001800806075334549
+2022-02-22 15:29:06,938 - Model - INFO - Training loss 4.924679175019264e-05
 2022-02-22 15:29:07,962 - Model - INFO - Train Instance Accuracy: 0.953264
 2022-02-22 15:29:09,688 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:29:09,689 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:29:09,689 - Model - INFO - Save model...
 2022-02-22 15:29:09,689 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-22 15:29:09,754 - Model - INFO - Epoch 22 (251/279):
-2022-02-22 15:29:13,137 - Model - INFO - Training loss 0.0005503006279468537 
-2022-02-22 15:29:15,814 - Model - INFO - Training loss 7.39569403231144e-05 
-2022-02-22 15:29:18,342 - Model - INFO - Training loss 0.00022084180265665053 
+2022-02-22 15:29:13,137 - Model - INFO - Training loss 0.0005503006279468537
+2022-02-22 15:29:15,814 - Model - INFO - Training loss 7.39569403231144e-05
+2022-02-22 15:29:18,342 - Model - INFO - Training loss 0.00022084180265665053
 2022-02-22 15:29:19,317 - Model - INFO - Train Instance Accuracy: 0.956973
 2022-02-22 15:29:21,029 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:29:21,030 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:29:21,030 - Model - INFO - Epoch 23 (252/279):
-2022-02-22 15:29:24,353 - Model - INFO - Training loss 0.000661507248878479 
-2022-02-22 15:29:26,860 - Model - INFO - Training loss 0.001345568895339966 
-2022-02-22 15:29:29,744 - Model - INFO - Training loss 0.0018986505270004272 
+2022-02-22 15:29:24,353 - Model - INFO - Training loss 0.000661507248878479
+2022-02-22 15:29:26,860 - Model - INFO - Training loss 0.001345568895339966
+2022-02-22 15:29:29,744 - Model - INFO - Training loss 0.0018986505270004272
 2022-02-22 15:29:30,585 - Model - INFO - Train Instance Accuracy: 0.951409
 2022-02-22 15:29:32,335 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.994792
 2022-02-22 15:29:32,335 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:29:32,336 - Model - INFO - Epoch 24 (253/279):
-2022-02-22 15:29:35,739 - Model - INFO - Training loss 0.004433991014957428 
-2022-02-22 15:29:38,578 - Model - INFO - Training loss 0.00033172309398651125 
-2022-02-22 15:29:41,500 - Model - INFO - Training loss 0.002157275527715683 
+2022-02-22 15:29:35,739 - Model - INFO - Training loss 0.004433991014957428
+2022-02-22 15:29:38,578 - Model - INFO - Training loss 0.00033172309398651125
+2022-02-22 15:29:41,500 - Model - INFO - Training loss 0.002157275527715683
 2022-02-22 15:29:42,321 - Model - INFO - Train Instance Accuracy: 0.952522
 2022-02-22 15:29:44,317 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:29:44,317 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:29:44,317 - Model - INFO - Epoch 25 (254/279):
-2022-02-22 15:29:47,739 - Model - INFO - Training loss 0.0001226103398948908 
-2022-02-22 15:29:50,233 - Model - INFO - Training loss 0.005981967449188232 
-2022-02-22 15:29:53,517 - Model - INFO - Training loss 0.004257082939147949 
+2022-02-22 15:29:47,739 - Model - INFO - Training loss 0.0001226103398948908
+2022-02-22 15:29:50,233 - Model - INFO - Training loss 0.005981967449188232
+2022-02-22 15:29:53,517 - Model - INFO - Training loss 0.004257082939147949
 2022-02-22 15:29:54,441 - Model - INFO - Train Instance Accuracy: 0.956973
 2022-02-22 15:29:56,276 - Model - INFO - Test Instance Accuracy: 0.993421, Class Accuracy: 0.994792
 2022-02-22 15:29:56,276 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:29:56,276 - Model - INFO - Epoch 26 (255/279):
-2022-02-22 15:30:00,313 - Model - INFO - Training loss 0.0002933504804968834 
-2022-02-22 15:30:02,851 - Model - INFO - Training loss 3.8563483394682406e-05 
-2022-02-22 15:30:05,677 - Model - INFO - Training loss 0.000142015740275383 
+2022-02-22 15:30:00,313 - Model - INFO - Training loss 0.0002933504804968834
+2022-02-22 15:30:02,851 - Model - INFO - Training loss 3.8563483394682406e-05
+2022-02-22 15:30:05,677 - Model - INFO - Training loss 0.000142015740275383
 2022-02-22 15:30:06,690 - Model - INFO - Train Instance Accuracy: 0.959570
 2022-02-22 15:30:08,480 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:30:08,481 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:30:08,481 - Model - INFO - Save model...
 2022-02-22 15:30:08,481 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-22 15:30:08,552 - Model - INFO - Epoch 27 (256/279):
-2022-02-22 15:30:12,316 - Model - INFO - Training loss 0.0005940040946006775 
-2022-02-22 15:30:14,978 - Model - INFO - Training loss 0.0004207465425133705 
-2022-02-22 15:30:17,597 - Model - INFO - Training loss 0.00019591880962252617 
+2022-02-22 15:30:12,316 - Model - INFO - Training loss 0.0005940040946006775
+2022-02-22 15:30:14,978 - Model - INFO - Training loss 0.0004207465425133705
+2022-02-22 15:30:17,597 - Model - INFO - Training loss 0.00019591880962252617
 2022-02-22 15:30:18,591 - Model - INFO - Train Instance Accuracy: 0.958828
 2022-02-22 15:30:20,423 - Model - INFO - Test Instance Accuracy: 0.986842, Class Accuracy: 0.989583
 2022-02-22 15:30:20,424 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:30:20,424 - Model - INFO - Epoch 28 (257/279):
-2022-02-22 15:30:23,871 - Model - INFO - Training loss 0.0009475641697645188 
-2022-02-22 15:30:26,622 - Model - INFO - Training loss 0.003347978889942169 
-2022-02-22 15:30:29,252 - Model - INFO - Training loss 8.981976658105851e-05 
+2022-02-22 15:30:23,871 - Model - INFO - Training loss 0.0009475641697645188
+2022-02-22 15:30:26,622 - Model - INFO - Training loss 0.003347978889942169
+2022-02-22 15:30:29,252 - Model - INFO - Training loss 8.981976658105851e-05
 2022-02-22 15:30:30,005 - Model - INFO - Train Instance Accuracy: 0.952151
 2022-02-22 15:30:31,776 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.996528
 2022-02-22 15:30:31,776 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:30:31,777 - Model - INFO - Epoch 29 (258/279):
-2022-02-22 15:30:35,513 - Model - INFO - Training loss 0.0007728461176156997 
-2022-02-22 15:30:38,523 - Model - INFO - Training loss 0.0005975161492824554 
-2022-02-22 15:30:41,030 - Model - INFO - Training loss 4.393735434859991e-05 
+2022-02-22 15:30:35,513 - Model - INFO - Training loss 0.0007728461176156997
+2022-02-22 15:30:38,523 - Model - INFO - Training loss 0.0005975161492824554
+2022-02-22 15:30:41,030 - Model - INFO - Training loss 4.393735434859991e-05
 2022-02-22 15:30:42,160 - Model - INFO - Train Instance Accuracy: 0.951409
 2022-02-22 15:30:43,927 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:30:43,927 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:30:43,927 - Model - INFO - Save model...
 2022-02-22 15:30:43,927 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-22 15:30:43,997 - Model - INFO - Epoch 30 (259/279):
-2022-02-22 15:30:47,618 - Model - INFO - Training loss 0.007450141906738281 
-2022-02-22 15:30:50,317 - Model - INFO - Training loss 0.003607145845890045 
-2022-02-22 15:30:53,160 - Model - INFO - Training loss 0.00020996998995542526 
+2022-02-22 15:30:47,618 - Model - INFO - Training loss 0.007450141906738281
+2022-02-22 15:30:50,317 - Model - INFO - Training loss 0.003607145845890045
+2022-02-22 15:30:53,160 - Model - INFO - Training loss 0.00020996998995542526
 2022-02-22 15:30:54,156 - Model - INFO - Train Instance Accuracy: 0.957344
 2022-02-22 15:30:55,958 - Model - INFO - Test Instance Accuracy: 0.986842, Class Accuracy: 0.989583
 2022-02-22 15:30:55,958 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:30:55,958 - Model - INFO - Epoch 31 (260/279):
-2022-02-22 15:30:59,326 - Model - INFO - Training loss 0.00015878833830356597 
-2022-02-22 15:31:02,166 - Model - INFO - Training loss 5.9630945324897764e-05 
-2022-02-22 15:31:04,684 - Model - INFO - Training loss 0.0001687958836555481 
+2022-02-22 15:30:59,326 - Model - INFO - Training loss 0.00015878833830356597
+2022-02-22 15:31:02,166 - Model - INFO - Training loss 5.9630945324897764e-05
+2022-02-22 15:31:04,684 - Model - INFO - Training loss 0.0001687958836555481
 2022-02-22 15:31:05,634 - Model - INFO - Train Instance Accuracy: 0.963279
 2022-02-22 15:31:07,410 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:31:07,411 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:31:07,411 - Model - INFO - Epoch 32 (261/279):
-2022-02-22 15:31:11,049 - Model - INFO - Training loss 4.557954147458077e-05 
-2022-02-22 15:31:14,091 - Model - INFO - Training loss 0.00631493866443634 
-2022-02-22 15:31:16,730 - Model - INFO - Training loss 0.0004458517953753471 
+2022-02-22 15:31:11,049 - Model - INFO - Training loss 4.557954147458077e-05
+2022-02-22 15:31:14,091 - Model - INFO - Training loss 0.00631493866443634
+2022-02-22 15:31:16,730 - Model - INFO - Training loss 0.0004458517953753471
 2022-02-22 15:31:17,824 - Model - INFO - Train Instance Accuracy: 0.957344
 2022-02-22 15:31:19,658 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.989583
 2022-02-22 15:31:19,659 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:31:19,659 - Model - INFO - Epoch 33 (262/279):
-2022-02-22 15:31:23,199 - Model - INFO - Training loss 0.0001951485313475132 
-2022-02-22 15:31:26,134 - Model - INFO - Training loss 0.00023637617006897927 
-2022-02-22 15:31:28,828 - Model - INFO - Training loss 0.00010756312869489193 
+2022-02-22 15:31:23,199 - Model - INFO - Training loss 0.0001951485313475132
+2022-02-22 15:31:26,134 - Model - INFO - Training loss 0.00023637617006897927
+2022-02-22 15:31:28,828 - Model - INFO - Training loss 0.00010756312869489193
 2022-02-22 15:31:30,052 - Model - INFO - Train Instance Accuracy: 0.959199
 2022-02-22 15:31:31,793 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.994792
 2022-02-22 15:31:31,793 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:31:31,793 - Model - INFO - Epoch 34 (263/279):
-2022-02-22 15:31:35,243 - Model - INFO - Training loss 0.0005105627700686455 
-2022-02-22 15:31:37,959 - Model - INFO - Training loss 4.7977366484701634e-05 
-2022-02-22 15:31:40,655 - Model - INFO - Training loss 0.002277418226003647 
+2022-02-22 15:31:35,243 - Model - INFO - Training loss 0.0005105627700686455
+2022-02-22 15:31:37,959 - Model - INFO - Training loss 4.7977366484701634e-05
+2022-02-22 15:31:40,655 - Model - INFO - Training loss 0.002277418226003647
 2022-02-22 15:31:41,512 - Model - INFO - Train Instance Accuracy: 0.958457
 2022-02-22 15:31:43,417 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:31:43,417 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:31:43,417 - Model - INFO - Epoch 35 (264/279):
-2022-02-22 15:31:47,116 - Model - INFO - Training loss 0.00018090233206748962 
-2022-02-22 15:31:49,453 - Model - INFO - Training loss 0.00166719451546669 
-2022-02-22 15:31:52,209 - Model - INFO - Training loss 0.0008610159158706665 
+2022-02-22 15:31:47,116 - Model - INFO - Training loss 0.00018090233206748962
+2022-02-22 15:31:49,453 - Model - INFO - Training loss 0.00166719451546669
+2022-02-22 15:31:52,209 - Model - INFO - Training loss 0.0008610159158706665
 2022-02-22 15:31:53,402 - Model - INFO - Train Instance Accuracy: 0.951409
 2022-02-22 15:31:55,189 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:31:55,189 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:31:55,189 - Model - INFO - Save model...
 2022-02-22 15:31:55,190 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-22 15:31:55,266 - Model - INFO - Epoch 36 (265/279):
-2022-02-22 15:31:58,545 - Model - INFO - Training loss 0.0008811186254024506 
-2022-02-22 15:32:01,207 - Model - INFO - Training loss 5.148185882717371e-05 
-2022-02-22 15:32:03,900 - Model - INFO - Training loss 9.207947179675102e-05 
+2022-02-22 15:31:58,545 - Model - INFO - Training loss 0.0008811186254024506
+2022-02-22 15:32:01,207 - Model - INFO - Training loss 5.148185882717371e-05
+2022-02-22 15:32:03,900 - Model - INFO - Training loss 9.207947179675102e-05
 2022-02-22 15:32:05,030 - Model - INFO - Train Instance Accuracy: 0.959199
 2022-02-22 15:32:06,793 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:32:06,793 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:32:06,793 - Model - INFO - Epoch 37 (266/279):
-2022-02-22 15:32:10,277 - Model - INFO - Training loss 8.28743539750576e-05 
-2022-02-22 15:32:12,912 - Model - INFO - Training loss 0.0007888190448284149 
-2022-02-22 15:32:16,453 - Model - INFO - Training loss 0.00010364436544477939 
+2022-02-22 15:32:10,277 - Model - INFO - Training loss 8.28743539750576e-05
+2022-02-22 15:32:12,912 - Model - INFO - Training loss 0.0007888190448284149
+2022-02-22 15:32:16,453 - Model - INFO - Training loss 0.00010364436544477939
 2022-02-22 15:32:17,408 - Model - INFO - Train Instance Accuracy: 0.958457
 2022-02-22 15:32:19,199 - Model - INFO - Test Instance Accuracy: 0.990132, Class Accuracy: 0.989583
 2022-02-22 15:32:19,200 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:32:19,200 - Model - INFO - Epoch 38 (267/279):
-2022-02-22 15:32:22,517 - Model - INFO - Training loss 0.002011149823665619 
-2022-02-22 15:32:24,912 - Model - INFO - Training loss 0.00029245935380458834 
-2022-02-22 15:32:27,632 - Model - INFO - Training loss 0.0004252417385578156 
+2022-02-22 15:32:22,517 - Model - INFO - Training loss 0.002011149823665619
+2022-02-22 15:32:24,912 - Model - INFO - Training loss 0.00029245935380458834
+2022-02-22 15:32:27,632 - Model - INFO - Training loss 0.0004252417385578156
 2022-02-22 15:32:28,834 - Model - INFO - Train Instance Accuracy: 0.957344
 2022-02-22 15:32:30,553 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:32:30,553 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:32:30,553 - Model - INFO - Save model...
 2022-02-22 15:32:30,554 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-22 15:32:30,637 - Model - INFO - Epoch 39 (268/279):
-2022-02-22 15:32:34,137 - Model - INFO - Training loss 0.003643016219139099 
-2022-02-22 15:32:36,457 - Model - INFO - Training loss 0.0013711541891098023 
-2022-02-22 15:32:39,200 - Model - INFO - Training loss 0.00045840006321668626 
+2022-02-22 15:32:34,137 - Model - INFO - Training loss 0.003643016219139099
+2022-02-22 15:32:36,457 - Model - INFO - Training loss 0.0013711541891098023
+2022-02-22 15:32:39,200 - Model - INFO - Training loss 0.00045840006321668626
 2022-02-22 15:32:40,200 - Model - INFO - Train Instance Accuracy: 0.960682
 2022-02-22 15:32:41,930 - Model - INFO - Test Instance Accuracy: 0.993421, Class Accuracy: 0.994792
 2022-02-22 15:32:41,930 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:32:41,930 - Model - INFO - Epoch 40 (269/279):
-2022-02-22 15:32:45,336 - Model - INFO - Training loss 0.0010819689184427262 
-2022-02-22 15:32:47,922 - Model - INFO - Training loss 3.811622504144907e-05 
-2022-02-22 15:32:50,811 - Model - INFO - Training loss 3.5431580618023875e-05 
+2022-02-22 15:32:45,336 - Model - INFO - Training loss 0.0010819689184427262
+2022-02-22 15:32:47,922 - Model - INFO - Training loss 3.811622504144907e-05
+2022-02-22 15:32:50,811 - Model - INFO - Training loss 3.5431580618023875e-05
 2022-02-22 15:32:51,809 - Model - INFO - Train Instance Accuracy: 0.964392
 2022-02-22 15:32:53,632 - Model - INFO - Test Instance Accuracy: 0.993421, Class Accuracy: 0.993924
 2022-02-22 15:32:53,632 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:32:53,632 - Model - INFO - Epoch 41 (270/279):
-2022-02-22 15:32:57,262 - Model - INFO - Training loss 0.0001282826717942953 
-2022-02-22 15:33:00,246 - Model - INFO - Training loss 0.00022614460438489915 
-2022-02-22 15:33:02,612 - Model - INFO - Training loss 0.0010904427617788315 
+2022-02-22 15:32:57,262 - Model - INFO - Training loss 0.0001282826717942953
+2022-02-22 15:33:00,246 - Model - INFO - Training loss 0.00022614460438489915
+2022-02-22 15:33:02,612 - Model - INFO - Training loss 0.0010904427617788315
 2022-02-22 15:33:03,896 - Model - INFO - Train Instance Accuracy: 0.958086
 2022-02-22 15:33:05,864 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:33:05,864 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:33:05,864 - Model - INFO - Save model...
 2022-02-22 15:33:05,864 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-22 15:33:05,924 - Model - INFO - Epoch 42 (271/279):
-2022-02-22 15:33:09,537 - Model - INFO - Training loss 0.0002192331477999687 
-2022-02-22 15:33:12,267 - Model - INFO - Training loss 0.005863981246948242 
-2022-02-22 15:33:14,656 - Model - INFO - Training loss 0.00017183035612106323 
+2022-02-22 15:33:09,537 - Model - INFO - Training loss 0.0002192331477999687
+2022-02-22 15:33:12,267 - Model - INFO - Training loss 0.005863981246948242
+2022-02-22 15:33:14,656 - Model - INFO - Training loss 0.00017183035612106323
 2022-02-22 15:33:15,933 - Model - INFO - Train Instance Accuracy: 0.968101
 2022-02-22 15:33:17,792 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:33:17,793 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:33:17,793 - Model - INFO - Epoch 43 (272/279):
-2022-02-22 15:33:21,012 - Model - INFO - Training loss 0.00031565707176923753 
-2022-02-22 15:33:23,955 - Model - INFO - Training loss 0.00034022137522697447 
-2022-02-22 15:33:27,012 - Model - INFO - Training loss 3.3018661197274925e-05 
+2022-02-22 15:33:21,012 - Model - INFO - Training loss 0.00031565707176923753
+2022-02-22 15:33:23,955 - Model - INFO - Training loss 0.00034022137522697447
+2022-02-22 15:33:27,012 - Model - INFO - Training loss 3.3018661197274925e-05
 2022-02-22 15:33:28,069 - Model - INFO - Train Instance Accuracy: 0.972181
 2022-02-22 15:33:29,972 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:33:29,972 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:33:29,972 - Model - INFO - Epoch 44 (273/279):
-2022-02-22 15:33:33,352 - Model - INFO - Training loss 0.0003940687328577042 
-2022-02-22 15:33:36,031 - Model - INFO - Training loss 0.0011869294196367264 
-2022-02-22 15:33:38,747 - Model - INFO - Training loss 0.004022147059440612 
+2022-02-22 15:33:33,352 - Model - INFO - Training loss 0.0003940687328577042
+2022-02-22 15:33:36,031 - Model - INFO - Training loss 0.0011869294196367264
+2022-02-22 15:33:38,747 - Model - INFO - Training loss 0.004022147059440612
 2022-02-22 15:33:39,669 - Model - INFO - Train Instance Accuracy: 0.968101
 2022-02-22 15:33:41,549 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:33:41,549 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:33:41,549 - Model - INFO - Save model...
 2022-02-22 15:33:41,549 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-22 15:33:41,615 - Model - INFO - Epoch 45 (274/279):
-2022-02-22 15:33:45,058 - Model - INFO - Training loss 0.00015027405694127084 
-2022-02-22 15:33:47,628 - Model - INFO - Training loss 7.04916100949049e-05 
-2022-02-22 15:33:50,572 - Model - INFO - Training loss 0.00040264271199703217 
+2022-02-22 15:33:45,058 - Model - INFO - Training loss 0.00015027405694127084
+2022-02-22 15:33:47,628 - Model - INFO - Training loss 7.04916100949049e-05
+2022-02-22 15:33:50,572 - Model - INFO - Training loss 0.00040264271199703217
 2022-02-22 15:33:51,468 - Model - INFO - Train Instance Accuracy: 0.965134
 2022-02-22 15:33:53,261 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:33:53,261 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:33:53,261 - Model - INFO - Save model...
 2022-02-22 15:33:53,261 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-22 15:33:53,338 - Model - INFO - Epoch 46 (275/279):
-2022-02-22 15:33:56,899 - Model - INFO - Training loss 0.0005508692935109139 
-2022-02-22 15:33:59,971 - Model - INFO - Training loss 0.00010856381617486476 
-2022-02-22 15:34:02,864 - Model - INFO - Training loss 6.089554168283939e-05 
+2022-02-22 15:33:56,899 - Model - INFO - Training loss 0.0005508692935109139
+2022-02-22 15:33:59,971 - Model - INFO - Training loss 0.00010856381617486476
+2022-02-22 15:34:02,864 - Model - INFO - Training loss 6.089554168283939e-05
 2022-02-22 15:34:03,842 - Model - INFO - Train Instance Accuracy: 0.966617
 2022-02-22 15:34:05,626 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:34:05,626 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:34:05,627 - Model - INFO - Save model...
 2022-02-22 15:34:05,627 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-22 15:34:05,709 - Model - INFO - Epoch 47 (276/279):
-2022-02-22 15:34:08,920 - Model - INFO - Training loss 8.69893655180931e-05 
-2022-02-22 15:34:11,965 - Model - INFO - Training loss 0.00035423316061496737 
-2022-02-22 15:34:14,445 - Model - INFO - Training loss 0.0007662742584943771 
+2022-02-22 15:34:08,920 - Model - INFO - Training loss 8.69893655180931e-05
+2022-02-22 15:34:11,965 - Model - INFO - Training loss 0.00035423316061496737
+2022-02-22 15:34:14,445 - Model - INFO - Training loss 0.0007662742584943771
 2022-02-22 15:34:15,528 - Model - INFO - Train Instance Accuracy: 0.965134
 2022-02-22 15:34:17,271 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:34:17,272 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:34:17,272 - Model - INFO - Save model...
 2022-02-22 15:34:17,272 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-22 15:34:17,355 - Model - INFO - Epoch 48 (277/279):
-2022-02-22 15:34:20,676 - Model - INFO - Training loss 0.00018614768981933594 
-2022-02-22 15:34:23,389 - Model - INFO - Training loss 0.00018130654469132425 
-2022-02-22 15:34:25,849 - Model - INFO - Training loss 0.00018345542252063752 
+2022-02-22 15:34:20,676 - Model - INFO - Training loss 0.00018614768981933594
+2022-02-22 15:34:23,389 - Model - INFO - Training loss 0.00018130654469132425
+2022-02-22 15:34:25,849 - Model - INFO - Training loss 0.00018345542252063752
 2022-02-22 15:34:27,037 - Model - INFO - Train Instance Accuracy: 0.973294
 2022-02-22 15:34:28,819 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-22 15:34:28,819 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:34:28,819 - Model - INFO - Epoch 49 (278/279):
-2022-02-22 15:34:31,992 - Model - INFO - Training loss 0.0009460017830133439 
-2022-02-22 15:34:35,468 - Model - INFO - Training loss 3.023426281288266e-05 
-2022-02-22 15:34:37,953 - Model - INFO - Training loss 4.2744581587612626e-05 
+2022-02-22 15:34:31,992 - Model - INFO - Training loss 0.0009460017830133439
+2022-02-22 15:34:35,468 - Model - INFO - Training loss 3.023426281288266e-05
+2022-02-22 15:34:37,953 - Model - INFO - Training loss 4.2744581587612626e-05
 2022-02-22 15:34:39,198 - Model - INFO - Train Instance Accuracy: 0.968472
 2022-02-22 15:34:40,944 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:34:40,945 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:34:40,945 - Model - INFO - Save model...
 2022-02-22 15:34:40,945 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-22 15:34:41,011 - Model - INFO - Epoch 50 (279/279):
-2022-02-22 15:34:44,515 - Model - INFO - Training loss 0.0001793604902923107 
-2022-02-22 15:34:47,161 - Model - INFO - Training loss 0.00019837651401758194 
-2022-02-22 15:34:49,878 - Model - INFO - Training loss 0.00015692915767431259 
+2022-02-22 15:34:44,515 - Model - INFO - Training loss 0.0001793604902923107
+2022-02-22 15:34:47,161 - Model - INFO - Training loss 0.00019837651401758194
+2022-02-22 15:34:49,878 - Model - INFO - Training loss 0.00015692915767431259
 2022-02-22 15:34:51,163 - Model - INFO - Train Instance Accuracy: 0.973294
 2022-02-22 15:34:53,194 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-22 15:34:53,194 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
@@ -1706,7 +1706,7 @@
 2022-02-23 12:03:32,016 - Model - INFO - Use pretrain model
 2022-02-23 12:03:32,017 - Model - INFO - Start training...
 2022-02-23 12:03:32,017 - Model - INFO - Epoch 1 (280/299):
-2022-02-23 12:03:35,969 - Model - INFO - Running DA loss 53.73614248275757 
+2022-02-23 12:03:35,969 - Model - INFO - Running DA loss 53.73614248275757
 2022-02-23 12:03:35,970 - Model - INFO - Save model...
 2022-02-23 12:03:35,970 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-23 12:03:36,444 - Model - INFO - Train Instance Accuracy: 0.970000
@@ -1714,7 +1714,7 @@
 2022-02-23 12:03:38,215 - Model - INFO - Best Instance Accuracy: 0.993421, Class Accuracy: 0.994792
 2022-02-23 12:03:38,215 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 12:03:38,215 - Model - INFO - Epoch 2 (281/299):
-2022-02-23 12:03:42,337 - Model - INFO - Running DA loss 49.98455707550049 
+2022-02-23 12:03:42,337 - Model - INFO - Running DA loss 49.98455707550049
 2022-02-23 12:03:42,337 - Model - INFO - Save model...
 2022-02-23 12:03:42,337 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-23 12:03:42,736 - Model - INFO - Train Instance Accuracy: 0.997500
@@ -1722,19 +1722,19 @@
 2022-02-23 12:03:44,478 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:03:44,478 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 12:03:44,478 - Model - INFO - Epoch 3 (282/299):
-2022-02-23 12:03:48,725 - Model - INFO - Running DA loss 51.58828067779541 
+2022-02-23 12:03:48,725 - Model - INFO - Running DA loss 51.58828067779541
 2022-02-23 12:03:49,044 - Model - INFO - Train Instance Accuracy: 0.997500
 2022-02-23 12:03:50,907 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:03:50,907 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:03:50,907 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 12:03:50,907 - Model - INFO - Epoch 4 (283/299):
-2022-02-23 12:03:55,691 - Model - INFO - Running DA loss 51.20167633056641 
+2022-02-23 12:03:55,691 - Model - INFO - Running DA loss 51.20167633056641
 2022-02-23 12:03:56,121 - Model - INFO - Train Instance Accuracy: 0.995000
 2022-02-23 12:03:57,995 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:03:57,996 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:03:57,996 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 12:03:57,996 - Model - INFO - Epoch 5 (284/299):
-2022-02-23 12:04:02,490 - Model - INFO - Running DA loss 49.50920091629028 
+2022-02-23 12:04:02,490 - Model - INFO - Running DA loss 49.50920091629028
 2022-02-23 12:04:02,490 - Model - INFO - Save model...
 2022-02-23 12:04:02,490 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-23 12:04:02,728 - Model - INFO - Train Instance Accuracy: 0.997500
@@ -1742,88 +1742,88 @@
 2022-02-23 12:04:04,637 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:04:04,637 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 12:04:04,637 - Model - INFO - Epoch 6 (285/299):
-2022-02-23 12:04:09,059 - Model - INFO - Running DA loss 51.282232398986814 
+2022-02-23 12:04:09,059 - Model - INFO - Running DA loss 51.282232398986814
 2022-02-23 12:04:09,383 - Model - INFO - Train Instance Accuracy: 0.993750
 2022-02-23 12:04:11,220 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-23 12:04:11,220 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:04:11,220 - Model - INFO - Epoch 7 (286/299):
-2022-02-23 12:04:16,275 - Model - INFO - Running DA loss 50.73252374649048 
+2022-02-23 12:04:16,275 - Model - INFO - Running DA loss 50.73252374649048
 2022-02-23 12:04:16,732 - Model - INFO - Train Instance Accuracy: 0.996250
 2022-02-23 12:04:18,711 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:04:18,711 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:04:18,711 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 12:04:18,711 - Model - INFO - Epoch 8 (287/299):
-2022-02-23 12:04:23,565 - Model - INFO - Running DA loss 53.73457092285156 
+2022-02-23 12:04:23,565 - Model - INFO - Running DA loss 53.73457092285156
 2022-02-23 12:04:24,082 - Model - INFO - Train Instance Accuracy: 1.000000
 2022-02-23 12:04:25,936 - Model - INFO - Test Instance Accuracy: 0.993421, Class Accuracy: 0.994792
 2022-02-23 12:04:25,936 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:04:25,936 - Model - INFO - Epoch 9 (288/299):
-2022-02-23 12:04:30,873 - Model - INFO - Running DA loss 53.136027336120605 
+2022-02-23 12:04:30,873 - Model - INFO - Running DA loss 53.136027336120605
 2022-02-23 12:04:31,217 - Model - INFO - Train Instance Accuracy: 1.000000
 2022-02-23 12:04:33,271 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:04:33,271 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:04:33,271 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 12:04:33,271 - Model - INFO - Epoch 10 (289/299):
-2022-02-23 12:04:38,860 - Model - INFO - Running DA loss 54.5379471206665 
+2022-02-23 12:04:38,860 - Model - INFO - Running DA loss 54.5379471206665
 2022-02-23 12:04:39,157 - Model - INFO - Train Instance Accuracy: 0.997500
 2022-02-23 12:04:40,916 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:04:40,917 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:04:40,917 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 12:04:40,917 - Model - INFO - Epoch 11 (290/299):
-2022-02-23 12:04:46,443 - Model - INFO - Running DA loss 52.1986869430542 
+2022-02-23 12:04:46,443 - Model - INFO - Running DA loss 52.1986869430542
 2022-02-23 12:04:46,761 - Model - INFO - Train Instance Accuracy: 0.996250
 2022-02-23 12:04:48,672 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:04:48,672 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:04:48,672 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 12:04:48,672 - Model - INFO - Epoch 12 (291/299):
-2022-02-23 12:04:54,573 - Model - INFO - Running DA loss 52.9188994216919 
+2022-02-23 12:04:54,573 - Model - INFO - Running DA loss 52.9188994216919
 2022-02-23 12:04:54,961 - Model - INFO - Train Instance Accuracy: 0.996250
 2022-02-23 12:04:56,803 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:04:56,803 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:04:56,803 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 12:04:56,803 - Model - INFO - Epoch 13 (292/299):
-2022-02-23 12:05:02,997 - Model - INFO - Running DA loss 52.90959718704224 
+2022-02-23 12:05:02,997 - Model - INFO - Running DA loss 52.90959718704224
 2022-02-23 12:05:03,413 - Model - INFO - Train Instance Accuracy: 1.000000
 2022-02-23 12:05:05,335 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:05:05,336 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:05:05,336 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 12:05:05,336 - Model - INFO - Epoch 14 (293/299):
-2022-02-23 12:05:11,724 - Model - INFO - Running DA loss 52.835950775146486 
+2022-02-23 12:05:11,724 - Model - INFO - Running DA loss 52.835950775146486
 2022-02-23 12:05:12,056 - Model - INFO - Train Instance Accuracy: 0.997500
 2022-02-23 12:05:13,900 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-23 12:05:13,900 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:05:13,900 - Model - INFO - Epoch 15 (294/299):
-2022-02-23 12:05:19,983 - Model - INFO - Running DA loss 54.263764228820804 
+2022-02-23 12:05:19,983 - Model - INFO - Running DA loss 54.263764228820804
 2022-02-23 12:05:20,506 - Model - INFO - Train Instance Accuracy: 0.998750
 2022-02-23 12:05:22,454 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:05:22,454 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:05:22,454 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 12:05:22,455 - Model - INFO - Epoch 16 (295/299):
-2022-02-23 12:05:29,067 - Model - INFO - Running DA loss 51.7758141708374 
+2022-02-23 12:05:29,067 - Model - INFO - Running DA loss 51.7758141708374
 2022-02-23 12:05:29,549 - Model - INFO - Train Instance Accuracy: 1.000000
 2022-02-23 12:05:31,460 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:05:31,460 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:05:31,461 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 12:05:31,461 - Model - INFO - Epoch 17 (296/299):
-2022-02-23 12:05:38,154 - Model - INFO - Running DA loss 52.30057479858399 
+2022-02-23 12:05:38,154 - Model - INFO - Running DA loss 52.30057479858399
 2022-02-23 12:05:38,383 - Model - INFO - Train Instance Accuracy: 1.000000
 2022-02-23 12:05:40,351 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:05:40,351 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:05:40,352 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 12:05:40,352 - Model - INFO - Epoch 18 (297/299):
-2022-02-23 12:05:47,034 - Model - INFO - Running DA loss 51.335294799804686 
+2022-02-23 12:05:47,034 - Model - INFO - Running DA loss 51.335294799804686
 2022-02-23 12:05:47,673 - Model - INFO - Train Instance Accuracy: 0.998750
 2022-02-23 12:05:49,711 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:05:49,716 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:05:49,716 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 12:05:49,716 - Model - INFO - Epoch 19 (298/299):
-2022-02-23 12:05:56,671 - Model - INFO - Running DA loss 52.392416915893556 
+2022-02-23 12:05:56,671 - Model - INFO - Running DA loss 52.392416915893556
 2022-02-23 12:05:56,896 - Model - INFO - Train Instance Accuracy: 0.993750
 2022-02-23 12:05:58,837 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:05:58,837 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:05:58,837 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 12:05:58,837 - Model - INFO - Epoch 20 (299/299):
-2022-02-23 12:06:06,120 - Model - INFO - Running DA loss 53.29135595321655 
+2022-02-23 12:06:06,120 - Model - INFO - Running DA loss 53.29135595321655
 2022-02-23 12:06:06,443 - Model - INFO - Train Instance Accuracy: 1.000000
 2022-02-23 12:06:08,484 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 12:06:08,484 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
@@ -1835,7 +1835,7 @@
 2022-02-23 14:11:24,041 - Model - INFO - Use pretrain model
 2022-02-23 14:11:24,041 - Model - INFO - Start training...
 2022-02-23 14:11:24,042 - Model - INFO - Epoch 1 (284/313):
-2022-02-23 14:11:27,633 - Model - INFO - Running DA loss 51.971104774475094 
+2022-02-23 14:11:27,633 - Model - INFO - Running DA loss 51.971104774475094
 2022-02-23 14:11:27,633 - Model - INFO - Save model...
 2022-02-23 14:11:27,634 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-23 14:11:28,219 - Model - INFO - Train Instance Accuracy: 0.976250
@@ -1843,20 +1843,20 @@
 2022-02-23 14:11:30,020 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:11:30,020 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:11:30,020 - Model - INFO - Epoch 2 (285/313):
-2022-02-23 14:11:33,756 - Model - INFO - Running DA loss 48.870350952148435 
+2022-02-23 14:11:33,756 - Model - INFO - Running DA loss 48.870350952148435
 2022-02-23 14:11:33,756 - Model - INFO - Save model...
 2022-02-23 14:11:33,756 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-23 14:11:34,396 - Model - INFO - Train Instance Accuracy: 0.995000
 2022-02-23 14:11:35,992 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.994792
 2022-02-23 14:11:35,992 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:11:35,992 - Model - INFO - Epoch 3 (286/313):
-2022-02-23 14:11:40,042 - Model - INFO - Running DA loss 50.45972602844238 
+2022-02-23 14:11:40,042 - Model - INFO - Running DA loss 50.45972602844238
 2022-02-23 14:11:40,458 - Model - INFO - Train Instance Accuracy: 0.993750
 2022-02-23 14:11:42,210 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:11:42,210 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:11:42,210 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:11:42,210 - Model - INFO - Epoch 4 (287/313):
-2022-02-23 14:11:46,269 - Model - INFO - Running DA loss 48.19235584259033 
+2022-02-23 14:11:46,269 - Model - INFO - Running DA loss 48.19235584259033
 2022-02-23 14:11:46,269 - Model - INFO - Save model...
 2022-02-23 14:11:46,270 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-23 14:11:46,640 - Model - INFO - Train Instance Accuracy: 0.992500
@@ -1864,156 +1864,511 @@
 2022-02-23 14:11:48,476 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:11:48,476 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:11:48,476 - Model - INFO - Epoch 5 (288/313):
-2022-02-23 14:11:52,731 - Model - INFO - Running DA loss 48.84705453872681 
+2022-02-23 14:11:52,731 - Model - INFO - Running DA loss 48.84705453872681
 2022-02-23 14:11:53,120 - Model - INFO - Train Instance Accuracy: 0.996250
 2022-02-23 14:11:54,976 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-23 14:11:54,976 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:11:54,976 - Model - INFO - Epoch 6 (289/313):
-2022-02-23 14:11:59,631 - Model - INFO - Running DA loss 49.28236993789673 
+2022-02-23 14:11:59,631 - Model - INFO - Running DA loss 49.28236993789673
 2022-02-23 14:11:59,937 - Model - INFO - Train Instance Accuracy: 0.997500
 2022-02-23 14:12:01,750 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:12:01,751 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:12:01,751 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:12:01,751 - Model - INFO - Epoch 7 (290/313):
-2022-02-23 14:12:06,291 - Model - INFO - Running DA loss 49.883718757629396 
+2022-02-23 14:12:06,291 - Model - INFO - Running DA loss 49.883718757629396
 2022-02-23 14:12:06,488 - Model - INFO - Train Instance Accuracy: 0.996250
 2022-02-23 14:12:08,220 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:12:08,220 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:12:08,220 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:12:08,220 - Model - INFO - Epoch 8 (291/313):
-2022-02-23 14:12:12,872 - Model - INFO - Running DA loss 49.491294364929196 
+2022-02-23 14:12:12,872 - Model - INFO - Running DA loss 49.491294364929196
 2022-02-23 14:12:13,110 - Model - INFO - Train Instance Accuracy: 0.996250
 2022-02-23 14:12:14,793 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:12:14,793 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:12:14,794 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:12:14,794 - Model - INFO - Epoch 9 (292/313):
-2022-02-23 14:12:20,066 - Model - INFO - Running DA loss 52.24678867340088 
+2022-02-23 14:12:20,066 - Model - INFO - Running DA loss 52.24678867340088
 2022-02-23 14:12:20,508 - Model - INFO - Train Instance Accuracy: 0.998750
 2022-02-23 14:12:22,351 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-23 14:12:22,352 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:12:22,352 - Model - INFO - Epoch 10 (293/313):
-2022-02-23 14:12:27,766 - Model - INFO - Running DA loss 52.005883026123044 
+2022-02-23 14:12:27,766 - Model - INFO - Running DA loss 52.005883026123044
 2022-02-23 14:12:28,075 - Model - INFO - Train Instance Accuracy: 1.000000
 2022-02-23 14:12:29,961 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:12:29,961 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:12:29,961 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:12:29,961 - Model - INFO - Epoch 11 (294/313):
-2022-02-23 14:12:35,407 - Model - INFO - Running DA loss 48.529579658508304 
+2022-02-23 14:12:35,407 - Model - INFO - Running DA loss 48.529579658508304
 2022-02-23 14:12:35,621 - Model - INFO - Train Instance Accuracy: 1.000000
 2022-02-23 14:12:37,483 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:12:37,483 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:12:37,483 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:12:37,483 - Model - INFO - Epoch 12 (295/313):
-2022-02-23 14:12:43,091 - Model - INFO - Running DA loss 51.320677547454835 
+2022-02-23 14:12:43,091 - Model - INFO - Running DA loss 51.320677547454835
 2022-02-23 14:12:43,403 - Model - INFO - Train Instance Accuracy: 0.995000
 2022-02-23 14:12:45,272 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.996528
 2022-02-23 14:12:45,272 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:12:45,272 - Model - INFO - Epoch 13 (296/313):
-2022-02-23 14:12:51,005 - Model - INFO - Running DA loss 51.886695098876956 
+2022-02-23 14:12:51,005 - Model - INFO - Running DA loss 51.886695098876956
 2022-02-23 14:12:51,335 - Model - INFO - Train Instance Accuracy: 0.998750
 2022-02-23 14:12:53,160 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:12:53,160 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:12:53,160 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:12:53,160 - Model - INFO - Epoch 14 (297/313):
-2022-02-23 14:12:59,201 - Model - INFO - Running DA loss 50.72294178009033 
+2022-02-23 14:12:59,201 - Model - INFO - Running DA loss 50.72294178009033
 2022-02-23 14:12:59,446 - Model - INFO - Train Instance Accuracy: 0.998750
 2022-02-23 14:13:01,257 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:13:01,258 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:13:01,258 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:13:01,258 - Model - INFO - Epoch 15 (298/313):
-2022-02-23 14:13:07,292 - Model - INFO - Running DA loss 49.91311637878418 
+2022-02-23 14:13:07,292 - Model - INFO - Running DA loss 49.91311637878418
 2022-02-23 14:13:07,563 - Model - INFO - Train Instance Accuracy: 1.000000
 2022-02-23 14:13:09,481 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:13:09,481 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:13:09,481 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:13:09,481 - Model - INFO - Epoch 16 (299/313):
-2022-02-23 14:13:15,955 - Model - INFO - Running DA loss 50.63549772262573 
+2022-02-23 14:13:15,955 - Model - INFO - Running DA loss 50.63549772262573
 2022-02-23 14:13:16,207 - Model - INFO - Train Instance Accuracy: 0.997500
 2022-02-23 14:13:18,068 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:13:18,068 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:13:18,068 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:13:18,068 - Model - INFO - Epoch 17 (300/313):
-2022-02-23 14:13:24,655 - Model - INFO - Running DA loss 50.661086025238035 
+2022-02-23 14:13:24,655 - Model - INFO - Running DA loss 50.661086025238035
 2022-02-23 14:13:25,146 - Model - INFO - Train Instance Accuracy: 0.996250
 2022-02-23 14:13:26,855 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:13:26,855 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:13:26,855 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:13:26,855 - Model - INFO - Epoch 18 (301/313):
-2022-02-23 14:13:33,764 - Model - INFO - Running DA loss 49.30978889465332 
+2022-02-23 14:13:33,764 - Model - INFO - Running DA loss 49.30978889465332
 2022-02-23 14:13:34,085 - Model - INFO - Train Instance Accuracy: 1.000000
 2022-02-23 14:13:35,827 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:13:35,827 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:13:35,828 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:13:35,828 - Model - INFO - Epoch 19 (302/313):
-2022-02-23 14:13:42,731 - Model - INFO - Running DA loss 52.323981742858884 
+2022-02-23 14:13:42,731 - Model - INFO - Running DA loss 52.323981742858884
 2022-02-23 14:13:42,925 - Model - INFO - Train Instance Accuracy: 0.996250
 2022-02-23 14:13:44,705 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:13:44,705 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:13:44,705 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:13:44,705 - Model - INFO - Epoch 20 (303/313):
-2022-02-23 14:13:51,690 - Model - INFO - Running DA loss 50.565798645019534 
+2022-02-23 14:13:51,690 - Model - INFO - Running DA loss 50.565798645019534
 2022-02-23 14:13:51,991 - Model - INFO - Train Instance Accuracy: 0.998750
 2022-02-23 14:13:53,761 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:13:53,761 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:13:53,762 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:13:53,762 - Model - INFO - Epoch 21 (304/313):
-2022-02-23 14:14:01,144 - Model - INFO - Running DA loss 49.972286262512206 
+2022-02-23 14:14:01,144 - Model - INFO - Running DA loss 49.972286262512206
 2022-02-23 14:14:01,524 - Model - INFO - Train Instance Accuracy: 1.000000
 2022-02-23 14:14:03,487 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:14:03,487 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:14:03,487 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:14:03,487 - Model - INFO - Epoch 22 (305/313):
-2022-02-23 14:14:11,185 - Model - INFO - Running DA loss 50.68386810302734 
+2022-02-23 14:14:11,185 - Model - INFO - Running DA loss 50.68386810302734
 2022-02-23 14:14:11,415 - Model - INFO - Train Instance Accuracy: 0.997500
 2022-02-23 14:14:13,335 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:14:13,335 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:14:13,335 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:14:13,335 - Model - INFO - Epoch 23 (306/313):
-2022-02-23 14:14:21,128 - Model - INFO - Running DA loss 51.09302959442139 
+2022-02-23 14:14:21,128 - Model - INFO - Running DA loss 51.09302959442139
 2022-02-23 14:14:21,588 - Model - INFO - Train Instance Accuracy: 0.997500
 2022-02-23 14:14:23,550 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:14:23,550 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:14:23,550 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:14:23,550 - Model - INFO - Epoch 24 (307/313):
-2022-02-23 14:14:31,611 - Model - INFO - Running DA loss 49.71943399429321 
+2022-02-23 14:14:31,611 - Model - INFO - Running DA loss 49.71943399429321
 2022-02-23 14:14:31,830 - Model - INFO - Train Instance Accuracy: 1.000000
 2022-02-23 14:14:33,757 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:14:33,758 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:14:33,758 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:14:33,758 - Model - INFO - Epoch 25 (308/313):
-2022-02-23 14:14:42,069 - Model - INFO - Running DA loss 49.1487255859375 
+2022-02-23 14:14:42,069 - Model - INFO - Running DA loss 49.1487255859375
 2022-02-23 14:14:42,364 - Model - INFO - Train Instance Accuracy: 0.998750
 2022-02-23 14:14:44,259 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:14:44,259 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:14:44,259 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:14:44,260 - Model - INFO - Epoch 26 (309/313):
-2022-02-23 14:14:52,576 - Model - INFO - Running DA loss 49.806692924499515 
+2022-02-23 14:14:52,576 - Model - INFO - Running DA loss 49.806692924499515
 2022-02-23 14:14:52,755 - Model - INFO - Train Instance Accuracy: 0.996250
 2022-02-23 14:14:54,722 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-23 14:14:54,722 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:14:54,722 - Model - INFO - Epoch 27 (310/313):
-2022-02-23 14:15:03,310 - Model - INFO - Running DA loss 47.859482002258304 
+2022-02-23 14:15:03,310 - Model - INFO - Running DA loss 47.859482002258304
 2022-02-23 14:15:03,311 - Model - INFO - Save model...
 2022-02-23 14:15:03,311 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
 2022-02-23 14:15:03,562 - Model - INFO - Train Instance Accuracy: 0.997500
 2022-02-23 14:15:05,442 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
 2022-02-23 14:15:05,442 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:15:05,442 - Model - INFO - Epoch 28 (311/313):
-2022-02-23 14:15:14,333 - Model - INFO - Running DA loss 51.12826557159424 
+2022-02-23 14:15:14,333 - Model - INFO - Running DA loss 51.12826557159424
 2022-02-23 14:15:14,524 - Model - INFO - Train Instance Accuracy: 1.000000
 2022-02-23 14:15:16,342 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:15:16,342 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:15:16,342 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:15:16,342 - Model - INFO - Epoch 29 (312/313):
-2022-02-23 14:15:25,528 - Model - INFO - Running DA loss 49.93227741241455 
+2022-02-23 14:15:25,528 - Model - INFO - Running DA loss 49.93227741241455
 2022-02-23 14:15:25,937 - Model - INFO - Train Instance Accuracy: 1.000000
 2022-02-23 14:15:27,870 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:15:27,870 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:15:27,870 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:15:27,870 - Model - INFO - Epoch 30 (313/313):
-2022-02-23 14:15:37,040 - Model - INFO - Running DA loss 49.998354511260985 
+2022-02-23 14:15:37,040 - Model - INFO - Running DA loss 49.998354511260985
 2022-02-23 14:15:37,374 - Model - INFO - Train Instance Accuracy: 0.996250
 2022-02-23 14:15:39,299 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:15:39,299 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
 2022-02-23 14:15:39,299 - Model - INFO - Model will not be saved with vision validation
 2022-02-23 14:15:39,299 - Model - INFO - End of training...
+2022-02-23 14:20:32,095 - Model - INFO - PARAMETER ...
+2022-02-23 14:20:32,095 - Model - INFO - Namespace(DA_method='multi_coral_mmd', SO3_Rotation=False, alpha=10, batch_size=8, beta=10, decay_rate=0.0001, epoch=5, gpu='0', lamda=10, learning_rate=0.0001, log_dir='pointnet_cls_Real_40_z', model='pointnet_cls', num_category=12, num_point=1024, num_sparse_point=50, optimizer='Adam', process_data=False, random_choose_sparse=False, use_cpu=False, use_normals=False, use_uniform_sample=False)
+2022-02-23 14:20:32,096 - Model - INFO - Load dataset ...
+2022-02-23 14:20:35,468 - Model - INFO - Use pretrain model
+2022-02-23 14:20:35,468 - Model - INFO - Loading model with DA loss 4785.948200
+2022-02-23 14:20:35,469 - Model - INFO - Start training...
+2022-02-23 14:20:35,469 - Model - INFO - Epoch 1 (310/314):
+2022-02-23 14:20:39,348 - Model - INFO - Running DA loss 50.94463720321655
+2022-02-23 14:20:39,348 - Model - INFO - Save model...
+2022-02-23 14:20:39,349 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
+2022-02-23 14:20:39,680 - Model - INFO - Train Instance Accuracy: 0.976250
+2022-02-23 14:20:41,238 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:20:41,238 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:20:41,238 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:20:41,239 - Model - INFO - Epoch 2 (311/314):
+2022-02-23 14:20:45,001 - Model - INFO - Running DA loss 50.239286003112795
+2022-02-23 14:20:45,001 - Model - INFO - Save model...
+2022-02-23 14:20:45,002 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
+2022-02-23 14:20:45,392 - Model - INFO - Train Instance Accuracy: 0.998750
+2022-02-23 14:20:47,290 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:20:47,291 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:20:47,291 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:20:47,291 - Model - INFO - Epoch 3 (312/314):
+2022-02-23 14:20:51,570 - Model - INFO - Running DA loss 49.42387157440186
+2022-02-23 14:20:51,570 - Model - INFO - Save model...
+2022-02-23 14:20:51,570 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
+2022-02-23 14:20:52,094 - Model - INFO - Train Instance Accuracy: 0.997500
+2022-02-23 14:20:53,807 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:20:53,807 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:20:53,807 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:20:53,807 - Model - INFO - Epoch 4 (313/314):
+2022-02-23 14:20:57,550 - Model - INFO - Running DA loss 51.34778932571411
+2022-02-23 14:20:57,953 - Model - INFO - Train Instance Accuracy: 0.995000
+2022-02-23 14:20:59,693 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:20:59,694 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:20:59,694 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:20:59,694 - Model - INFO - Epoch 5 (314/314):
+2022-02-23 14:21:04,001 - Model - INFO - Running DA loss 52.43965356826782
+2022-02-23 14:21:04,507 - Model - INFO - Train Instance Accuracy: 1.000000
+2022-02-23 14:21:06,109 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:21:06,109 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:21:06,110 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:21:06,110 - Model - INFO - End of training...
+2022-02-23 14:22:39,355 - Model - INFO - PARAMETER ...
+2022-02-23 14:22:39,355 - Model - INFO - Namespace(DA_method='multi_coral_mmd', SO3_Rotation=False, alpha=10, batch_size=8, beta=10, decay_rate=0.0001, epoch=50, gpu='0', lamda=10, learning_rate=0.0001, log_dir='pointnet_cls_Real_40_z', model='pointnet_cls', num_category=12, num_point=1024, num_sparse_point=50, optimizer='Adam', process_data=False, random_choose_sparse=False, use_cpu=False, use_normals=False, use_uniform_sample=False)
+2022-02-23 14:22:39,355 - Model - INFO - Load dataset ...
+2022-02-23 14:22:42,789 - Model - INFO - Use pretrain model
+2022-02-23 14:22:42,789 - Model - INFO - Loading model with DA loss 4942.387157
+2022-02-23 14:22:42,790 - Model - INFO - Start training...
+2022-02-23 14:22:42,790 - Model - INFO - Epoch 1 (312/361):
+2022-02-23 14:22:46,958 - Model - INFO - Running DA loss 49.28839687347412
+2022-02-23 14:22:46,958 - Model - INFO - Save model...
+2022-02-23 14:22:46,959 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
+2022-02-23 14:22:47,481 - Model - INFO - Train Instance Accuracy: 0.978750
+2022-02-23 14:22:49,077 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
+2022-02-23 14:22:49,077 - Model - INFO - Best Instance Accuracy: 0.996711, Class Accuracy: 0.997396
+2022-02-23 14:22:49,077 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:22:49,077 - Model - INFO - Epoch 2 (313/361):
+2022-02-23 14:22:52,859 - Model - INFO - Running DA loss 48.67062236785889
+2022-02-23 14:22:52,859 - Model - INFO - Save model...
+2022-02-23 14:22:52,859 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
+2022-02-23 14:22:53,409 - Model - INFO - Train Instance Accuracy: 0.996250
+2022-02-23 14:22:55,055 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
+2022-02-23 14:22:55,055 - Model - INFO - Best Instance Accuracy: 0.996711, Class Accuracy: 0.997396
+2022-02-23 14:22:55,055 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:22:55,055 - Model - INFO - Epoch 3 (314/361):
+2022-02-23 14:22:58,806 - Model - INFO - Running DA loss 49.88948888778687
+2022-02-23 14:22:59,165 - Model - INFO - Train Instance Accuracy: 0.996250
+2022-02-23 14:23:00,863 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
+2022-02-23 14:23:00,863 - Model - INFO - Best Instance Accuracy: 0.996711, Class Accuracy: 0.997396
+2022-02-23 14:23:00,863 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:23:00,863 - Model - INFO - Epoch 4 (315/361):
+2022-02-23 14:23:04,884 - Model - INFO - Running DA loss 49.12133234024048
+2022-02-23 14:23:05,206 - Model - INFO - Train Instance Accuracy: 0.996250
+2022-02-23 14:23:07,074 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
+2022-02-23 14:23:07,074 - Model - INFO - Best Instance Accuracy: 0.996711, Class Accuracy: 0.997396
+2022-02-23 14:23:07,074 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:23:07,074 - Model - INFO - Epoch 5 (316/361):
+2022-02-23 14:23:11,230 - Model - INFO - Running DA loss 50.48680908203125
+2022-02-23 14:23:11,615 - Model - INFO - Train Instance Accuracy: 0.995000
+2022-02-23 14:23:13,215 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
+2022-02-23 14:23:13,215 - Model - INFO - Best Instance Accuracy: 0.996711, Class Accuracy: 0.997396
+2022-02-23 14:23:13,215 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:23:13,215 - Model - INFO - Epoch 6 (317/361):
+2022-02-23 14:23:17,748 - Model - INFO - Running DA loss 51.1767179107666
+2022-02-23 14:23:18,078 - Model - INFO - Train Instance Accuracy: 0.997500
+2022-02-23 14:23:19,910 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:23:19,910 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:23:19,910 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:23:19,910 - Model - INFO - Epoch 7 (318/361):
+2022-02-23 14:23:24,211 - Model - INFO - Running DA loss 49.84072860717774
+2022-02-23 14:23:24,603 - Model - INFO - Train Instance Accuracy: 0.997500
+2022-02-23 14:23:26,422 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:23:26,422 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:23:26,422 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:23:26,422 - Model - INFO - Epoch 8 (319/361):
+2022-02-23 14:23:31,318 - Model - INFO - Running DA loss 51.18753826141357
+2022-02-23 14:23:31,652 - Model - INFO - Train Instance Accuracy: 0.998750
+2022-02-23 14:23:33,478 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:23:33,478 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:23:33,479 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:23:33,479 - Model - INFO - Epoch 9 (320/361):
+2022-02-23 14:23:38,583 - Model - INFO - Running DA loss 52.98565221786499
+2022-02-23 14:23:38,923 - Model - INFO - Train Instance Accuracy: 0.995000
+2022-02-23 14:23:40,576 - Model - INFO - Test Instance Accuracy: 0.996711, Class Accuracy: 0.997396
+2022-02-23 14:23:40,576 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:23:40,576 - Model - INFO - Epoch 10 (321/361):
+2022-02-23 14:23:45,829 - Model - INFO - Running DA loss 51.7422957611084
+2022-02-23 14:23:46,197 - Model - INFO - Train Instance Accuracy: 0.997500
+2022-02-23 14:23:47,974 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:23:47,975 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:23:47,975 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:23:47,975 - Model - INFO - Epoch 11 (322/361):
+2022-02-23 14:23:53,220 - Model - INFO - Running DA loss 52.23347595214844
+2022-02-23 14:23:53,432 - Model - INFO - Train Instance Accuracy: 0.990000
+2022-02-23 14:23:55,169 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:23:55,169 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:23:55,169 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:23:55,169 - Model - INFO - Epoch 12 (323/361):
+2022-02-23 14:24:00,777 - Model - INFO - Running DA loss 51.73931625366211
+2022-02-23 14:24:01,067 - Model - INFO - Train Instance Accuracy: 0.998750
+2022-02-23 14:24:02,933 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:24:02,933 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:24:02,933 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:24:02,933 - Model - INFO - Epoch 13 (324/361):
+2022-02-23 14:24:08,751 - Model - INFO - Running DA loss 51.60888849258423
+2022-02-23 14:24:08,966 - Model - INFO - Train Instance Accuracy: 0.995000
+2022-02-23 14:24:10,836 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:24:10,836 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:24:10,836 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:24:10,836 - Model - INFO - Epoch 14 (325/361):
+2022-02-23 14:24:16,905 - Model - INFO - Running DA loss 51.4407018661499
+2022-02-23 14:24:17,191 - Model - INFO - Train Instance Accuracy: 0.993750
+2022-02-23 14:24:18,937 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:24:18,938 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:24:18,938 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:24:18,938 - Model - INFO - Epoch 15 (326/361):
+2022-02-23 14:24:25,248 - Model - INFO - Running DA loss 48.11761651992798
+2022-02-23 14:24:25,248 - Model - INFO - Save model...
+2022-02-23 14:24:25,249 - Model - INFO - Saving at log/classification/pointnet_cls_Real_40_z/checkpoints/best_model.pth
+2022-02-23 14:24:25,479 - Model - INFO - Train Instance Accuracy: 0.997500
+2022-02-23 14:24:27,431 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:24:27,431 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:24:27,431 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:24:27,431 - Model - INFO - Epoch 16 (327/361):
+2022-02-23 14:24:33,520 - Model - INFO - Running DA loss 50.154407482147214
+2022-02-23 14:24:33,929 - Model - INFO - Train Instance Accuracy: 0.997500
+2022-02-23 14:24:35,622 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:24:35,623 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:24:35,623 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:24:35,623 - Model - INFO - Epoch 17 (328/361):
+2022-02-23 14:24:42,188 - Model - INFO - Running DA loss 48.99545213699341
+2022-02-23 14:24:42,455 - Model - INFO - Train Instance Accuracy: 0.998750
+2022-02-23 14:24:44,341 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:24:44,342 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:24:44,342 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:24:44,342 - Model - INFO - Epoch 18 (329/361):
+2022-02-23 14:24:50,926 - Model - INFO - Running DA loss 51.296881141662595
+2022-02-23 14:24:51,239 - Model - INFO - Train Instance Accuracy: 0.997500
+2022-02-23 14:24:53,020 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:24:53,020 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:24:53,020 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:24:53,020 - Model - INFO - Epoch 19 (330/361):
+2022-02-23 14:24:59,480 - Model - INFO - Running DA loss 52.45446327209473
+2022-02-23 14:24:59,767 - Model - INFO - Train Instance Accuracy: 0.992500
+2022-02-23 14:25:01,522 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:25:01,522 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:25:01,522 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:25:01,522 - Model - INFO - Epoch 20 (331/361):
+2022-02-23 14:25:08,657 - Model - INFO - Running DA loss 53.104122924804685
+2022-02-23 14:25:08,952 - Model - INFO - Train Instance Accuracy: 1.000000
+2022-02-23 14:25:10,784 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:25:10,785 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:25:10,785 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:25:10,785 - Model - INFO - Epoch 21 (332/361):
+2022-02-23 14:25:18,097 - Model - INFO - Running DA loss 50.644820861816406
+2022-02-23 14:25:18,698 - Model - INFO - Train Instance Accuracy: 1.000000
+2022-02-23 14:25:20,578 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:25:20,578 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:25:20,578 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:25:20,579 - Model - INFO - Epoch 22 (333/361):
+2022-02-23 14:25:27,821 - Model - INFO - Running DA loss 52.53822177886963
+2022-02-23 14:25:28,006 - Model - INFO - Train Instance Accuracy: 0.996250
+2022-02-23 14:25:29,859 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:25:29,860 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:25:29,860 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:25:29,860 - Model - INFO - Epoch 23 (334/361):
+2022-02-23 14:25:37,546 - Model - INFO - Running DA loss 51.92588201522827
+2022-02-23 14:25:37,860 - Model - INFO - Train Instance Accuracy: 1.000000
+2022-02-23 14:25:39,781 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:25:39,782 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:25:39,782 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:25:39,782 - Model - INFO - Epoch 24 (335/361):
+2022-02-23 14:25:47,445 - Model - INFO - Running DA loss 51.12898546218872
+2022-02-23 14:25:47,668 - Model - INFO - Train Instance Accuracy: 1.000000
+2022-02-23 14:25:49,424 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:25:49,424 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:25:49,424 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:25:49,424 - Model - INFO - Epoch 25 (336/361):
+2022-02-23 14:25:57,473 - Model - INFO - Running DA loss 51.81400608062744
+2022-02-23 14:25:57,775 - Model - INFO - Train Instance Accuracy: 0.998750
+2022-02-23 14:25:59,562 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:25:59,562 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:25:59,562 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:25:59,562 - Model - INFO - Epoch 26 (337/361):
+2022-02-23 14:26:07,482 - Model - INFO - Running DA loss 50.64811958312988
+2022-02-23 14:26:07,788 - Model - INFO - Train Instance Accuracy: 1.000000
+2022-02-23 14:26:09,719 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:26:09,719 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:26:09,719 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:26:09,720 - Model - INFO - Epoch 27 (338/361):
+2022-02-23 14:26:18,103 - Model - INFO - Running DA loss 49.281650924682616
+2022-02-23 14:26:18,580 - Model - INFO - Train Instance Accuracy: 0.997500
+2022-02-23 14:26:20,379 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:26:20,379 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:26:20,380 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:26:20,380 - Model - INFO - Epoch 28 (339/361):
+2022-02-23 14:26:29,098 - Model - INFO - Running DA loss 51.48590866088867
+2022-02-23 14:26:29,323 - Model - INFO - Train Instance Accuracy: 1.000000
+2022-02-23 14:26:31,231 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:26:31,232 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:26:31,232 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:26:31,232 - Model - INFO - Epoch 29 (340/361):
+2022-02-23 14:26:39,935 - Model - INFO - Running DA loss 50.80760341644287
+2022-02-23 14:26:40,098 - Model - INFO - Train Instance Accuracy: 0.998750
+2022-02-23 14:26:41,944 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:26:41,944 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:26:41,944 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:26:41,944 - Model - INFO - Epoch 30 (341/361):
+2022-02-23 14:26:50,733 - Model - INFO - Running DA loss 51.28030967712402
+2022-02-23 14:26:51,126 - Model - INFO - Train Instance Accuracy: 1.000000
+2022-02-23 14:26:53,102 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:26:53,103 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:26:53,103 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:26:53,103 - Model - INFO - Epoch 31 (342/361):
+2022-02-23 14:27:02,020 - Model - INFO - Running DA loss 51.063345451354984
+2022-02-23 14:27:02,448 - Model - INFO - Train Instance Accuracy: 0.995000
+2022-02-23 14:27:04,266 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:27:04,266 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:27:04,266 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:27:04,266 - Model - INFO - Epoch 32 (343/361):
+2022-02-23 14:27:13,631 - Model - INFO - Running DA loss 49.02771991729736
+2022-02-23 14:27:14,183 - Model - INFO - Train Instance Accuracy: 0.998750
+2022-02-23 14:27:15,997 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:27:15,997 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:27:15,997 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:27:15,997 - Model - INFO - Epoch 33 (344/361):
+2022-02-23 14:27:25,209 - Model - INFO - Running DA loss 50.56149778366089
+2022-02-23 14:27:25,329 - Model - INFO - Train Instance Accuracy: 1.000000
+2022-02-23 14:27:27,203 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:27:27,204 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:27:27,204 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:27:27,204 - Model - INFO - Epoch 34 (345/361):
+2022-02-23 14:27:36,680 - Model - INFO - Running DA loss 50.699862728118894
+2022-02-23 14:27:36,908 - Model - INFO - Train Instance Accuracy: 1.000000
+2022-02-23 14:27:38,912 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:27:38,913 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:27:38,913 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:27:38,913 - Model - INFO - Epoch 35 (346/361):
+2022-02-23 14:27:48,788 - Model - INFO - Running DA loss 50.322287235260006
+2022-02-23 14:27:49,071 - Model - INFO - Train Instance Accuracy: 0.998750
+2022-02-23 14:27:50,878 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:27:50,878 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:27:50,878 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:27:50,878 - Model - INFO - Epoch 36 (347/361):
+2022-02-23 14:28:00,640 - Model - INFO - Running DA loss 50.928616218566894
+2022-02-23 14:28:00,904 - Model - INFO - Train Instance Accuracy: 0.998750
+2022-02-23 14:28:02,821 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:28:02,822 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:28:02,822 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:28:02,822 - Model - INFO - Epoch 37 (348/361):
+2022-02-23 14:28:12,734 - Model - INFO - Running DA loss 51.327214584350585
+2022-02-23 14:28:13,021 - Model - INFO - Train Instance Accuracy: 1.000000
+2022-02-23 14:28:15,046 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:28:15,046 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:28:15,047 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:28:15,047 - Model - INFO - Epoch 38 (349/361):
+2022-02-23 14:28:25,252 - Model - INFO - Running DA loss 51.64667955398559
+2022-02-23 14:28:25,490 - Model - INFO - Train Instance Accuracy: 1.000000
+2022-02-23 14:28:27,334 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:28:27,334 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:28:27,334 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:28:27,334 - Model - INFO - Epoch 39 (350/361):
+2022-02-23 14:28:37,941 - Model - INFO - Running DA loss 51.03927238464355
+2022-02-23 14:28:38,286 - Model - INFO - Train Instance Accuracy: 1.000000
+2022-02-23 14:28:40,142 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:28:40,142 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:28:40,142 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:28:40,143 - Model - INFO - Epoch 40 (351/361):
+2022-02-23 14:28:51,125 - Model - INFO - Running DA loss 52.17828502655029
+2022-02-23 14:28:51,501 - Model - INFO - Train Instance Accuracy: 0.997500
+2022-02-23 14:28:53,499 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:28:53,499 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:28:53,499 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:28:53,499 - Model - INFO - Epoch 41 (352/361):
+2022-02-23 14:29:04,934 - Model - INFO - Running DA loss 48.85486602783203
+2022-02-23 14:29:05,239 - Model - INFO - Train Instance Accuracy: 0.996250
+2022-02-23 14:29:07,031 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:29:07,031 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:29:07,031 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:29:07,032 - Model - INFO - Epoch 42 (353/361):
+2022-02-23 14:29:18,137 - Model - INFO - Running DA loss 50.60485496520996
+2022-02-23 14:29:18,463 - Model - INFO - Train Instance Accuracy: 0.998750
+2022-02-23 14:29:20,494 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:29:20,494 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:29:20,494 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:29:20,494 - Model - INFO - Epoch 43 (354/361):
+2022-02-23 14:29:32,387 - Model - INFO - Running DA loss 49.47470026016235
+2022-02-23 14:29:32,585 - Model - INFO - Train Instance Accuracy: 0.998750
+2022-02-23 14:29:34,602 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:29:34,602 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:29:34,603 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:29:34,603 - Model - INFO - Epoch 44 (355/361):
+2022-02-23 14:29:46,461 - Model - INFO - Running DA loss 51.42676113128662
+2022-02-23 14:29:46,781 - Model - INFO - Train Instance Accuracy: 0.998750
+2022-02-23 14:29:48,840 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:29:48,840 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:29:48,840 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:29:48,840 - Model - INFO - Epoch 45 (356/361):
+2022-02-23 14:30:00,924 - Model - INFO - Running DA loss 52.02391487121582
+2022-02-23 14:30:01,319 - Model - INFO - Train Instance Accuracy: 0.998750
+2022-02-23 14:30:03,285 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:30:03,285 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:30:03,285 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:30:03,285 - Model - INFO - Epoch 46 (357/361):
+2022-02-23 14:30:15,585 - Model - INFO - Running DA loss 52.737782592773435
+2022-02-23 14:30:15,857 - Model - INFO - Train Instance Accuracy: 1.000000
+2022-02-23 14:30:17,922 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:30:17,922 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:30:17,922 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:30:17,923 - Model - INFO - Epoch 47 (358/361):
+2022-02-23 14:30:30,306 - Model - INFO - Running DA loss 51.03646236419678
+2022-02-23 14:30:30,640 - Model - INFO - Train Instance Accuracy: 1.000000
+2022-02-23 14:30:32,715 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:30:32,715 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:30:32,715 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:30:32,715 - Model - INFO - Epoch 48 (359/361):
+2022-02-23 14:30:45,008 - Model - INFO - Running DA loss 50.48409498214722
+2022-02-23 14:30:45,455 - Model - INFO - Train Instance Accuracy: 1.000000
+2022-02-23 14:30:47,478 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:30:47,478 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:30:47,479 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:30:47,479 - Model - INFO - Epoch 49 (360/361):
+2022-02-23 14:30:59,876 - Model - INFO - Running DA loss 50.44109481811523
+2022-02-23 14:31:00,158 - Model - INFO - Train Instance Accuracy: 1.000000
+2022-02-23 14:31:02,210 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:31:02,210 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:31:02,210 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:31:02,210 - Model - INFO - Epoch 50 (361/361):
+2022-02-23 14:31:14,721 - Model - INFO - Running DA loss 50.78088687896729
+2022-02-23 14:31:15,124 - Model - INFO - Train Instance Accuracy: 0.998750
+2022-02-23 14:31:16,986 - Model - INFO - Test Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:31:16,986 - Model - INFO - Best Instance Accuracy: 1.000000, Class Accuracy: 1.000000
+2022-02-23 14:31:16,987 - Model - INFO - Model will not be saved with vision validation
+2022-02-23 14:31:16,987 - Model - INFO - End of training...

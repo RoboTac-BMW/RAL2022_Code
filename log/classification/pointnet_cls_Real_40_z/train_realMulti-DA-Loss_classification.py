@@ -215,7 +215,9 @@ def main(args):
 
     try:
         min_loss = checkpoint['loss']
+        log_string('Loading model with DA loss %f' % min_loss)
     except:
+        log_string('No DA loss found in the model')
         min_loss = 10000.0
 
 
@@ -355,7 +357,7 @@ def main(args):
                         'epoch': epoch,
                         # 'instance_acc': instance_acc,
                         # 'class_acc': class_acc,
-                        'loss': running_loss,
+                        'loss': calculate_loss,
                         'model_state_dict': classifier.state_dict(),
                         'optimizer_state_dict': optimizer.state_dict(),
                     }

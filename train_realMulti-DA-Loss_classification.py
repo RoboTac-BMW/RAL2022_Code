@@ -357,7 +357,7 @@ def main(args):
                         'epoch': epoch,
                         # 'instance_acc': instance_acc,
                         # 'class_acc': class_acc,
-                        'loss': running_loss,
+                        'loss': calculate_loss,
                         'model_state_dict': classifier.state_dict(),
                         'optimizer_state_dict': optimizer.state_dict(),
                     }
