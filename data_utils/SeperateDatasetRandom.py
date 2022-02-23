@@ -50,14 +50,16 @@ def seperate_dataset(root_dir, num_test, move=True):
         print(category)
         new_dir = root_dir/Path(category)
         tmp_dir = root_dir/Path(category)/"Train"
-        create_dir(new_dir, "Train")
-        create_dir(new_dir, "Test")
-        create_dir(tmp_dir, "No_use")
+        # create_dir(new_dir, "Train")
+        # create_dir(new_dir, "Test")
+        create_dir(tmp_dir, "no_use_150")
 
         for i in range(num_test):
             fileName = random.choice(os.listdir(tmp_dir))
             if fileName.endswith('pcd'):
-                move_file(tmp_dir, "No_use", fileName, move)
+                move_file(tmp_dir, "no_use_150", fileName, move)
+            else:
+                i = i-1
 
         """
         for i in range(num_test):
@@ -74,7 +76,7 @@ def seperate_dataset(root_dir, num_test, move=True):
 if __name__ == "__main__":
     # seperate_dataset("/home/airocs/Desktop/Dataset/Rotated_visual_data_pcd/", 25)
     # seperate_dataset("/home/airocs/Desktop/sampled_tactile_data_set", 20)
-    seperate_dataset("/home/prajval/cong_workspace/Pointnet_Pointnet2_pytorch/data/active_vision_pcd_4000", 100, True)
+    seperate_dataset("/home/prajval/Desktop/active_vision_pcd_1500", 4, True)
     # seperate_dataset("/home/airocs/Desktop/Dataset/visual_pcd_21.02", 25)
 
 
