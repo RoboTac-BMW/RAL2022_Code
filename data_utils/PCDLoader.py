@@ -281,7 +281,8 @@ class PCDActiveVision(PCDPointCloudData):
         with open(self.active_path) as file:
             lines = [line.rstrip() for line in file]
             if random_shuffle is True:
-                lines = random_shuffle.shuffle(lines)
+                random.shuffle(lines)
+
             for i in range(self.active_sample_num):
                 # print(lines[i])
                 # print(type(lines[i]))
