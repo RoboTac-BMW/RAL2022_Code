@@ -215,7 +215,9 @@ def main(args):
 
     try:
         min_loss = checkpoint['loss']
+        log_string('Loading model with DA loss %f' % min_loss)
     except:
+        log_string('No DA loss found in the model')
         min_loss = 10000.0
 
 
