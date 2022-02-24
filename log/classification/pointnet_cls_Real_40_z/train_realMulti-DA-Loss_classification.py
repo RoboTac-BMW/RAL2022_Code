@@ -30,7 +30,7 @@ def parse_args():
     parser.add_argument('--model', default='pointnet_cls', help='model name [default: pointnet_cls]')
     parser.add_argument('--num_category', default=12, type=int, help='training on real dataset')
     parser.add_argument('--epoch', default=20, type=int, help='number of epoch in training')
-    parser.add_argument('--learning_rate', default=0.0001, type=float, help='learning rate in training')
+    parser.add_argument('--learning_rate', default=0.00001, type=float, help='learning rate in training')
     parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
     parser.add_argument('--optimizer', type=str, default='Adam', help='optimizer for training')
     parser.add_argument('--log_dir', type=str, default=None, help='experiment root')
@@ -340,12 +340,12 @@ def main(args):
 
             # Print the loss
             running_loss += DA_loss.item()
-            if batch_id % 100 == 99:
+            if batch_id % 20 == 19:
                 # log_string("fc1 {}".format(classifier.fc1.weight.grad))
                 # log_string("fc2 {}".format(classifier.fc2.weight.grad))
                 # log_string("fc3 {}".format(classifier.fc3.weight.grad))
                 # print("Training loss {} ".format(loss.item()/100))
-                calculate_loss = running_loss/100
+                calculate_loss = running_loss/20
                 log_string("Running DA loss {} ".format(calculate_loss))
 
                 if calculate_loss < min_loss:
