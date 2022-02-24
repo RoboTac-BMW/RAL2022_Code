@@ -14,6 +14,8 @@ from path import Path
 from data_utils.PCDLoader import *
 from scipy.stats import entropy
 
+from datetime import datetime
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = BASE_DIR
 sys.path.append(os.path.join(ROOT_DIR, 'models'))
@@ -277,7 +279,7 @@ def main(args):
 
     # sorted_sample_list = sorted(visual_pcd_files, key=lambda x: x['entropy'], reverse=True)
 
-    saved_file_path = "/home/airocs/Desktop/tactile_output.json"
+    saved_file_path = "/home/airocs/Desktop/tactile_output" + str(datetime.now()) +".json"
     with open(saved_file_path, 'w') as f:
         json.dump(classes, f)
         f.write('\n')
