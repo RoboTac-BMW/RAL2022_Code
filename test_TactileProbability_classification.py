@@ -37,6 +37,7 @@ def parse_args():
     parser.add_argument('--num_votes', type=int, default=3, help='Aggregate classification scores with voting')
     parser.add_argument('--SO3_Rotation', action='store_true', default=False, help='arbitrary rotation in SO3')
     parser.add_argument('--pcd_dir', type=str, default=None, help='The path of the tactile pcd')
+    parser.add_argument('--tmp_label', type=str, default=None, help='Use only for saving file')
     return parser.parse_args()
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -276,12 +277,13 @@ def main(args):
                                                     shuffle=False, num_workers=10)
 
         probability_sample = get_monte_carlo_predictions(classifier, pcdDataLoader,
-                                             forward_passes=5, n_samples=1, n_classes=12)
+                                             forward_passes=50, n_samples=1, n_classes=12)
+        print(probability_sample)
         sample['probability'] = probability_sample
 
     sorted_sample_list = sorted(output_files, key=lambda x: x['pcd_path'], reverse=False)
 
-    saved_file_path = "/home/airocs/Desktop/tactile_output_" + str(datetime.now()) +".csv"
+    saved_file_path = "/home/airocs/Desktop/tactile_output_" + str(args.tmp_label) + str(datetime.now())  +".csv"
     with open(saved_file_path, 'w') as f:
         writer = csv.writer(f)
         # json.dump(classes, f)
