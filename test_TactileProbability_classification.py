@@ -26,7 +26,7 @@ def parse_args():
     parser.add_argument('--gpu', type=str, default='0', help='specify gpu device')
     parser.add_argument('--batch_size', type=int, default=8, help='batch size in training')
     # parser.add_argument('--num_category', default=10, type=int, choices=[10, 40],  help='training on ModelNet10/40')
-    parser.add_argument('--num_category', default=15, type=int, help='training on real dataset')
+    parser.add_argument('--num_category', default=12, type=int, help='training on real dataset')
     parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
     parser.add_argument('--log_dir', type=str, required=True, help='Experiment root')
     parser.add_argument('--use_normals', action='store_true', default=False, help='use normals')
@@ -135,7 +135,7 @@ def get_monte_carlo_predictions(model,
                                 data_loader,
                                 forward_passes,
                                 n_samples,
-                                n_classes=15):
+                                n_classes=12):
     """ Function to get the monte-carlo samples and uncertainty estimates
     through multiple forward passes
 
@@ -180,8 +180,8 @@ def get_monte_carlo_predictions(model,
     # print(mean.shape)
     # print(mean[0])
     prob_sample = mean[0]
-    entr_sample = entropy(prob_sample)
-    return entr_sample
+    # entr_sample = entropy(prob_sample)
+    return prob_sample
 
 
 
@@ -220,23 +220,27 @@ def main(args):
 
     '''DATA LOADING'''
     # log_string('Load dataset ...')
-    visual_data_path = '/home/airocs/Desktop/active_vision_pcd_entropy/'
+    # visual_data_path = '/home/airocs/Desktop/active_vision_pcd_entropy/'
     # data_path = 'data/modelnet40_normal_resampled/'
     # data_path = Path("mesh_data/ModelNet10")
+    offline_tactile_path = 'data/tactile_pcd_10_sampled_21.02'
+    tactile_data_dir = 'data/active_tactile_data'
 
-    classes = find_classes(Path(visual_data_path))
+    # classes = find_classes(Path(visual_data_path))
+    classes = ['cleaner', 'coffee', 'cup', 'eraser', 'glasses_box', 'jam', 'olive_oil', 'shampoo', 'spray', 'sugar', 'tape', 'wine']
     print(classes)
-    visual_pcd_files = []
+    # visual_pcd_files = []
+    output_files = []
 
-    for category in classes.keys():
-        new_dir = visual_data_path/Path(category)/'Train'
-        for file in os.listdir(new_dir):
-            if file.endswith('.pcd'):
-                sample = {}
-                sample['pcd_path'] = str(Path(new_dir/file))
-                sample['category'] = category
-                sample['entropy'] = 0.0
-                visual_pcd_files.append(sample)
+    # for category in classes.keys():
+    #     new_dir = visual_data_path/Path(category)/'Train'
+    for file in os.listdir(tactile_data_dir):
+        if file.endswith('.pcd'):
+            sample = {}
+            sample['pcd_path'] = str(Path(tactile_data_dir/file))
+            # sample['category'] = category
+            sample['probability'] = 0.0
+            output_files.append(sample)
 
 
     '''MODEL LOADING'''
@@ -257,25 +261,27 @@ def main(args):
 
     # Load Samples
     print("...............................")
-    print(len(visual_pcd_files))
+    print(len(output_files))
 
 
-    for index, sample in tqdm(enumerate(visual_pcd_files), total=len(visual_pcd_files)):
+    for index, sample in tqdm(enumerate(output_files), total=len(output_files)):
         pcd_path = sample['pcd_path']
         pcd_dataset = PCDTest(pcd_path, sub_sample=True, sample_num=args.num_point)
         pcdDataLoader = torch.utils.data.DataLoader(pcd_dataset,
                                                     batch_size=args.batch_size,
                                                     shuffle=False, num_workers=10)
 
-        entropy_sample = get_monte_carlo_predictions(classifier, pcdDataLoader,
-                                             forward_passes=3, n_samples=1, n_classes=15)
-        sample['entropy'] = entropy_sample
+        probability_sample = get_monte_carlo_predictions(classifier, pcdDataLoader,
+                                             forward_passes=5, n_samples=1, n_classes=12)
+        sample['probability'] = probability_sample
 
-    sorted_sample_list = sorted(visual_pcd_files, key=lambda x: x['entropy'], reverse=True)
+    # sorted_sample_list = sorted(visual_pcd_files, key=lambda x: x['entropy'], reverse=True)
 
-    saved_file_path = "/home/airocs/Desktop/active_entropy_files.json"
+    saved_file_path = "/home/airocs/Desktop/tactile_output.json"
     with open(saved_file_path, 'w') as f:
-        for item in sorted_sample_list:
+        json.dump(classes, f)
+        f.write('\n')
+        for item in output_files:
             json.dump(item, f)
             f.write('\n')
             # f.write("%s\n" % item)
