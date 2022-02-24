@@ -34,7 +34,7 @@ def parse_args():
     # parser.add_argument('--num_category', default=10, type=int, choices=[10, 40],  help='training on ModelNet10/40')
     parser.add_argument('--num_category', default=12, type=int, help='training on real dataset')
     parser.add_argument('--sample_point', type=bool, default=True,  help='Sampling on tacitle data')
-    parser.add_argument('--num_point', type=int, default=50, help='Point Number')
+    parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
     parser.add_argument('--log_dir', type=str, required=True, help='Experiment root')
     parser.add_argument('--use_normals', action='store_true', default=False, help='use normals')
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
@@ -126,7 +126,7 @@ def test(model, loader, num_class=12, vote_num=1):
         # print(".....................")
         # print(feature_tSNE_np.shape)
         tSNE_X[j] = feature_tSNE_np[0]
-        tSNE_Y[j] = y_true_new
+        tSNE_Y[j] = int(y_true_new)
         # print(feature_tSNE_np)
 
 
@@ -134,19 +134,29 @@ def test(model, loader, num_class=12, vote_num=1):
     print(tSNE_Y.shape)
     X_embedded = TSNE(learning_rate=10.0).fit_transform(tSNE_X)
     print(X_embedded.shape)
+    classes_name = ['cleaner', 'coffee', 'cup', 'eraser', 'glasses_box', 'jam', 'olive_oil',
+                    'shampoo', 'spray', 'sugar', 'tape', 'wine']
     # print(tSNE_Y[:,0])
     df = pd.DataFrame()
     df['y'] = tSNE_Y[:,0]
     df['comp-1'] = X_embedded[:,0]
     df['comp-2'] = X_embedded[:,1]
+    list_y = df.y.tolist()
+    # print(list_y)
+    # print(type(list_y[0]))
+
+    for i, item in enumerate(list_y):
+        list_y[i] = classes_name[int(item)]
+
+    print(list_y)
 
     plt.figure(figsize = (12,7))
-    sn.scatterplot(x='comp-1', y='comp-2', hue=df.y.tolist(),
+    sn.scatterplot(x='comp-1', y='comp-2', hue=list_y,
                    # palette=sn.color_palette("flare", as_cmap=True),
                    # palette=sn.color_palette("Spectral", as_cmap=True),
                    palette = sn.color_palette("Paired"),
                    data=df).set(xlabel='Component-1', ylabel='Component-2')
-    plt.savefig('/home/airocs/Desktop/' +'tSNE_withoutDA_' + str(datetime.now()) + '.png')
+    plt.savefig('/home/airocs/Desktop/' +'tSNE_vision' + str(datetime.now()) + '.png')
 
     # print(f'Got {num_correct} / {num_samples} with accuracy {float(num_correct)/float(num_samples)*100:.2f}')
 
@@ -201,12 +211,13 @@ def main(args):
     log_string('Load dataset ...')
     # tactile_data_path = 'data/tactile_data_pcd/'
     tactile_data_path = 'data/tactile_pcd_10_sampled_21.02/'
+    visual_data_path = 'data/visual_data_pcd_12/'
     # tactile_data_path = 'data/visual_data_pcd/'
     # data_path = 'data/modelnet40_normal_resampled/'
     # data_path = Path("mesh_data/ModelNet10")
 
 
-    test_dataset = PCDPointCloudData(tactile_data_path,
+    test_dataset = PCDPointCloudData(visual_data_path,
                                      folder='Test',
                                      sample_method='Voxel',
                                      num_point=args.num_point,
