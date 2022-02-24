@@ -293,7 +293,6 @@ def main(args):
             writer.writerow(item['probability'])
             # json.dump(item, f)
             # f.write('\n')
-            # f.write("%s\n" % item)
 
     print("File saved to %s " % saved_file_path)
 
