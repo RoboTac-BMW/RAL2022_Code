@@ -41,6 +41,7 @@ def parse_args():
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
     parser.add_argument('--SO3_Rotation', action='store_true', default=False, help='arbitrary rotation in SO3')
     parser.add_argument('--random_shuffle', action='store_true', default=False, help='random select files from entropy file')
+    parser.add_argument('--active_sample_num', type=int, default=None, help='Number of active sampples')
     return parser.parse_args()
 
 
@@ -123,7 +124,8 @@ def main(args):
     active_txt_path = '/home/airocs/Desktop/active_entropy_files_new.json'
 
     train_dataset = PCDActiveVision(root_dir=data_path,
-                                    active_path=active_txt_path, active_sample_num=1000,
+                                    active_path=active_txt_path,
+                                    active_sample_num=args.active_sample_num,
                                     folder='Train',
                                     random_shuffle=args.random_shuffle)
 
