@@ -452,3 +452,107 @@
 2022-02-24 11:38:27,231 - Model - INFO - Test Instance Accuracy: 0.790107, Class Accuracy: 0.789988
 2022-02-24 11:38:27,231 - Model - INFO - Best Instance Accuracy: 0.874332, Class Accuracy: 0.876938
 2022-02-24 11:38:27,231 - Model - INFO - End of training...
+2022-02-24 11:39:05,109 - Model - INFO - PARAMETER ...
+2022-02-24 11:39:05,109 - Model - INFO - Namespace(SO3_Rotation=False, active_sample_num=2500, batch_size=8, decay_rate=0.0001, epoch=10, gpu='0', learning_rate=0.001, log_dir='Real_Vision_z', model='pointnet_cls', num_ModelNet=0, num_category=15, num_point=1024, optimizer='Adam', process_data=False, random_shuffle=False, use_cpu=False, use_normals=False, use_uniform_sample=False)
+2022-02-24 11:39:05,109 - Model - INFO - Load dataset ...
+2022-02-24 11:39:08,350 - Model - INFO - Use pretrain model
+2022-02-24 11:39:08,352 - Model - INFO - Start training...
+2022-02-24 11:39:08,352 - Model - INFO - Epoch 1 (51/60):
+2022-02-24 11:39:11,331 - Model - INFO - Training loss 0.012514395713806152 
+2022-02-24 11:39:13,345 - Model - INFO - Training loss 0.014326626062393188 
+2022-02-24 11:39:15,165 - Model - INFO - Training loss 0.01256717085838318 
+2022-02-24 11:39:17,137 - Model - INFO - Training loss 0.018585364818572998 
+2022-02-24 11:39:19,160 - Model - INFO - Training loss 0.008675026297569275 
+2022-02-24 11:39:19,343 - Model - INFO - Train Instance Accuracy: 0.562998
+2022-02-24 11:39:23,757 - Model - INFO - Test Instance Accuracy: 0.780080, Class Accuracy: 0.783266
+2022-02-24 11:39:23,757 - Model - INFO - Best Instance Accuracy: 0.780080, Class Accuracy: 0.783266
+2022-02-24 11:39:23,757 - Model - INFO - Save model...
+2022-02-24 11:39:23,758 - Model - INFO - Saving at log/classification/Real_Vision_z/checkpoints/best_model.pth
+2022-02-24 11:39:23,827 - Model - INFO - Epoch 2 (52/60):
+2022-02-24 11:39:27,068 - Model - INFO - Training loss 0.012771220207214355 
+2022-02-24 11:39:29,217 - Model - INFO - Training loss 0.017110991477966308 
+2022-02-24 11:39:31,227 - Model - INFO - Training loss 0.021200175285339354 
+2022-02-24 11:39:33,126 - Model - INFO - Training loss 0.008896533846855164 
+2022-02-24 11:39:35,090 - Model - INFO - Training loss 0.016050920486450196 
+2022-02-24 11:39:35,231 - Model - INFO - Train Instance Accuracy: 0.553038
+2022-02-24 11:39:39,723 - Model - INFO - Test Instance Accuracy: 0.869652, Class Accuracy: 0.871841
+2022-02-24 11:39:39,723 - Model - INFO - Best Instance Accuracy: 0.869652, Class Accuracy: 0.871841
+2022-02-24 11:39:39,724 - Model - INFO - Save model...
+2022-02-24 11:39:39,724 - Model - INFO - Saving at log/classification/Real_Vision_z/checkpoints/best_model.pth
+2022-02-24 11:39:39,807 - Model - INFO - Epoch 3 (53/60):
+2022-02-24 11:39:42,605 - Model - INFO - Training loss 0.009970154762268067 
+2022-02-24 11:39:44,664 - Model - INFO - Training loss 0.011720584630966186 
+2022-02-24 11:39:46,971 - Model - INFO - Training loss 0.010330431461334229 
+2022-02-24 11:39:48,675 - Model - INFO - Training loss 0.008080377578735351 
+2022-02-24 11:39:50,958 - Model - INFO - Training loss 0.01079206943511963 
+2022-02-24 11:39:51,095 - Model - INFO - Train Instance Accuracy: 0.563247
+2022-02-24 11:39:55,580 - Model - INFO - Test Instance Accuracy: 0.817513, Class Accuracy: 0.822357
+2022-02-24 11:39:55,580 - Model - INFO - Best Instance Accuracy: 0.869652, Class Accuracy: 0.871841
+2022-02-24 11:39:55,580 - Model - INFO - Epoch 4 (54/60):
+2022-02-24 11:39:58,614 - Model - INFO - Training loss 0.00881248116493225 
+2022-02-24 11:40:01,039 - Model - INFO - Training loss 0.012515952587127685 
+2022-02-24 11:40:02,799 - Model - INFO - Training loss 0.017539207935333253 
+2022-02-24 11:40:04,977 - Model - INFO - Training loss 0.00690418541431427 
+2022-02-24 11:40:07,077 - Model - INFO - Training loss 0.009175112843513489 
+2022-02-24 11:40:07,222 - Model - INFO - Train Instance Accuracy: 0.565488
+2022-02-24 11:40:11,797 - Model - INFO - Test Instance Accuracy: 0.853610, Class Accuracy: 0.857662
+2022-02-24 11:40:11,798 - Model - INFO - Best Instance Accuracy: 0.869652, Class Accuracy: 0.871841
+2022-02-24 11:40:11,798 - Model - INFO - Epoch 5 (55/60):
+2022-02-24 11:40:14,627 - Model - INFO - Training loss 0.008481754064559937 
+2022-02-24 11:40:17,036 - Model - INFO - Training loss 0.012590266466140747 
+2022-02-24 11:40:19,382 - Model - INFO - Training loss 0.007981016039848328 
+2022-02-24 11:40:21,234 - Model - INFO - Training loss 0.00920002579689026 
+2022-02-24 11:40:23,027 - Model - INFO - Training loss 0.005729935765266418 
+2022-02-24 11:40:23,147 - Model - INFO - Train Instance Accuracy: 0.560010
+2022-02-24 11:40:27,282 - Model - INFO - Test Instance Accuracy: 0.886364, Class Accuracy: 0.889542
+2022-02-24 11:40:27,282 - Model - INFO - Best Instance Accuracy: 0.886364, Class Accuracy: 0.889542
+2022-02-24 11:40:27,282 - Model - INFO - Save model...
+2022-02-24 11:40:27,282 - Model - INFO - Saving at log/classification/Real_Vision_z/checkpoints/best_model.pth
+2022-02-24 11:40:27,363 - Model - INFO - Epoch 6 (56/60):
+2022-02-24 11:40:30,378 - Model - INFO - Training loss 0.007441523671150208 
+2022-02-24 11:40:32,696 - Model - INFO - Training loss 0.02222912311553955 
+2022-02-24 11:40:34,537 - Model - INFO - Training loss 0.009202640056610107 
+2022-02-24 11:40:36,543 - Model - INFO - Training loss 0.011195441484451294 
+2022-02-24 11:40:38,563 - Model - INFO - Training loss 0.011564196348190307 
+2022-02-24 11:40:38,896 - Model - INFO - Train Instance Accuracy: 0.558765
+2022-02-24 11:40:43,090 - Model - INFO - Test Instance Accuracy: 0.848930, Class Accuracy: 0.849799
+2022-02-24 11:40:43,091 - Model - INFO - Best Instance Accuracy: 0.886364, Class Accuracy: 0.889542
+2022-02-24 11:40:43,091 - Model - INFO - Epoch 7 (57/60):
+2022-02-24 11:40:46,339 - Model - INFO - Training loss 0.018875136375427246 
+2022-02-24 11:40:48,220 - Model - INFO - Training loss 0.014358812570571899 
+2022-02-24 11:40:50,290 - Model - INFO - Training loss 0.03488263845443726 
+2022-02-24 11:40:52,425 - Model - INFO - Training loss 0.010138570070266724 
+2022-02-24 11:40:54,539 - Model - INFO - Training loss 0.011251991987228394 
+2022-02-24 11:40:54,654 - Model - INFO - Train Instance Accuracy: 0.569970
+2022-02-24 11:40:58,927 - Model - INFO - Test Instance Accuracy: 0.850936, Class Accuracy: 0.849338
+2022-02-24 11:40:58,927 - Model - INFO - Best Instance Accuracy: 0.886364, Class Accuracy: 0.889542
+2022-02-24 11:40:58,927 - Model - INFO - Epoch 8 (58/60):
+2022-02-24 11:41:01,346 - Model - INFO - Training loss 0.009838204383850097 
+2022-02-24 11:41:03,103 - Model - INFO - Training loss 0.009811392426490784 
+2022-02-24 11:41:05,204 - Model - INFO - Training loss 0.014665420055389405 
+2022-02-24 11:41:07,247 - Model - INFO - Training loss 0.016079365015029906 
+2022-02-24 11:41:09,235 - Model - INFO - Training loss 0.017930704355239867 
+2022-02-24 11:41:09,364 - Model - INFO - Train Instance Accuracy: 0.568476
+2022-02-24 11:41:13,666 - Model - INFO - Test Instance Accuracy: 0.886364, Class Accuracy: 0.888614
+2022-02-24 11:41:13,666 - Model - INFO - Best Instance Accuracy: 0.886364, Class Accuracy: 0.889542
+2022-02-24 11:41:13,666 - Model - INFO - Save model...
+2022-02-24 11:41:13,666 - Model - INFO - Saving at log/classification/Real_Vision_z/checkpoints/best_model.pth
+2022-02-24 11:41:13,737 - Model - INFO - Epoch 9 (59/60):
+2022-02-24 11:41:16,546 - Model - INFO - Training loss 0.006942498087882995 
+2022-02-24 11:41:18,818 - Model - INFO - Training loss 0.012996717691421508 
+2022-02-24 11:41:21,052 - Model - INFO - Training loss 0.014648582935333252 
+2022-02-24 11:41:23,299 - Model - INFO - Training loss 0.010479276180267333 
+2022-02-24 11:41:25,465 - Model - INFO - Training loss 0.008784232139587402 
+2022-02-24 11:41:25,571 - Model - INFO - Train Instance Accuracy: 0.560259
+2022-02-24 11:41:30,128 - Model - INFO - Test Instance Accuracy: 0.852941, Class Accuracy: 0.847570
+2022-02-24 11:41:30,129 - Model - INFO - Best Instance Accuracy: 0.886364, Class Accuracy: 0.889542
+2022-02-24 11:41:30,129 - Model - INFO - Epoch 10 (60/60):
+2022-02-24 11:41:33,401 - Model - INFO - Training loss 0.011169979572296143 
+2022-02-24 11:41:35,427 - Model - INFO - Training loss 0.014999282360076905 
+2022-02-24 11:41:37,373 - Model - INFO - Training loss 0.02391768217086792 
+2022-02-24 11:41:39,657 - Model - INFO - Training loss 0.008410934805870057 
+2022-02-24 11:41:41,745 - Model - INFO - Training loss 0.005745360255241394 
+2022-02-24 11:41:41,861 - Model - INFO - Train Instance Accuracy: 0.582171
+2022-02-24 11:41:46,266 - Model - INFO - Test Instance Accuracy: 0.778075, Class Accuracy: 0.780238
+2022-02-24 11:41:46,266 - Model - INFO - Best Instance Accuracy: 0.886364, Class Accuracy: 0.889542
+2022-02-24 11:41:46,266 - Model - INFO - End of training...
