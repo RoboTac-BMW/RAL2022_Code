@@ -286,7 +286,7 @@ class PCDActiveVision(PCDPointCloudData):
             for i in range(self.active_sample_num):
                 # print(lines[i])
                 # print(type(lines[i]))
-                converted_string=json.loads(lines[i])
+                converted_string=json.loads(lines[-i])
                 # print(converted_string)
                 # print(type(converted_string))
                 self.files.append(converted_string)
