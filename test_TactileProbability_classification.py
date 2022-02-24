@@ -10,6 +10,7 @@ from tqdm import tqdm
 import sys
 import importlib
 import json
+import csv
 from path import Path
 from data_utils.PCDLoader import *
 from scipy.stats import entropy
@@ -226,7 +227,8 @@ def main(args):
     # data_path = 'data/modelnet40_normal_resampled/'
     # data_path = Path("mesh_data/ModelNet10")
     offline_tactile_path = 'data/tactile_pcd_10_sampled_21.02'
-    tactile_data_dir = 'data/active_tactile_data'
+    # tactile_data_dir = 'data/active_tactile_data'
+    tactile_data_dir = args.pcd_dir
 
     # classes = find_classes(Path(visual_data_path))
     classes = ['cleaner', 'coffee', 'cup', 'eraser', 'glasses_box', 'jam', 'olive_oil', 'shampoo', 'spray', 'sugar', 'tape', 'wine']
@@ -239,7 +241,7 @@ def main(args):
     for file in os.listdir(tactile_data_dir):
         if file.endswith('.pcd'):
             sample = {}
-            sample['pcd_path'] = str(Path(tactile_data_dir/file))
+            sample['pcd_path'] = str((tactile_data_dir + str(file)))
             # sample['category'] = category
             sample['probability'] = 0.0
             output_files.append(sample)
@@ -277,15 +279,18 @@ def main(args):
                                              forward_passes=5, n_samples=1, n_classes=12)
         sample['probability'] = probability_sample
 
-    # sorted_sample_list = sorted(visual_pcd_files, key=lambda x: x['entropy'], reverse=True)
+    sorted_sample_list = sorted(output_files, key=lambda x: x['pcd_path'], reverse=False)
 
-    saved_file_path = "/home/airocs/Desktop/tactile_output" + str(datetime.now()) +".json"
+    saved_file_path = "/home/airocs/Desktop/tactile_output_" + str(datetime.now()) +".csv"
     with open(saved_file_path, 'w') as f:
-        json.dump(classes, f)
-        f.write('\n')
-        for item in output_files:
-            json.dump(item, f)
-            f.write('\n')
+        writer = csv.writer(f)
+        # json.dump(classes, f)
+        # f.write('\n')
+        for item in sorted_sample_list:
+            print(item)
+            writer.writerow(item['probability'])
+            # json.dump(item, f)
+            # f.write('\n')
             # f.write("%s\n" % item)
 
     print("File saved to %s " % saved_file_path)
