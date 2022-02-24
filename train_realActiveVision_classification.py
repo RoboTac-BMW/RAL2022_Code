@@ -123,7 +123,7 @@ def main(args):
     active_txt_path = '/home/airocs/Desktop/active_entropy_files_new.json'
 
     train_dataset = PCDActiveVision(root_dir=data_path,
-                                    active_path=active_txt_path, active_sample_num=500,
+                                    active_path=active_txt_path, active_sample_num=1000,
                                     folder='Train',
                                     random_shuffle=args.random_shuffle)
 
