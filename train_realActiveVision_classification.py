@@ -30,7 +30,7 @@ def parse_args():
     parser.add_argument('--model', default='pointnet_cls', help='model name [default: pointnet_cls]')
     parser.add_argument('--num_category', default=15, type=int, help='training on real dataset')
     parser.add_argument('--num_ModelNet', default=0, type=int, choices=[0,10,40], help='Pre-trained num_category')
-    parser.add_argument('--epoch', default=50, type=int, help='number of epoch in training')
+    parser.add_argument('--epoch', default=5, type=int, help='number of epoch in training')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='learning rate in training')
     parser.add_argument('--num_point', type=int, default=1024, help='Visual Point Number')
     parser.add_argument('--optimizer', type=str, default='Adam', help='optimizer for training')
@@ -40,6 +40,7 @@ def parse_args():
     parser.add_argument('--process_data', action='store_true', default=False, help='save data offline')
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
     parser.add_argument('--SO3_Rotation', action='store_true', default=False, help='arbitrary rotation in SO3')
+    parser.add_argument('--random_shuffle', action='store_true', default=False, help='random select files from entropy file')
     return parser.parse_args()
 
 
@@ -118,12 +119,13 @@ def main(args):
 
     '''DATA LOADING'''
     log_string('Load dataset ...')
-    data_path = 'data/active_vision_pcd_1500/'
+    data_path = 'data/active_vision_pcd_150/'
     active_txt_path = '/home/airocs/Desktop/active_entropy_files.json'
 
     train_dataset = PCDActiveVision(root_dir=data_path,
-                                    active_path=active_txt_path, active_sample_num=1500,
-                                    folder='Train')
+                                    active_path=active_txt_path, active_sample_num=50,
+                                    folder='Train',
+                                    random_shuffle=args.random_shuffle)
 
     # train_dataset = PCDPointCloudData(data_path,
     #                                   folder='Train',

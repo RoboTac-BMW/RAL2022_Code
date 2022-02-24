@@ -270,7 +270,8 @@ class PCDActiveVision(PCDPointCloudData):
                  est_normal = False,
                  random_num = False,
                  list_num_point = [1024],
-                 rotation='z'):
+                 rotation='z',
+                 random_shuffle=False):
 
         super(PCDActiveVision, self).__init__(root_dir, folder, num_point, sample, sample_method,
                          est_normal, random_num, list_num_point, rotation)
@@ -279,6 +280,9 @@ class PCDActiveVision(PCDPointCloudData):
 
         with open(self.active_path) as file:
             lines = [line.rstrip() for line in file]
+            if random_shuffle is True:
+                random.shuffle(lines)
+
             for i in range(self.active_sample_num):
                 # print(lines[i])
                 # print(type(lines[i]))

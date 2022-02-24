@@ -52,10 +52,14 @@ def inplace_relu(m):
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 def test(model, loader, num_class=12):
 =======
 def test(model, loader, num_class=13):
 >>>>>>> 81959a71886fd40d0979490f8ae0172a347fcf32
+=======
+def test(model, loader, num_class=15):
+>>>>>>> c6b07f95ad887026bb0a53e866edc883f6153f5b
     mean_correct = []
     class_acc = np.zeros((num_class, 3))
     classifier = model.eval()
