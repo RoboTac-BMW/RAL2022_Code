@@ -33,7 +33,7 @@ def rand_rotation(pointcloud, with_normal=True, SO3=False):
     rot_matrix_with_normal = np.concatenate((tmp_matrix, tmp_matrix_2), axis=0)
     if with_normal is True:
         rot_pointcloud = rot_matrix_with_normal.dot(pointcloud.T).T
-    else:                                          # up=[-0.0694, -0.9768, 0.2024])
+    else:
 
         rot_pointcloud = rot_matrix.dot(pointcloud.T).T
     return  rot_pointcloud
@@ -58,16 +58,17 @@ def normalize_pointcloud(pointcloud):
 
 class PCDPointCloudData(Dataset):
     def __init__(self, root_dir,
-                 folder='train',
-                 valid=False,
+                 folder='Train',
                  num_point=1024,
-                 sample_method='random',
+                 random_num=False,
+                 list_num_point=[1024],
                  rotation='z'):
 
         self.root_dir = root_dir
-        self.valid = valid
         self.folder = folder
         self.num_point = num_point
+        self.random_num = random_num
+        self.list_num_point = list_num_point
         self.classes = find_classes(Path(root_dir))
         self.files = []
 
@@ -111,8 +112,13 @@ class PCDPointCloudData(Dataset):
         # print(pointcloud_np.shape)
 
         # random select points
+        if self.random_num is False:
+            sample_size = self.num_point
+        else:
+            sample_size = random.choice(self.list_num_point)
+
         sel_pts_idx = np.random.choice(pointcloud_np.shape[0],
-                                       size=self.num_point,
+                                       size=sample_size,
                                        replace=False).reshape(-1)
         pointcloud_np = pointcloud_np[sel_pts_idx]
         # print(self.classes[category])
