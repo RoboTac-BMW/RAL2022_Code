@@ -13,9 +13,6 @@ import argparse
 from pathlib import Path
 from tqdm import tqdm
 from data_utils.PCDLoader import *
-# from data_utils.OFFDataLoader import *
-# from path import Path
-# from data_utils.ModelNetDataLoader import ModelNetDataLoader
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = BASE_DIR
@@ -146,7 +143,6 @@ def main(args):
     shutil.copy('models/pointnet_cls.py', str(exp_dir))
     shutil.copy('data_utils/PCDLoader.py', str(exp_dir))
     shutil.copy('./train_dense_realVision_classification.py', str(exp_dir))
-    # shutil.copy('./train_dense_classification.py', str(exp_dir))
 
     classifier = model.get_model(num_class, normal_channel=args.use_normals)
     criterion = model.get_loss()
