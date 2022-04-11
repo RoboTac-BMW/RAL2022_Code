@@ -14,7 +14,6 @@ import torch.nn as nn
 
 from pathlib import Path
 from tqdm import tqdm
-# from data_utils.OFFDataLoader import *
 from data_utils.PCDLoader import *
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -126,11 +125,6 @@ def main(args):
                                     active_path=active_txt_path, active_sample_num=50,
                                     folder='Train',
                                     random_shuffle=args.random_shuffle)
-
-    # train_dataset = PCDPointCloudData(data_path,
-    #                                   folder='Train',
-    #                                   num_point=args.num_point,
-    #                                   est_normal=args.use_normals)
 
     test_dataset = PCDPointCloudData(data_path,
                                      folder='Test',
