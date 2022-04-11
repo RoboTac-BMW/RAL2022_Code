@@ -55,15 +55,11 @@ def test(model, loader, num_class=15, vote_num=1):
     all_pred_new = []
     all_true_new = []
     # classes = list(find_classes(data_path).keys())
-    # print(classes)
 
     for j, data in tqdm(enumerate(loader), total=len(loader)):
         if not args.use_cpu:
-            # points, target = points.cuda(), target.cuda()
             points, target = data['pointcloud'].to(device).float(), data['category'].to(device)
-            # print(target)
-            # print("points............")
-            # print(points.size())
+
 
         points = points.transpose(2, 1)
         vote_pool = torch.zeros(target.size()[0], num_class).cuda()
@@ -71,7 +67,6 @@ def test(model, loader, num_class=15, vote_num=1):
         ###################################################################################
         output_new, _ = classifier(points)
         _, preds_new = torch.max(output_new.data, 1)
-        # print(preds_new)
         y_true_new = target.data.cpu().numpy()
         y_pred_new = preds_new.data.cpu().numpy()
 
@@ -87,7 +82,6 @@ def test(model, loader, num_class=15, vote_num=1):
             pred, _ = classifier(points)
             vote_pool += pred
         pred = vote_pool / vote_num
-        # print(pred.data.max(1)[1])
         pred_choice = pred.data.max(1)[1]
 
         # pred for confusion matrix
@@ -97,8 +91,7 @@ def test(model, loader, num_class=15, vote_num=1):
 
         for cat in np.unique(target.cpu()):
             classacc = pred_choice[target == cat].eq(target[target == cat].long().data).cpu().sum()
-            # print("------------------------------------------------------")
-            # print("cat", cat)
+
             class_acc[cat, 0] += classacc.item() / float(points[target == cat].size()[0])
             class_acc[cat, 1] += 1
         correct = pred_choice.eq(target.long().data).cpu().sum()
@@ -106,25 +99,15 @@ def test(model, loader, num_class=15, vote_num=1):
 
     print(f'Got {num_correct} / {num_samples} with accuracy {float(num_correct)/float(num_samples)*100:.2f}')
     cf_matrix_new = confusion_matrix(all_true_new, all_pred_new, normalize='true')
-    # cf_matrix_old = confusion_matrix(all_true_new, all_pred_new)
-    # print(cf_matrix_new)
-    # print(all_true_new)
-    # print(all_pred_new)
     print(cf_matrix_new)
 
     # print(mean_correct)
     class_acc[:, 2] = class_acc[:, 0] / class_acc[:, 1]
     class_acc = np.mean(class_acc[:, 2])
     instance_acc = np.mean(mean_correct)
-    # print(instance_acc)
-    # Draw Confusion Matrix
-    # print(y_true)
-    # print(y_pred)
-    # cf_matrix_old = confusion_matrix(y_true, y_pred)
-    # print(cf_matrix)
-    # return instance_acc, class_acc, cf_matrix
+    
     return instance_acc, class_acc, cf_matrix_new
-    # return instance_acc, class_acc
+
 
 
 def main(args):
@@ -152,11 +135,6 @@ def main(args):
 
     '''DATA LOADING'''
     log_string('Load dataset ...')
-    # tactile_data_path = 'data/tactile_data_pcd/'
-    # tactile_data_path = 'data/tactile_pcd_10_sampled_21.02/'
-    # tactile_data_path = 'data/visual_data_pcd/'
-    # data_path = 'data/modelnet40_normal_resampled/'
-    # data_path = Path("mesh_data/ModelNet10")
     visual_data_path = Path('data/Rotated_visual_data_pcd')
 
 
@@ -194,12 +172,6 @@ def main(args):
 
         # Draw confusion matrix
         # df_cm = pd.DataFrame(cf_matrix_new *10,
-        #                      index = [i for i in classes.keys()], columns = [i for i in classes.keys()])
-        # plt.figure(figsize = (12,7))
-        # sn.heatmap(df_cm, annot=True)
-        # plt.savefig(experiment_dir + '/' + str(datetime.now()) + '.png')
-
-        # df_cm = pd.DataFrame(cf_matrix_new/np.sum(cf_matrix_old) *10,
         #                      index = [i for i in classes.keys()], columns = [i for i in classes.keys()])
         # plt.figure(figsize = (12,7))
         # sn.heatmap(df_cm, annot=True)
