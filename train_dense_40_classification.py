@@ -1,8 +1,3 @@
-"""
-Author: Benny
-Date: Nov 2019
-"""
-
 import os
 import sys
 import torch
@@ -159,7 +154,6 @@ def main(args):
     shutil.copy('./models/%s.py' % args.model, str(exp_dir))
     shutil.copy('models/pointnet_cls.py', str(exp_dir))
     shutil.copy('./train_dense_40_classification.py', str(exp_dir))
-    # shutil.copy('./train_dense_classification.py', str(exp_dir))
 
     classifier = model.get_model(num_class, normal_channel=args.use_normals)
     criterion = model.get_loss()
