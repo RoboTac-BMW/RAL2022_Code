@@ -106,7 +106,8 @@ def test(model, loader, num_class=12, vote_num=1):
 
     print(tSNE_X.shape)
     print(tSNE_Y.shape)
-    X_embedded = TSNE(learning_rate=10.0).fit_transform(tSNE_X)
+    # Changing the value of perplexity HERE (5-50):
+    X_embedded = TSNE(perplexity=50, learning_rate=10.0).fit_transform(tSNE_X)
     print(X_embedded.shape)
     # print(tSNE_Y[:,0])
     df = pd.DataFrame()
