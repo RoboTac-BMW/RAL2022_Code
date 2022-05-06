@@ -99,29 +99,42 @@ def test(model, loader, num_class=12, vote_num=1):
         output_tSNE = classifier(points)
         feature_tSNE = activation['fc2']
         feature_tSNE_np = feature_tSNE.data.cpu().numpy()
-
+        # print(".....................")
+        # print(feature_tSNE_np.shape)
         tSNE_X[j] = feature_tSNE_np[0]
-        tSNE_Y[j] = y_true_new
+        tSNE_Y[j] = int(y_true_new)
+        # print(feature_tSNE_np)
 
 
     print(tSNE_X.shape)
     print(tSNE_Y.shape)
-    # Changing the value of perplexity HERE (5-50):
-    X_embedded = TSNE(perplexity=50, learning_rate=10.0).fit_transform(tSNE_X)
+    X_embedded = TSNE(perplexity=10, learning_rate=10.0).fit_transform(tSNE_X)
     print(X_embedded.shape)
+    classes_name = ['cleaner', 'coffee', 'cup', 'eraser', 'glasses_box', 'jam', 'olive_oil',
+                    'shampoo', 'spray', 'sugar', 'tape', 'wine']
+    # Changing the value of perplexity HERE (5-50):
     # print(tSNE_Y[:,0])
     df = pd.DataFrame()
     df['y'] = tSNE_Y[:,0]
     df['comp-1'] = X_embedded[:,0]
     df['comp-2'] = X_embedded[:,1]
+    list_y = df.y.tolist()
+    # print(list_y)
+    # print(type(list_y[0]))
+
+    for i, item in enumerate(list_y):
+        list_y[i] = classes_name[int(item)]
+
+    print(list_y)
 
     plt.figure(figsize = (12,7))
-    sn.scatterplot(x='comp-1', y='comp-2', hue=df.y.tolist(),
+    sn.scatterplot(x='comp-1', y='comp-2', hue=list_y,
                    # palette=sn.color_palette("flare", as_cmap=True),
                    # palette=sn.color_palette("Spectral", as_cmap=True),
                    palette = sn.color_palette("Paired"),
                    data=df).set(xlabel='Component-1', ylabel='Component-2')
-    plt.savefig('/home/airocs/Desktop/' +'tSNE_tactile_' + str(datetime.now()) + '.png')
+
+    plt.savefig('/home/prajval/Desktop/' +'tSNE_tactile_' + str(datetime.now()) + '.png')
 
 
 
@@ -155,7 +168,12 @@ def main(args):
 
     '''DATA LOADING'''
     log_string('Load dataset ...')
+    # tactile_data_path = 'data/tactile_data_pcd/'
     tactile_data_path = 'data/tactile_pcd_10_sampled_21.02/'
+    visual_data_path = 'data/visual_data_pcd/'
+    # tactile_data_path = 'data/visual_data_pcd/'
+    # data_path = 'data/modelnet40_normal_resampled/'
+    # data_path = Path("mesh_data/ModelNet10")
 
 
     test_dataset = PCDPointCloudData(tactile_data_path,
@@ -192,13 +210,18 @@ def main(args):
         log_string('Test Instance Accuracy: %f, Class Accuracy: %f' % (instance_acc, class_acc))
 
         # Draw confusion matrix
-        # df_cm = pd.DataFrame(cf_matrix_new *10,
+        df_cm = pd.DataFrame(cf_matrix_new,
                              index = [i for i in classes.keys()],
                              columns = [i for i in classes.keys()])
+        plt.figure(figsize = (12,7))
+        sn.heatmap(df_cm, annot=True)
+        # plt.savefig(experiment_dir + '/' + str(datetime.now()) + '.png')
+
+        # df_cm = pd.DataFrame(cf_matrix_new/np.sum(cf_matrix_old) *10,
+        #                      index = [i for i in classes.keys()], columns = [i for i in classes.keys()])
         # plt.figure(figsize = (12,7))
         # sn.heatmap(df_cm, annot=True)
         # plt.savefig(experiment_dir + '/' + str(datetime.now()) + '.png')
-
 
 if __name__ == '__main__':
     args = parse_args()
