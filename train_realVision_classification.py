@@ -14,7 +14,6 @@ import torch.nn as nn
 
 from pathlib import Path
 from tqdm import tqdm
-# from data_utils.OFFDataLoader import *
 from data_utils.PCDLoader import *
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))

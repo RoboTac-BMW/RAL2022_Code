@@ -1,5 +1,3 @@
-# from data_utils.ModelNetDataLoader import ModelNetDataLoader
-# from data_utils.OFFDataLoader import *
 import argparse
 import numpy as np
 import os
@@ -45,91 +43,6 @@ def enable_dropout(model):
         if m.__class__.__name__.startswith('Dropout'):
             m.train()
 
-# def test(model, loader, num_class=15, vote_num=1):
-#     mean_correct = []
-#     classifier = model.eval()
-#     class_acc = np.zeros((num_class, 3))
-
-#     for j, data in tqdm(enumerate(loader), total=len(loader)):
-#         if not args.use_cpu:
-#             # points, target = points.cuda(), target.cuda()
-#             points, target = data['pointcloud'].to(device).float(), data['category'].to(device)
-#             # print("points............")
-#             # print(points.size())
-
-#         points = points.transpose(2, 1)
-#         vote_pool = torch.zeros(target.size()[0], num_class).cuda()
-
-#         for _ in range(vote_num):
-#             pred, _ = classifier(points)
-#             vote_pool += pred
-#         pred = vote_pool / vote_num
-#         pred_choice = pred.data.max(1)[1]
-
-#         for cat in np.unique(target.cpu()):
-#             classacc = pred_choice[target == cat].eq(target[target == cat].long().data).cpu().sum()
-#             class_acc[cat, 0] += classacc.item() / float(points[target == cat].size()[0])
-#             class_acc[cat, 1] += 1
-#         correct = pred_choice.eq(target.long().data).cpu().sum()
-#         mean_correct.append(correct.item() / float(points.size()[0]))
-
-#     class_acc[:, 2] = class_acc[:, 0] / class_acc[:, 1]
-#     class_acc = np.mean(class_acc[:, 2])
-#     instance_acc = np.mean(mean_correct)
-#     return instance_acc, class_acc
-
-# def get_monte_carlo_predictions_Dataset(model,
-#                                         data_loader,
-#                                         forward_passes=3,
-#                                         n_classes=15,
-#                                         n_samples=6000):
-#     """ Function to get the monte-carlo samples and uncertainty estimates
-#     through multiple forward passes
-
-#     Parameters
-#     ----------
-#     data_loader : object
-#         data loader object from the data loader module
-#     forward_passes : int
-#         number of monte-carlo samples/forward passes
-#     model : object
-#         keras model
-#     n_classes : int
-#         number of classes in the dataset
-#     n_samples : int
-#         number of samples in the test set
-#     """
-
-#     dropout_predictions = np.empty((0, n_samples, n_classes))
-#     softmax = nn.Softmax(dim=1)
-#     for i in tqdm(range(forward_passes)):
-#         # print(i)
-#         predictions = np.empty((0, n_classes))
-#         model.eval()
-#         classifier = model.eval()
-#         enable_dropout(model)
-#         for i, data in tqdm(enumerate(data_loader), total=len(data_loader)):
-#             if not args.use_cpu:
-#                 points, target = data['pointcloud'].to(device).float(), data['category'].to(device)
-
-#             points = points.transpose(2,1)
-#             # image = image.to(torch.device('cuda'))
-
-#             with torch.no_grad():
-#                 # output = model(image)
-#                 output, _ = classifier(points)
-#                 output = softmax(output) # shape (n_samples, n_classes)
-#                 # print(output)
-#             predictions = np.vstack((predictions, output.cpu().numpy()))
-
-#         dropout_predictions = np.vstack((dropout_predictions,
-#                                          predictions[np.newaxis, :, :]))
-#         # print(dropout_predictions)
-#     mean = np.mean(dropout_predictions, axis=0)
-#     print(mean.shape)
-#     print(mean[100])
-#         # dropout predictions - shape (forward_passes, n_samples, n_classes)
-
 
 def get_monte_carlo_predictions(model,
                                 data_loader,
@@ -156,7 +69,6 @@ def get_monte_carlo_predictions(model,
     dropout_predictions = np.empty((0, n_samples, n_classes))
     softmax = nn.Softmax(dim=1)
     for i in range(forward_passes):
-        # print(i)
         predictions = np.empty((0, n_classes))
         model.eval()
         classifier = model.eval()
@@ -169,30 +81,15 @@ def get_monte_carlo_predictions(model,
             with torch.no_grad():
                 output, _ = classifier(points)
                 output = softmax(output) # shape (n_samples, n_classes)
-                # print(output)
             predictions = np.vstack((predictions, output.cpu().numpy()))
 
         dropout_predictions = np.vstack((dropout_predictions,
                                          predictions[np.newaxis, :, :]))
 
-        # print(dropout_predictions)
     mean = np.mean(dropout_predictions, axis=0)
-    # print(mean.shape)
-    # print(mean[0])
     prob_sample = mean[0]
     entr_sample = entropy(prob_sample)
     return entr_sample
-
-
-
-
-    # print(type(mean[0]))
-    # mean = np.mean(dropout_predictions, axis=0)
-    # print(mean.shape)
-    # print(mean[100])
-        # dropout predictions - shape (forward_passes, n_samples, n_classes)
-
-
 
 
 def main(args):
@@ -215,8 +112,6 @@ def main(args):
     file_handler.setLevel(logging.INFO)
     file_handler.setFormatter(formatter)
     logger.addHandler(file_handler)
-    # log_string('PARAMETER ...')
-    # log_string(args)
 
     '''DATA LOADING'''
     # log_string('Load dataset ...')
@@ -250,10 +145,6 @@ def main(args):
 
     checkpoint = torch.load(str(experiment_dir) + '/checkpoints/best_model.pth')
     classifier.load_state_dict(checkpoint['model_state_dict'])
-
-    # with torch.no_grad():
-    #     instance_acc, class_acc = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
-    #     log_string('Test Instance Accuracy: %f, Class Accuracy: %f' % (instance_acc, class_acc))
 
     # Load Samples
     print("...............................")

@@ -13,8 +13,6 @@ import argparse
 from pathlib import Path
 from tqdm import tqdm
 from data_utils.OFFDataLoader import *
-# from path import Path
-# from data_utils.ModelNetDataLoader import ModelNetDataLoader
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = BASE_DIR
@@ -128,8 +126,6 @@ def main(args):
         data_path = Path("mesh_data/ModelNet40")
     else:
         raise ValueError("Not a valid category input")
-    # data_path = 'data/modelnet40_normal_resampled/'
-    # data_path = Path("mesh_data/ModelNet10")
 
     train_transforms = transforms.Compose([
         PointSampler(args.num_point, with_normal=args.use_normals),
@@ -155,8 +151,6 @@ def main(args):
             ToTensor()
             ])
 
-    # train_dataset = ModelNetDataLoader(root=data_path, args=args, split='train', process_data=args.process_data)
-    # test_dataset = ModelNetDataLoader(root=data_path, args=args, split='test', process_data=args.process_data)
 
     train_dataset = PointCloudData(data_path, transform=train_transforms)
     domain_adaptation_dataset = PointCloudData(data_path, transform=domain_adaptation_transforms)
@@ -180,7 +174,6 @@ def main(args):
     shutil.copy('./models/%s.py' % args.model, str(exp_dir))
     shutil.copy('models/pointnet_cls.py', str(exp_dir))
     shutil.copy('./train_multi-DA_classification.py', str(exp_dir))
-    # shutil.copy('./train_dense_classification.py', str(exp_dir))
 
     classifier = model.get_model(num_class, normal_channel=args.use_normals)
     criterion = model.get_loss()
@@ -213,12 +206,6 @@ def main(args):
         log_string('No existing model, starting training from scratch...')
         start_epoch = 0
 
-    # Test parameters
-    print("Test Parameters .........................")
-    # for name, param in classifier.named_parameters():
-    #     print(name)
-    #     print(type(name))
-    #     print(str(param.requires_grad))
 
     if args.optimizer == 'Adam':
         optimizer = torch.optim.Adam(
@@ -245,16 +232,13 @@ def main(args):
     for epoch in range(start_epoch, end_epoch):
         log_string('Epoch %d (%d/%s):' % (global_epoch + 1, epoch + 1, end_epoch))
         mean_correct = []
-        # Test Freeze Conv
+        # Freeze Conv
         for name, param in classifier.named_parameters():
             if "feat" in name:
                 param.requires_grad = False
-            # print(name)
-            # print(param.requires_grad)
 
 
         scheduler.step()
-        # for batch_id, data in tqdm(enumerate(trainDataLoader, 0), total=len(trainDataLoader), smoothing=0.9):
         for batch_id, (data, data_DA) in tqdm(
                 enumerate(zip(trainDataLoader,domainAdaptationDataLoader), 0),
                 total=len(trainDataLoader),
@@ -283,7 +267,6 @@ def main(args):
                 points_DA = points_DA.cuda()
 
             pred, trans_feat = classifier(points)
-            # loss = criterion(pred, target.long(), trans_feat)
 
             # Multi-layer Loss
             ###############################################################################################

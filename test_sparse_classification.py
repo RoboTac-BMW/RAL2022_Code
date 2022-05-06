@@ -41,8 +41,6 @@ def test(model, loader, num_class=10, vote_num=1):
         if not args.use_cpu:
             # points, target = points.cuda(), target.cuda()
             points, target = data['pointcloud'].to(device).float(), data['category'].to(device)
-            # print("points............")
-            # print(points.size())
 
         points = points.transpose(2, 1)
         vote_pool = torch.zeros(target.size()[0], num_class).cuda()
@@ -97,8 +95,6 @@ def main(args):
         data_path = Path("mesh_data/ModelNet40")
     else:
         raise ValueError("Not a valid category input")
-    # data_path = 'data/modelnet40_normal_resampled/'
-    # data_path = Path("mesh_data/ModelNet10")
 
     test_transforms = transforms.Compose([
             PointSampler(args.num_point, with_normal=args.use_normals),
@@ -108,7 +104,6 @@ def main(args):
             ToTensor()
             ])
 
-    # test_dataset = ModelNetDataLoader(root=data_path, args=args, split='test', process_data=False)
     test_dataset = PointCloudData(data_path, valid=True, folder='test', transform=test_transforms)
     testDataLoader = torch.utils.data.DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=10)
 

@@ -12,10 +12,8 @@ import argparse
 
 from pathlib import Path
 from tqdm import tqdm
-# from data_utils.OFFDataLoader import *
 from data_utils.PCDLoader import *
-# from path import Path
-# from data_utils.ModelNetDataLoader import ModelNetDataLoader
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = BASE_DIR
@@ -72,7 +70,6 @@ def test(model, loader, num_class=13):
         pred_choice = pred.data.max(1)[1]
 
         for cat in np.unique(target.cpu()):
-            # print(cat)
             classacc = pred_choice[target == cat].eq(target[target == cat].long().data).cpu().sum()
             class_acc[cat, 0] += classacc.item() / float(points[target == cat].size()[0])
             class_acc[cat, 1] += 1
@@ -168,7 +165,6 @@ def main(args):
     activation = {}
     def get_activation(name):
         def hook(model, input, output):
-            # activation [name] = output[0].detach()
             activation [name] = output.detach()
         return hook
 
@@ -179,7 +175,6 @@ def main(args):
     shutil.copy('models/pointnet_cls.py', str(exp_dir))
     shutil.copy('data_utils/PCDLoader.py', str(exp_dir))
     shutil.copy('./train_realMulti-DA_classification.py', str(exp_dir))
-    # shutil.copy('./train_dense_classification.py', str(exp_dir))
 
     classifier = model.get_model(num_class, normal_channel=args.use_normals)
     criterion = model.get_loss()
@@ -213,12 +208,6 @@ def main(args):
         log_string('No existing model, starting training from scratch...')
         start_epoch = 0
 
-    # Test parameters
-    print("Test Parameters .........................")
-    # for name, param in classifier.named_parameters():
-    #     print(name)
-    #     print(type(name))
-    #     print(str(param.requires_grad))
 
     if args.optimizer == 'Adam':
         optimizer = torch.optim.Adam(
@@ -282,15 +271,6 @@ def main(args):
                 points_DA = points_DA.cuda()
 
             pred, trans_feat = classifier(points)
-            # loss = criterion(pred, target.long(), trans_feat)
-
-            # Print Feature
-            ##############################################################################################
-            # classifier.feat.register_forward_hook(get_activation('feat'))
-            # output_conv = classifier(points)
-            # feature_conv = activation['feat'].data.cpu().numpy
-            # feature_norm = np.linalg.norm(feature_conv)
-            # log_string("Feature_Norm {}".format(feature_norm))
 
             # Multi-layer Loss
             ###############################################################################################
@@ -339,19 +319,6 @@ def main(args):
                 # print("Training loss {} ".format(loss.item()/100))
                 calculate_loss = running_loss/100
                 log_string("Training loss {} ".format(calculate_loss))
-
-                # if calculate_loss < min_loss:
-                #     logger.info('Save model...')
-                #     savepath = str(checkpoints_dir) + '/best_model.pth'
-                #     log_string('Saving at %s' % savepath)
-                #     state = {
-                #         'epoch': best_epoch,
-                #         'instance_acc': instance_acc,
-                #         'class_acc': class_acc,
-                #         'model_state_dict': classifier.state_dict(),
-                #         'optimizer_state_dict': optimizer.state_dict(),
-                #     }
-                #     torch.save(state, savepath)
                 running_loss = 0.0
 
         train_instance_acc = np.mean(mean_correct)
@@ -371,8 +338,6 @@ def main(args):
 
             if (instance_acc >= best_instance_acc):
                 logger.info('Save model...')
-                # print("This is a better model, but the model will not be saved")
-                # logger.info('Model will not be saved in this training')
                 savepath = str(checkpoints_dir) + '/best_model.pth'
                 log_string('Saving at %s' % savepath)
                 state = {

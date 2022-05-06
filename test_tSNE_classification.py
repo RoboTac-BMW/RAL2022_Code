@@ -34,7 +34,7 @@ def parse_args():
     # parser.add_argument('--num_category', default=10, type=int, choices=[10, 40],  help='training on ModelNet10/40')
     parser.add_argument('--num_category', default=12, type=int, help='training on real dataset')
     parser.add_argument('--sample_point', type=bool, default=True,  help='Sampling on tacitle data')
-    parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
+    parser.add_argument('--num_point', type=int, default=50, help='Point Number')
     parser.add_argument('--log_dir', type=str, required=True, help='Experiment root')
     parser.add_argument('--use_normals', action='store_true', default=False, help='use normals')
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
@@ -96,28 +96,6 @@ def test(model, loader, num_class=12, vote_num=1):
         num_samples += y_pred_new.size
 
 
-        ##################################################################################
-        # for _ in range(vote_num):
-        #     pred, _ = classifier(points)
-        #     vote_pool += pred
-        # pred = vote_pool / vote_num
-        # print(pred.data.max(1)[1])
-        # pred_choice = pred.data.max(1)[1]
-
-        # pred for confusion matrix
-        # pred_conf = (torch.max(torch.exp(pred), 1)[1]).data.cpu().numpy()
-        # y_pred.extend(pred_conf)
-        # y_true.extend(target.data.cpu())
-
-        # for cat in np.unique(target.cpu()):
-        #     classacc = pred_choice[target == cat].eq(target[target == cat].long().data).cpu().sum()
-        #     # print("------------------------------------------------------")
-        #     # print("cat", cat)
-        #     class_acc[cat, 0] += classacc.item() / float(points[target == cat].size()[0])
-        #     class_acc[cat, 1] += 1
-        # correct = pred_choice.eq(target.long().data).cpu().sum()
-        # mean_correct.append(correct.item() / float(points.size()[0]))
-
         # Output for fc2 feature
         classifier.fc2.register_forward_hook(get_activation('fc2'))
         output_tSNE = classifier(points)
@@ -132,15 +110,17 @@ def test(model, loader, num_class=12, vote_num=1):
 
     print(tSNE_X.shape)
     print(tSNE_Y.shape)
-    X_embedded = TSNE(learning_rate=10.0).fit_transform(tSNE_X)
+    X_embedded = TSNE(perplexity=50, learning_rate=10.0).fit_transform(tSNE_X)
     print(X_embedded.shape)
     classes_name = ['cleaner', 'coffee', 'cup', 'eraser', 'glasses_box', 'jam', 'olive_oil',
                     'shampoo', 'spray', 'sugar', 'tape', 'wine']
+    # Changing the value of perplexity HERE (5-50):
     # print(tSNE_Y[:,0])
     df = pd.DataFrame()
     df['y'] = tSNE_Y[:,0]
     df['comp-1'] = X_embedded[:,0]
     df['comp-2'] = X_embedded[:,1]
+<<<<<<< HEAD
     list_y = df.y.tolist()
     # print(list_y)
     # print(type(list_y[0]))
@@ -156,32 +136,14 @@ def test(model, loader, num_class=12, vote_num=1):
                    # palette=sn.color_palette("Spectral", as_cmap=True),
                    palette = sn.color_palette("Paired"),
                    data=df).set(xlabel='Component-1', ylabel='Component-2')
-    plt.savefig('/home/airocs/Desktop/' +'tSNE_vision' + str(datetime.now()) + '.png')
 
-    # print(f'Got {num_correct} / {num_samples} with accuracy {float(num_correct)/float(num_samples)*100:.2f}')
+    plt.savefig('/home/airocs/Desktop/' +'tSNE_tactile_' + str(datetime.now()) + '.png')
 
 
 
     cf_matrix_new = confusion_matrix(all_true_new, all_pred_new, normalize='true')
-    # cf_matrix_old = confusion_matrix(all_true_new, all_pred_new)
-    # print(cf_matrix_new)
-    # print(all_true_new)
-    # print(all_pred_new)
 
-    # print(mean_correct)
-    # class_acc[:, 2] = class_acc[:, 0] / class_acc[:, 1]
-    # class_acc = np.mean(class_acc[:, 2])
-    # instance_acc = np.mean(mean_correct)
-    # print(instance_acc)
-    # Draw Confusion Matrix
-    # print(y_true)
-    # print(y_pred)
-    # cf_matrix_old = confusion_matrix(y_true, y_pred)
-    # print(cf_matrix)
-    # return instance_acc, class_acc, cf_matrix
-    # return instance_acc, class_acc, cf_matrix_new
     return 0.0, 0.0, cf_matrix_new
-    # return instance_acc, class_acc
 
 
 def main(args):
@@ -247,7 +209,6 @@ def main(args):
 
 
     with torch.no_grad():
-        # instance_acc, class_acc = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
         instance_acc, class_acc, cf_matrix_new = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
         log_string('Test Instance Accuracy: %f, Class Accuracy: %f' % (instance_acc, class_acc))
 
