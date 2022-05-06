@@ -39,7 +39,7 @@ def parse_args():
     parser.add_argument('--num_sparse_point', type=int, default=50, help='Point Number for domain loss')
     parser.add_argument('--random_choose_sparse', type=bool, default=False, help='Random select num_sparse_point from [10,20,30,40,50]')
     parser.add_argument('--SO3_Rotation', action='store_true', default=False, help='arbitrary rotation in SO3')
-    parser.add_argument('--DA_method', type=str, default="multi_coral_mmd", help='choose the DA loss function')
+    parser.add_argument('--DA_method', type=str, default="coral_mmd", help='choose the DA loss function')
     parser.add_argument('--alpha', type=float, default=10, help='set the value of classification loss')
     parser.add_argument('--lamda', type=float, default=10, help='set the value of CORAL loss')
     parser.add_argument('--beta', type=float, default=10, help='set the value of MMD loss')
@@ -144,8 +144,8 @@ def main(args):
                                      est_normal=args.use_normals)
 
 
-    if args.random_choose_sparse is True: 
-        raise NotImplementedError("Function Not Implemented) # Not Implement
+    if args.random_choose_sparse is True:
+        raise NotImplementedError("Function Not Implemented") # Not Implement
         # domain_adaptation_dataset = PCDPointCloudData(tactile_data_path, folder='Train',
         #                                               random_num=True,
         #                                               list_num_point=[10,20,30,40,50])
@@ -293,6 +293,7 @@ def main(args):
             # print(feature_DA_1.size())
 
             # FC2
+            """
             classifier.fc2.register_forward_hook(get_activation('fc2'))
             output_dense_2 = classifier(points)
             feature_dense_2 = activation['fc2']
@@ -302,11 +303,14 @@ def main(args):
             output_DA_2 = classifier(points_DA)
             feature_DA_2 = activation['fc2']
             # print(feature_DA_2.size())
+            """
 
             # change the loss here for testing!!!
 
             DA_loss, loss = criterion_DA(pred, target.long(), trans_feat,
-                                feature_dense_1, feature_DA_1, feature_dense_2, feature_DA_2)
+                                feature_dense_1, feature_DA_1)
+            # DA_loss, loss = criterion_DA(pred, target.long(), trans_feat,
+            #                     feature_dense_1, feature_DA_1, feature_dense_2, feature_DA_2)
             ################################################################################################
             pred_choice = pred.data.max(1)[1]
 
