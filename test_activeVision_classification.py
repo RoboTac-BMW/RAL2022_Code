@@ -157,7 +157,7 @@ def main(args):
     # tactile_data_path = 'data/visual_data_pcd/'
     # data_path = 'data/modelnet40_normal_resampled/'
     # data_path = Path("mesh_data/ModelNet10")
-    visual_data_path = Path('data/Rotated_visual_data_pcd')
+    visual_data_path = Path('data/visual_data_pcd_15')
 
 
     test_dataset = PCDPointCloudData(visual_data_path,
