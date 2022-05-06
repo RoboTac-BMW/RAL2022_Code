@@ -34,7 +34,7 @@ def parse_args():
     # parser.add_argument('--num_category', default=10, type=int, choices=[10, 40],  help='training on ModelNet10/40')
     parser.add_argument('--num_category', default=12, type=int, help='training on real dataset')
     parser.add_argument('--sample_point', type=bool, default=True,  help='Sampling on tacitle data')
-    parser.add_argument('--num_point', type=int, default=50, help='Point Number')
+    parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
     parser.add_argument('--log_dir', type=str, required=True, help='Experiment root')
     parser.add_argument('--use_normals', action='store_true', default=False, help='use normals')
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
@@ -75,9 +75,7 @@ def test(model, loader, num_class=12, vote_num=1):
         if not args.use_cpu:
             # points, target = points.cuda(), target.cuda()
             points, target = data['pointcloud'].to(device).float(), data['category'].to(device)
-            # print(target)
-            # print("points............")
-            # print(points.size())
+
 
         points = points.transpose(2, 1)
         vote_pool = torch.zeros(target.size()[0], num_class).cuda()
@@ -120,7 +118,6 @@ def test(model, loader, num_class=12, vote_num=1):
     df['y'] = tSNE_Y[:,0]
     df['comp-1'] = X_embedded[:,0]
     df['comp-2'] = X_embedded[:,1]
-<<<<<<< HEAD
     list_y = df.y.tolist()
     # print(list_y)
     # print(type(list_y[0]))
@@ -137,7 +134,8 @@ def test(model, loader, num_class=12, vote_num=1):
                    palette = sn.color_palette("Paired"),
                    data=df).set(xlabel='Component-1', ylabel='Component-2')
 
-    plt.savefig('/home/airocs/Desktop/' +'tSNE_tactile_' + str(datetime.now()) + '.png')
+    # plt.savefig('/home/airocs/Desktop/' +'tSNE_tactile_' + str(datetime.now()) + '.png')
+    plt.savefig('/home/prajval/Desktop/' +'tSNE_vision_' + str(datetime.now()) + '.png')
 
 
 
@@ -173,7 +171,7 @@ def main(args):
     log_string('Load dataset ...')
     # tactile_data_path = 'data/tactile_data_pcd/'
     tactile_data_path = 'data/tactile_pcd_10_sampled_21.02/'
-    visual_data_path = 'data/visual_data_pcd_12/'
+    visual_data_path = 'data/visual_data_pcd/'
     # tactile_data_path = 'data/visual_data_pcd/'
     # data_path = 'data/modelnet40_normal_resampled/'
     # data_path = Path("mesh_data/ModelNet10")
@@ -218,7 +216,7 @@ def main(args):
                              columns = [i for i in classes.keys()])
         plt.figure(figsize = (12,7))
         sn.heatmap(df_cm, annot=True)
-        plt.savefig(experiment_dir + '/' + str(datetime.now()) + '.png')
+        # plt.savefig(experiment_dir + '/' + str(datetime.now()) + '.png')
 
         # df_cm = pd.DataFrame(cf_matrix_new/np.sum(cf_matrix_old) *10,
         #                      index = [i for i in classes.keys()], columns = [i for i in classes.keys()])
