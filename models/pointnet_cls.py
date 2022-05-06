@@ -44,12 +44,13 @@ def compute_covariance(input_data):
 
 # PointNet Classification
 class get_model(nn.Module):
-    def __init__(self, k=40, normal_channel=True):
+    def __init__(self, k=40, normal_channel=True, mc_dropout=False):
         super(get_model, self).__init__()
         if normal_channel:
             channel = 6
         else:
             channel = 3
+        self.mc_dropout = mc_dropout
         self.feat = PointNetEncoder(global_feat=True, feature_transform=True, channel=channel)
         self.fc1 = nn.Linear(1024, 512)
         self.fc2 = nn.Linear(512, 256)
@@ -63,8 +64,12 @@ class get_model(nn.Module):
         x, trans, trans_feat = self.feat(x)
         x = F.relu(self.bn1(self.fc1(x)))
         x = F.relu(self.bn2(self.dropout(self.fc2(x))))
-        x = self.fc3(x)
-        x = F.log_softmax(x, dim=1)
+
+        if self.mc_dropout is False:
+            x = self.fc3(x)
+            x = F.log_softmax(x, dim=1)
+        else:
+            x = self.fc3(self.dropout(x))
         return x, trans_feat
 
 
@@ -166,8 +171,9 @@ class get_coral_mmd_loss(get_mmd_loss):
         YX = torch.mean(kernels[batch_size:, :batch_size])
         mmd_loss = torch.mean(XX + YY - XY -YX)
         coral_loss = coral(feature_dense, feature_sparse)
+        DA_loss = self.DA_beta * mmd_loss + self.DA_lamda * coral_loss
         total_loss = self.DA_alpha * loss + mat_diff_loss * self.mat_diff_loss_scale + self.DA_beta * mmd_loss + self.DA_lamda * coral_loss
-        return total_loss
+        return DA_loss, total_loss
 
 
 # KL Loss. Total Loss = alpha * Classification + gamma * KL
@@ -216,9 +222,11 @@ class get_multiLayer_loss(get_coral_mmd_loss):
         mmd_loss_1, coral_loss_1 = self.singleLayer_loss(pred, target, trans_feat, feature_dense_1, feature_sparse_1)
         mmd_loss_2, coral_loss_2 = self.singleLayer_loss(pred, target, trans_feat, feature_dense_2, feature_sparse_2)
 
+        DA_loss = self.DA_beta * (mmd_loss_1 + mmd_loss_2) + self.DA_lamda * (coral_loss_1 + coral_loss_2)
+
         total_loss = self.DA_alpha * loss + mat_diff_loss * self.mat_diff_loss_scale + self.DA_beta * (mmd_loss_1 + mmd_loss_2) + self.DA_lamda * (coral_loss_1 + coral_loss_2)
 
-        return total_loss
+        return DA_loss, total_loss
 
 
 

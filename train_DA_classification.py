@@ -13,8 +13,6 @@ import argparse
 from pathlib import Path
 from tqdm import tqdm
 from data_utils.OFFDataLoader import *
-# from path import Path
-# from data_utils.ModelNetDataLoader import ModelNetDataLoader
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = BASE_DIR
@@ -157,9 +155,6 @@ def main(args):
             ToTensor()
             ])
 
-    # train_dataset = ModelNetDataLoader(root=data_path, args=args, split='train', process_data=args.process_data)
-    # test_dataset = ModelNetDataLoader(root=data_path, args=args, split='test', process_data=args.process_data)
-
     train_dataset = PointCloudData(data_path, transform=train_transforms)
     domain_adaptation_dataset = PointCloudData(data_path, transform=domain_adaptation_transforms)
     test_dataset = PointCloudData(data_path, valid=True, folder='test', transform=test_transforms)
@@ -214,12 +209,6 @@ def main(args):
         log_string('No existing model, starting training from scratch...')
         start_epoch = 0
 
-    # Test parameters
-    print("Test Parameters .........................")
-    # for name, param in classifier.named_parameters():
-    #     print(name)
-    #     print(type(name))
-    #     print(str(param.requires_grad))
 
     if args.optimizer == 'Adam':
         optimizer = torch.optim.Adam(
@@ -250,14 +239,10 @@ def main(args):
         for name, param in classifier.named_parameters():
             if "feat" in name:
                 param.requires_grad = False
-            # print(name)
-            # print(param.requires_grad)
-
 
         classifier = classifier.train()
 
         scheduler.step()
-        # for batch_id, data in tqdm(enumerate(trainDataLoader, 0), total=len(trainDataLoader), smoothing=0.9):
         for batch_id, (data, data_DA) in tqdm(
                 enumerate(zip(trainDataLoader,domainAdaptationDataLoader), 0),
                 total=len(trainDataLoader),
@@ -286,7 +271,6 @@ def main(args):
                 points_DA = points_DA.cuda()
 
             pred, trans_feat = classifier(points)
-            # loss = criterion(pred, target.long(), trans_feat)
 
             classifier.fc2.register_forward_hook(get_activation('fc2'))
             output_dense = classifier(points)
@@ -295,10 +279,6 @@ def main(args):
             classifier.fc2.register_forward_hook(get_activation('fc2'))
             output_DA = classifier(points_DA)
             feature_DA = activation['fc2']
-            # print(output.size())
-            # print("----------------------")
-            # print(feature_dense.size())
-            # print(feature_DA.size())
 
             # change the loss here for testing!!!
             # loss = criterion_coral(pred, target.long(), trans_feat, feature_dense, feature_coral)
@@ -330,8 +310,7 @@ def main(args):
 
             if (instance_acc >= best_instance_acc):
                 logger.info('Save model...')
-                # print("This is a better model, but the model will not be saved")
-                # logger.info('Model will not be saved in this training')
+
                 savepath = str(checkpoints_dir) + '/best_model.pth'
                 log_string('Saving at %s' % savepath)
                 state = {

@@ -12,10 +12,8 @@ import argparse
 
 from pathlib import Path
 from tqdm import tqdm
-# from data_utils.OFFDataLoader import *
 from data_utils.PCDLoader import *
-# from path import Path
-# from data_utils.ModelNetDataLoader import ModelNetDataLoader
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = BASE_DIR
@@ -28,14 +26,14 @@ def parse_args():
     parser.add_argument('--gpu', type=str, default='0', help='specify gpu device')
     parser.add_argument('--batch_size', type=int, default=8, help='batch size in training')
     parser.add_argument('--model', default='pointnet_cls', help='model name [default: pointnet_cls]')
-    parser.add_argument('--num_category', default=15, type=int, help='training on real dataset')
+    parser.add_argument('--num_category', default=13, type=int, help='training on real dataset')
     parser.add_argument('--epoch', default=20, type=int, help='number of epoch in training')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='learning rate in training')
     parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
     parser.add_argument('--optimizer', type=str, default='Adam', help='optimizer for training')
     parser.add_argument('--log_dir', type=str, default=None, help='experiment root')
     parser.add_argument('--decay_rate', type=float, default=1e-4, help='decay rate')
-    parser.add_argument('--use_normals', action='store_true', default=True, help='use normals')
+    parser.add_argument('--use_normals', action='store_true', default=False, help='use normals')
     parser.add_argument('--process_data', action='store_true', default=False, help='save data offline')
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
     parser.add_argument('--num_sparse_point', type=int, default=50, help='Point Number for domain loss')
@@ -57,7 +55,7 @@ def inplace_relu(m):
         m.inplace=True
 
 
-def test(model, loader, num_class=15):
+def test(model, loader, num_class=13):
     mean_correct = []
     class_acc = np.zeros((num_class, 3))
     classifier = model.eval()
@@ -124,18 +122,40 @@ def main(args):
 
     '''DATA LOADING'''
     log_string('Load dataset ...')
-    data_path = 'data/visual_data_pcd/'
+    visual_data_path = 'data/visual_data_pcd/'
+    tactile_data_path = 'data/tactile_pcd_10_sampled_21.02/'
 
 
-    train_dataset = PCDPointCloudData(data_path, folder='Train', num_point=args.num_point)
-    test_dataset = PCDPointCloudData(data_path, folder='Test', num_point=args.num_point)
-    if args.random_choose_sparse is True:
-        domain_adaptation_dataset = PCDPointCloudData(data_path, folder='Train',
+
+    train_dataset = PCDPointCloudData(visual_data_path,
+                                      folder='Train',
+                                      sample_method='Voxel',
+                                      num_point=args.num_point,
+                                      sample=True,
+                                      rotation=False,
+                                      est_normal=args.use_normals)
+
+    test_dataset = PCDPointCloudData(visual_data_path,
+                                     folder='Test',
+                                     sample_method='Voxel',
+                                     num_point=args.num_point,
+                                     sample=True,
+                                     rotation=False,
+                                     est_normal=args.use_normals)
+
+
+    if args.random_choose_sparse is True: # TODO
+        domain_adaptation_dataset = PCDPointCloudData(tactile_data_path, folder='Train',
                                                       random_num=True,
                                                       list_num_point=[10,20,30,40,50])
     else:
-        domain_adaptation_dataset = PCDPointCloudData(data_path, folder='Train',
-                                                      num_point=args.num_sparse_point)
+        domain_adaptation_dataset = PCDPointCloudData(tactile_data_path,
+                                                      folder='Train',
+                                                      sample_method='Voxel',
+                                                      num_point=args.num_sparse_point,
+                                                      sample=True,
+                                                      rotation=False,
+                                                      est_normal=args.use_normals)
 
     trainDataLoader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=10, drop_last=True)
     domainAdaptationDataLoader = torch.utils.data.DataLoader(domain_adaptation_dataset, batch_size=args.batch_size, shuffle=True, num_workers=10, drop_last=True)
@@ -145,7 +165,6 @@ def main(args):
     activation = {}
     def get_activation(name):
         def hook(model, input, output):
-            # activation [name] = output[0].detach()
             activation [name] = output.detach()
         return hook
 
@@ -154,8 +173,8 @@ def main(args):
     model = importlib.import_module(args.model)
     shutil.copy('./models/%s.py' % args.model, str(exp_dir))
     shutil.copy('models/pointnet_cls.py', str(exp_dir))
+    shutil.copy('data_utils/PCDLoader.py', str(exp_dir))
     shutil.copy('./train_realMulti-DA_classification.py', str(exp_dir))
-    # shutil.copy('./train_dense_classification.py', str(exp_dir))
 
     classifier = model.get_model(num_class, normal_channel=args.use_normals)
     criterion = model.get_loss()
@@ -189,12 +208,6 @@ def main(args):
         log_string('No existing model, starting training from scratch...')
         start_epoch = 0
 
-    # Test parameters
-    print("Test Parameters .........................")
-    # for name, param in classifier.named_parameters():
-    #     print(name)
-    #     print(type(name))
-    #     print(str(param.requires_grad))
 
     if args.optimizer == 'Adam':
         optimizer = torch.optim.Adam(
@@ -212,6 +225,8 @@ def main(args):
     global_step = 0
     best_instance_acc = 0.0
     best_class_acc = 0.0
+    running_loss = 0.0
+    min_loss = 100.0
 
     '''TRANING'''
     logger.info('Start training...')
@@ -256,7 +271,6 @@ def main(args):
                 points_DA = points_DA.cuda()
 
             pred, trans_feat = classifier(points)
-            # loss = criterion(pred, target.long(), trans_feat)
 
             # Multi-layer Loss
             ###############################################################################################
@@ -284,7 +298,7 @@ def main(args):
 
             # change the loss here for testing!!!
 
-            loss = criterion_DA(pred, target.long(), trans_feat,
+            _, loss = criterion_DA(pred, target.long(), trans_feat,
                                 feature_dense_1, feature_DA_1, feature_dense_2, feature_DA_2)
             ################################################################################################
             pred_choice = pred.data.max(1)[1]
@@ -295,6 +309,17 @@ def main(args):
             loss.backward()
             optimizer.step()
             global_step += 1
+
+            # Print the loss
+            running_loss += loss.item()
+            if batch_id % 100 == 99:
+                # log_string("fc1 {}".format(classifier.fc1.weight.grad))
+                # log_string("fc2 {}".format(classifier.fc2.weight.grad))
+                # log_string("fc3 {}".format(classifier.fc3.weight.grad))
+                # print("Training loss {} ".format(loss.item()/100))
+                calculate_loss = running_loss/100
+                log_string("Training loss {} ".format(calculate_loss))
+                running_loss = 0.0
 
         train_instance_acc = np.mean(mean_correct)
         log_string('Train Instance Accuracy: %f' % train_instance_acc)
@@ -313,8 +338,6 @@ def main(args):
 
             if (instance_acc >= best_instance_acc):
                 logger.info('Save model...')
-                # print("This is a better model, but the model will not be saved")
-                # logger.info('Model will not be saved in this training')
                 savepath = str(checkpoints_dir) + '/best_model.pth'
                 log_string('Saving at %s' % savepath)
                 state = {
