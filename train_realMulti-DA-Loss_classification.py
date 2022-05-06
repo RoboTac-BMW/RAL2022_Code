@@ -144,8 +144,8 @@ def main(args):
                                      est_normal=args.use_normals)
 
 
-    if args.random_choose_sparse is True: 
-        raise NotImplementedError("Function Not Implemented) # Not Implement
+    if args.random_choose_sparse is True:
+        raise NotImplementedError("Function Not Implemented") # Not Implement
         # domain_adaptation_dataset = PCDPointCloudData(tactile_data_path, folder='Train',
         #                                               random_num=True,
         #                                               list_num_point=[10,20,30,40,50])
