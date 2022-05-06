@@ -67,7 +67,7 @@ def normalize_pointcloud(pointcloud):
 def sub_and_downSample(pointcloud, sample_num):
     assert len(pointcloud.shape)==2
     # print("Old shape", pointcloud.shape)
-    if pointcloud.shape[1] == 3:
+    if pointcloud.shape[1] == 3 or pointcloud.shape[1] == 6:
         num_point = pointcloud.shape[0]
 
         while(num_point < int(sample_num)):
