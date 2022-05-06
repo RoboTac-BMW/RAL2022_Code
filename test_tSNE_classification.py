@@ -110,7 +110,7 @@ def test(model, loader, num_class=12, vote_num=1):
 
     print(tSNE_X.shape)
     print(tSNE_Y.shape)
-    X_embedded = TSNE(perplexity=50, learning_rate=10.0).fit_transform(tSNE_X)
+    X_embedded = TSNE(perplexity=30, learning_rate=10.0).fit_transform(tSNE_X)
     print(X_embedded.shape)
     classes_name = ['cleaner', 'coffee', 'cup', 'eraser', 'glasses_box', 'jam', 'olive_oil',
                     'shampoo', 'spray', 'sugar', 'tape', 'wine']
@@ -120,7 +120,6 @@ def test(model, loader, num_class=12, vote_num=1):
     df['y'] = tSNE_Y[:,0]
     df['comp-1'] = X_embedded[:,0]
     df['comp-2'] = X_embedded[:,1]
-<<<<<<< HEAD
     list_y = df.y.tolist()
     # print(list_y)
     # print(type(list_y[0]))
@@ -137,7 +136,7 @@ def test(model, loader, num_class=12, vote_num=1):
                    palette = sn.color_palette("Paired"),
                    data=df).set(xlabel='Component-1', ylabel='Component-2')
 
-    plt.savefig('/home/airocs/Desktop/' +'tSNE_tactile_' + str(datetime.now()) + '.png')
+    plt.savefig('/home/prajval/Desktop/' +'tSNE_tactile_' + str(datetime.now()) + '.png')
 
 
 
@@ -173,13 +172,13 @@ def main(args):
     log_string('Load dataset ...')
     # tactile_data_path = 'data/tactile_data_pcd/'
     tactile_data_path = 'data/tactile_pcd_10_sampled_21.02/'
-    visual_data_path = 'data/visual_data_pcd_12/'
+    visual_data_path = 'data/visual_data_pcd/'
     # tactile_data_path = 'data/visual_data_pcd/'
     # data_path = 'data/modelnet40_normal_resampled/'
     # data_path = Path("mesh_data/ModelNet10")
 
 
-    test_dataset = PCDPointCloudData(visual_data_path,
+    test_dataset = PCDPointCloudData(tactile_data_path,
                                      folder='Test',
                                      sample_method='Voxel',
                                      num_point=args.num_point,
@@ -218,7 +217,7 @@ def main(args):
                              columns = [i for i in classes.keys()])
         plt.figure(figsize = (12,7))
         sn.heatmap(df_cm, annot=True)
-        plt.savefig(experiment_dir + '/' + str(datetime.now()) + '.png')
+        # plt.savefig(experiment_dir + '/' + str(datetime.now()) + '.png')
 
         # df_cm = pd.DataFrame(cf_matrix_new/np.sum(cf_matrix_old) *10,
         #                      index = [i for i in classes.keys()], columns = [i for i in classes.keys()])
