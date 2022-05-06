@@ -120,7 +120,6 @@ def test(model, loader, num_class=12, vote_num=1):
     df['y'] = tSNE_Y[:,0]
     df['comp-1'] = X_embedded[:,0]
     df['comp-2'] = X_embedded[:,1]
-<<<<<<< HEAD
     list_y = df.y.tolist()
     # print(list_y)
     # print(type(list_y[0]))
@@ -137,7 +136,7 @@ def test(model, loader, num_class=12, vote_num=1):
                    palette = sn.color_palette("Paired"),
                    data=df).set(xlabel='Component-1', ylabel='Component-2')
 
-    plt.savefig('/home/airocs/Desktop/' +'tSNE_tactile_' + str(datetime.now()) + '.png')
+    plt.savefig('/home/prajval/Desktop/' +'tSNE_tactile_' + str(datetime.now()) + '.png')
 
 
 
@@ -179,7 +178,7 @@ def main(args):
     # data_path = Path("mesh_data/ModelNet10")
 
 
-    test_dataset = PCDPointCloudData(visual_data_path,
+    test_dataset = PCDPointCloudData(tactile_data_path,
                                      folder='Test',
                                      sample_method='Voxel',
                                      num_point=args.num_point,
