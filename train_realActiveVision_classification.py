@@ -120,7 +120,7 @@ def main(args):
     '''DATA LOADING'''
     log_string('Load dataset ...')
     data_path = 'data/active_vision_pcd_1500/'
-    active_txt_path = '/home/prajval/Desktop/active_entropy_files.json'
+    active_txt_path = '/home/prajval/Desktop/active_entropy_files_random-1.json'
 
     train_dataset = PCDActiveVision(root_dir=data_path,
                                     active_path=active_txt_path, active_sample_num=500,
