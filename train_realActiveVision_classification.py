@@ -41,6 +41,7 @@ def parse_args():
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
     parser.add_argument('--SO3_Rotation', action='store_true', default=False, help='arbitrary rotation in SO3')
     parser.add_argument('--random_shuffle', action='store_true', default=False, help='random select files from entropy file')
+    parser.add_argument('--num_active_sample', type=int, default=500, help='Num of active samples')
     return parser.parse_args()
 
 
@@ -120,10 +121,11 @@ def main(args):
     '''DATA LOADING'''
     log_string('Load dataset ...')
     data_path = 'data/active_vision_pcd_1500/'
-    active_txt_path = '/home/prajval/Desktop/active_entropy_files.json'
+    active_txt_path = '/home/prajval/Desktop/active_entropy_files_random-2.json'
 
     train_dataset = PCDActiveVision(root_dir=data_path,
-                                    active_path=active_txt_path, active_sample_num=500,
+                                    active_path=active_txt_path,
+                                    active_sample_num=args.num_active_sample,
                                     folder='Train',
                                     random_shuffle=args.random_shuffle)
 
