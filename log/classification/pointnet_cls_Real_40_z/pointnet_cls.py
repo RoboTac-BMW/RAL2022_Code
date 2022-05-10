@@ -171,8 +171,9 @@ class get_coral_mmd_loss(get_mmd_loss):
         YX = torch.mean(kernels[batch_size:, :batch_size])
         mmd_loss = torch.mean(XX + YY - XY -YX)
         coral_loss = coral(feature_dense, feature_sparse)
+        DA_loss = self.DA_beta * mmd_loss + self.DA_lamda * coral_loss
         total_loss = self.DA_alpha * loss + mat_diff_loss * self.mat_diff_loss_scale + self.DA_beta * mmd_loss + self.DA_lamda * coral_loss
-        return total_loss
+        return DA_loss, total_loss
 
 
 # KL Loss. Total Loss = alpha * Classification + gamma * KL
@@ -221,9 +222,11 @@ class get_multiLayer_loss(get_coral_mmd_loss):
         mmd_loss_1, coral_loss_1 = self.singleLayer_loss(pred, target, trans_feat, feature_dense_1, feature_sparse_1)
         mmd_loss_2, coral_loss_2 = self.singleLayer_loss(pred, target, trans_feat, feature_dense_2, feature_sparse_2)
 
+        DA_loss = self.DA_beta * (mmd_loss_1 + mmd_loss_2) + self.DA_lamda * (coral_loss_1 + coral_loss_2)
+
         total_loss = self.DA_alpha * loss + mat_diff_loss * self.mat_diff_loss_scale + self.DA_beta * (mmd_loss_1 + mmd_loss_2) + self.DA_lamda * (coral_loss_1 + coral_loss_2)
 
-        return total_loss
+        return DA_loss, total_loss
 
 
 
