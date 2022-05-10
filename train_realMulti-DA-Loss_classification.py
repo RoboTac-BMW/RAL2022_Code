@@ -12,10 +12,8 @@ import argparse
 
 from pathlib import Path
 from tqdm import tqdm
-# from data_utils.OFFDataLoader import *
 from data_utils.PCDLoader import *
-# from path import Path
-# from data_utils.ModelNetDataLoader import ModelNetDataLoader
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = BASE_DIR
@@ -72,7 +70,6 @@ def test(model, loader, num_class=12):
         pred_choice = pred.data.max(1)[1]
 
         for cat in np.unique(target.cpu()):
-            # print(cat)
             classacc = pred_choice[target == cat].eq(target[target == cat].long().data).cpu().sum()
             class_acc[cat, 0] += classacc.item() / float(points[target == cat].size()[0])
             class_acc[cat, 1] += 1
@@ -147,10 +144,11 @@ def main(args):
                                      est_normal=args.use_normals)
 
 
-    if args.random_choose_sparse is True: # TODO
-        domain_adaptation_dataset = PCDPointCloudData(tactile_data_path, folder='Train',
-                                                      random_num=True,
-                                                      list_num_point=[10,20,30,40,50])
+    if args.random_choose_sparse is True:
+        raise NotImplementedError("Function Not Implemented") # Not Implement
+        # domain_adaptation_dataset = PCDPointCloudData(tactile_data_path, folder='Train',
+        #                                               random_num=True,
+        #                                               list_num_point=[10,20,30,40,50])
     else:
         domain_adaptation_dataset = PCDPointCloudData(tactile_data_path,
                                                       folder='Train',
@@ -168,7 +166,6 @@ def main(args):
     activation = {}
     def get_activation(name):
         def hook(model, input, output):
-            # activation [name] = output[0].detach()
             activation [name] = output.detach()
         return hook
 
@@ -179,7 +176,6 @@ def main(args):
     shutil.copy('models/pointnet_cls.py', str(exp_dir))
     shutil.copy('data_utils/PCDLoader.py', str(exp_dir))
     shutil.copy('./train_realMulti-DA-Loss_classification.py', str(exp_dir))
-    # shutil.copy('./train_dense_classification.py', str(exp_dir))
 
     classifier = model.get_model(num_class, normal_channel=args.use_normals)
     criterion = model.get_loss()
@@ -221,14 +217,6 @@ def main(args):
         min_loss = 10000.0
 
 
-
-    # Test parameters
-    print("Test Parameters .........................")
-    # for name, param in classifier.named_parameters():
-    #     print(name)
-    #     print(type(name))
-    #     print(str(param.requires_grad))
-
     if args.optimizer == 'Adam':
         optimizer = torch.optim.Adam(
             classifier.parameters(),
@@ -255,7 +243,7 @@ def main(args):
     for epoch in range(start_epoch, end_epoch):
         log_string('Epoch %d (%d/%s):' % (global_epoch + 1, epoch + 1, end_epoch))
         mean_correct = []
-        # Test Freeze Conv
+        # Freeze Conv
         for name, param in classifier.named_parameters():
             if "feat" in name:
                 param.requires_grad = False
@@ -290,15 +278,6 @@ def main(args):
                 points_DA = points_DA.cuda()
 
             pred, trans_feat = classifier(points)
-            # loss = criterion(pred, target.long(), trans_feat)
-
-            # Print Feature
-            ##############################################################################################
-            # classifier.feat.register_forward_hook(get_activation('feat'))
-            # output_conv = classifier(points)
-            # feature_conv = activation['feat'].data.cpu().numpy
-            # feature_norm = np.linalg.norm(feature_conv)
-            # log_string("Feature_Norm {}".format(feature_norm))
 
             # Multi-layer Loss
             ###############################################################################################

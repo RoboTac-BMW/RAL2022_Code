@@ -12,10 +12,8 @@ import argparse
 
 from pathlib import Path
 from tqdm import tqdm
-# from data_utils.OFFDataLoader import *
 from data_utils.PCDLoader import *
-# from path import Path
-# from data_utils.ModelNetDataLoader import ModelNetDataLoader
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = BASE_DIR
@@ -28,7 +26,7 @@ def parse_args():
     parser.add_argument('--gpu', type=str, default='0', help='specify gpu device')
     parser.add_argument('--batch_size', type=int, default=8, help='batch size in training')
     parser.add_argument('--model', default='pointnet_cls', help='model name [default: pointnet_cls]')
-    parser.add_argument('--num_category', default=13, type=int, help='training on real dataset')
+    parser.add_argument('--num_category', default=12, type=int, help='training on real dataset')
     parser.add_argument('--epoch', default=20, type=int, help='number of epoch in training')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='learning rate in training')
     parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
@@ -57,7 +55,7 @@ def inplace_relu(m):
         m.inplace=True
 
 
-def test(model, loader, num_class=13):
+def test(model, loader, num_class=12):
     mean_correct = []
     class_acc = np.zeros((num_class, 3))
     classifier = model.eval()
@@ -72,7 +70,6 @@ def test(model, loader, num_class=13):
         pred_choice = pred.data.max(1)[1]
 
         for cat in np.unique(target.cpu()):
-            # print(cat)
             classacc = pred_choice[target == cat].eq(target[target == cat].long().data).cpu().sum()
             class_acc[cat, 0] += classacc.item() / float(points[target == cat].size()[0])
             class_acc[cat, 1] += 1
@@ -147,10 +144,11 @@ def main(args):
                                      est_normal=args.use_normals)
 
 
-    if args.random_choose_sparse is True: # TODO
-        domain_adaptation_dataset = PCDPointCloudData(tactile_data_path, folder='Train',
-                                                      random_num=True,
-                                                      list_num_point=[10,20,30,40,50])
+    if args.random_choose_sparse is True:
+        raise NotImplementedError("Function Not Implemented") # Not implemented
+        # domain_adaptation_dataset = PCDPointCloudData(tactile_data_path, folder='Train',
+        #                                               random_num=True,
+        #                                               list_num_point=[10,20,30,40,50])
     else:
         domain_adaptation_dataset = PCDPointCloudData(tactile_data_path,
                                                       folder='Train',
@@ -168,7 +166,6 @@ def main(args):
     activation = {}
     def get_activation(name):
         def hook(model, input, output):
-            # activation [name] = output[0].detach()
             activation [name] = output.detach()
         return hook
 
@@ -179,14 +176,13 @@ def main(args):
     shutil.copy('models/pointnet_cls.py', str(exp_dir))
     shutil.copy('data_utils/PCDLoader.py', str(exp_dir))
     shutil.copy('./train_realMulti-DA_classification.py', str(exp_dir))
-    # shutil.copy('./train_dense_classification.py', str(exp_dir))
 
     classifier = model.get_model(num_class, normal_channel=args.use_normals)
     criterion = model.get_loss()
     if args.DA_method == "coral":
         criterion_DA = model.get_coral_loss(DA_alpha=args.alpha, DA_lamda=args.lamda)
     elif args.DA_method == "mmd":
-        criterion_DA = model.get_mmd_loss(DA_alpha=args.alpha, DA_lamda=args.lamda)
+        criterion_DA = model.get_mmd_loss(DA_alpha=args.alpha, DA_beta=args.beta)
     elif args.DA_method == "coral_mmd":
         criterion_DA = model.get_coral_mmd_loss(DA_alpha=args.alpha, DA_beta=args.beta,
                                                 DA_lamda=args.lamda)
@@ -213,12 +209,6 @@ def main(args):
         log_string('No existing model, starting training from scratch...')
         start_epoch = 0
 
-    # Test parameters
-    print("Test Parameters .........................")
-    # for name, param in classifier.named_parameters():
-    #     print(name)
-    #     print(type(name))
-    #     print(str(param.requires_grad))
 
     if args.optimizer == 'Adam':
         optimizer = torch.optim.Adam(
@@ -282,15 +272,6 @@ def main(args):
                 points_DA = points_DA.cuda()
 
             pred, trans_feat = classifier(points)
-            # loss = criterion(pred, target.long(), trans_feat)
-
-            # Print Feature
-            ##############################################################################################
-            # classifier.feat.register_forward_hook(get_activation('feat'))
-            # output_conv = classifier(points)
-            # feature_conv = activation['feat'].data.cpu().numpy
-            # feature_norm = np.linalg.norm(feature_conv)
-            # log_string("Feature_Norm {}".format(feature_norm))
 
             # Multi-layer Loss
             ###############################################################################################
@@ -339,19 +320,6 @@ def main(args):
                 # print("Training loss {} ".format(loss.item()/100))
                 calculate_loss = running_loss/100
                 log_string("Training loss {} ".format(calculate_loss))
-
-                # if calculate_loss < min_loss:
-                #     logger.info('Save model...')
-                #     savepath = str(checkpoints_dir) + '/best_model.pth'
-                #     log_string('Saving at %s' % savepath)
-                #     state = {
-                #         'epoch': best_epoch,
-                #         'instance_acc': instance_acc,
-                #         'class_acc': class_acc,
-                #         'model_state_dict': classifier.state_dict(),
-                #         'optimizer_state_dict': optimizer.state_dict(),
-                #     }
-                #     torch.save(state, savepath)
                 running_loss = 0.0
 
         train_instance_acc = np.mean(mean_correct)
@@ -371,8 +339,6 @@ def main(args):
 
             if (instance_acc >= best_instance_acc):
                 logger.info('Save model...')
-                # print("This is a better model, but the model will not be saved")
-                # logger.info('Model will not be saved in this training')
                 savepath = str(checkpoints_dir) + '/best_model.pth'
                 log_string('Saving at %s' % savepath)
                 state = {
