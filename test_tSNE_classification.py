@@ -127,7 +127,8 @@ def test(model, loader, num_class=12, vote_num=1):
 
     print(list_y)
 
-    # sn.set(font_scale = 2)
+    sn.set(font_scale = 1.3, style="white")
+    # sn.set_theme(style="white")
     plt.figure(figsize = (12,7))
     sn.scatterplot(x='comp-1', y='comp-2', hue=list_y,
                    # palette=sn.color_palette("flare", as_cmap=True),
@@ -135,7 +136,9 @@ def test(model, loader, num_class=12, vote_num=1):
                    palette = sn.color_palette("Paired"),
                    data=df).set(xlabel='Component-1', ylabel='Component-2')
 
-    plt.savefig('/home/prajval/Desktop/' +'tSNE_tactile_' + str(datetime.now()) + '.png')
+    plt.savefig('/home/prajval/Desktop/tSNE_plot_new/'
+                +'tSNE_tactile_' + str(datetime.now()) + '.png')
+    print("Saved the tSNE plot on Desktop")
 
 
 
