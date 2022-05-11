@@ -34,7 +34,7 @@ def parse_args():
     # parser.add_argument('--num_category', default=10, type=int, choices=[10, 40],  help='training on ModelNet10/40')
     parser.add_argument('--num_category', default=12, type=int, help='training on real dataset')
     parser.add_argument('--sample_point', type=bool, default=True,  help='Sampling on tacitle data')
-    parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
+    parser.add_argument('--num_point', type=int, default=50, help='Point Number')
     parser.add_argument('--log_dir', type=str, required=True, help='Experiment root')
     parser.add_argument('--use_normals', action='store_true', default=False, help='use normals')
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
@@ -108,7 +108,7 @@ def test(model, loader, num_class=12, vote_num=1):
 
     print(tSNE_X.shape)
     print(tSNE_Y.shape)
-    X_embedded = TSNE(perplexity=50, learning_rate=10.0).fit_transform(tSNE_X)
+    X_embedded = TSNE(perplexity=30, learning_rate=10.0).fit_transform(tSNE_X)
     print(X_embedded.shape)
     classes_name = ['cleaner', 'coffee', 'cup', 'eraser', 'glasses_box', 'jam', 'olive_oil',
                     'shampoo', 'spray', 'sugar', 'tape', 'wine']
@@ -127,6 +127,8 @@ def test(model, loader, num_class=12, vote_num=1):
 
     print(list_y)
 
+    # sn.set(font_scale = 1.3, style="white")
+    # sn.set_theme(style="white")
     plt.figure(figsize = (12,7))
     sn.scatterplot(x='comp-1', y='comp-2', hue=list_y,
                    # palette=sn.color_palette("flare", as_cmap=True),
@@ -134,8 +136,9 @@ def test(model, loader, num_class=12, vote_num=1):
                    palette = sn.color_palette("Paired"),
                    data=df).set(xlabel='Component-1', ylabel='Component-2')
 
-    # plt.savefig('/home/airocs/Desktop/' +'tSNE_tactile_' + str(datetime.now()) + '.png')
-    plt.savefig('/home/prajval/Desktop/' +'tSNE_vision_' + str(datetime.now()) + '.png')
+    plt.savefig('/home/prajval/Desktop/tSNE_plot_new/'
+                +'tSNE_tactile_' + str(datetime.now()) + '.png')
+    print("Saved the tSNE plot on Desktop")
 
 
 
@@ -177,7 +180,7 @@ def main(args):
     # data_path = Path("mesh_data/ModelNet10")
 
 
-    test_dataset = PCDPointCloudData(visual_data_path,
+    test_dataset = PCDPointCloudData(tactile_data_path,
                                      folder='Test',
                                      sample_method='Voxel',
                                      num_point=args.num_point,
