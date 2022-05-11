@@ -127,7 +127,7 @@ def test(model, loader, num_class=12, vote_num=1):
 
     print(list_y)
 
-    sn.set(font_scale = 1.3, style="white")
+    # sn.set(font_scale = 1.3, style="white")
     # sn.set_theme(style="white")
     plt.figure(figsize = (12,7))
     sn.scatterplot(x='comp-1', y='comp-2', hue=list_y,
