@@ -105,7 +105,7 @@ def test(model, loader, num_class=15, vote_num=1):
     class_acc[:, 2] = class_acc[:, 0] / class_acc[:, 1]
     class_acc = np.mean(class_acc[:, 2])
     instance_acc = np.mean(mean_correct)
-    
+
     return instance_acc, class_acc, cf_matrix_new
 
 
@@ -135,7 +135,12 @@ def main(args):
 
     '''DATA LOADING'''
     log_string('Load dataset ...')
-    visual_data_path = Path('data/Rotated_visual_data_pcd')
+    # tactile_data_path = 'data/tactile_data_pcd/'
+    # tactile_data_path = 'data/tactile_pcd_10_sampled_21.02/'
+    # tactile_data_path = 'data/visual_data_pcd/'
+    # data_path = 'data/modelnet40_normal_resampled/'
+    # data_path = Path("mesh_data/ModelNet10")
+    visual_data_path = Path('data/Rotated_visual_data_pcd_bi/')
 
 
     test_dataset = PCDPointCloudData(visual_data_path,
@@ -172,6 +177,12 @@ def main(args):
 
         # Draw confusion matrix
         # df_cm = pd.DataFrame(cf_matrix_new *10,
+        #                      index = [i for i in classes.keys()], columns = [i for i in classes.keys()])
+        # plt.figure(figsize = (12,7))
+        # sn.heatmap(df_cm, annot=True)
+        # plt.savefig(experiment_dir + '/' + str(datetime.now()) + '.png')
+
+        # df_cm = pd.DataFrame(cf_matrix_new/np.sum(cf_matrix_old) *10,
         #                      index = [i for i in classes.keys()], columns = [i for i in classes.keys()])
         # plt.figure(figsize = (12,7))
         # sn.heatmap(df_cm, annot=True)
