@@ -3,8 +3,27 @@
 Thanks for the original author https://github.com/yanx27/Pointnet_Pointnet2_pytorch
 
 ## Branch Instructions
+**Important Branches for Revision:**
+| **Branch Names**                                                                           | **Details**                                                                                            | **Parameters**                                             |
+|--------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|------------------------------------------------------------|
+| cong_dev                                                                                   | Main branch. Containing all the latest code.                                                           | ---                                                        |
+| RealData-12-40-Dense-WithoutNormal                                                         | Fine-tuning the best model in PointNet-40-Dense-WithoutNormal with real vision dataset                 | learning rate 0.001, epoch 50                              |
+| RealData-12-40-Dense-WithNormal                                                            | Fine-tuning the best model in PointNet-40-Dense-WithNormal with real vision dataset                    | learning rate 0.001, epoch 50                              |
+| RealData-12-40-fc1+2-new-Loss-alpha_10-beta_10-lamda-10-50-learning_rate_0.001             | (BEST Model!) DA training based on the best model in RealData-12-40-Dense-WithoutNormal                | alpha 10, beta 10, lamda 10, learning rate 0.001, epoch 20 |
+| RealData-12-40-MMD-fc1+2-Loss-alpha_10-beta_10-learning_rate_0.001                         | DA training with MMD loss based on the best model in RealData-12-40-Dense-WithoutNormal                | alpha 10, beta 10, learning rate 0.001, epoch 20           |
+| RealData-12-40-CORAL-fc1+2-Loss-alpha_10-lamda_10-learning_rate_0.001                      | DA training with CORAL loss based on the best model in RealData-12-40-Dense-WithoutNormal              | alpha 10, lamda 10, learning rate 0.001, epoch 20          |
+| RealData-12-40-fc1-Loss-alpha_10-beta_10-lamda_10-50-learning_rate_0.001                   | DA training with fc1 layer based on the best model in RealData-12-40-Dense-WithoutNormal               | learning rate 0.001, epoch 20                              |
+| RealData-12-40-fc2-Loss-alpha_10-beta_10-lamda_10-50-learning_rate_0.001                   | DA training with fc2 layer based on the best model in RealData-12-40-Dense-WithoutNormal               | learning rate 0.001, epoch 20                              |
+| RealData-12-WithNormal-40-MultiLayer-Loss-alpha_10-beta_10-lamda_10-50-learning_rate_0.001 | DA training based on the best model in RealData-12-40-Dense-WithNormal (With Normal!)                  | learning rate 0.001, epoch 20                              |
+| RealData-ActiveVision-New-New-Selected                                                     | Active Vision trained with the selected highest entropy samples 500-4500. (Entropy file in log folder) | learning rate 0.001, epoch 20 each 500 samples             |
+| RealData-ActiveVision-New-Random-1                                                         | Active Vision trained with the 1st random sequence entropy samples. (Entropy file in log folder)       | learning rate 0.001, epoch 20 each 500 samples             |
+| RealData-ActiveVision-New-Random-2                                                         | Active Vision trained with the 2nd random sequence entropy samples. (Entropy file in log folder)       | learning rate 0.001, epoch 20 each 500 samples             |
+| RealData-ActiveVision-New-Random-3                                                         | Active Vision trained with the 3rd random sequence entropy samples. (Entropy file in log folder)       | learning rate 0.001, epoch 20 each 500 samples             |
 
-**Important branches:**
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+**Important branches (old):**
 | Branch Name                                                                          | Details                                                                                              | Parameters                                                   |
 |--------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
 | cong_dev                                                                             | Main branch. Containing all the latest code.                                                         | ---                                                          |
