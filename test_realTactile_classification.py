@@ -171,11 +171,11 @@ def main(args):
         log_string('Test Instance Accuracy: %f, Class Accuracy: %f' % (instance_acc, class_acc))
 
         # Draw confusion matrix
-        df_cm = pd.DataFrame(cf_matrix_new *10,
-                             index = [i for i in classes.keys()], columns = [i for i in classes.keys()])
+        df_cm = pd.DataFrame(cf_matrix_new, index = [i for i in classes.keys()],
+                                            columns = [i for i in classes.keys()])
         plt.figure(figsize = (12,7))
         sn.heatmap(df_cm, annot=True)
-        plt.savefig(experiment_dir + '/' + str(datetime.now()) + '.png')
+        # plt.savefig(experiment_dir + '/' + str(datetime.now()) + '.png')
 
 
 if __name__ == '__main__':

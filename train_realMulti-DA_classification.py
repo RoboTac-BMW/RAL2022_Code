@@ -26,7 +26,7 @@ def parse_args():
     parser.add_argument('--gpu', type=str, default='0', help='specify gpu device')
     parser.add_argument('--batch_size', type=int, default=8, help='batch size in training')
     parser.add_argument('--model', default='pointnet_cls', help='model name [default: pointnet_cls]')
-    parser.add_argument('--num_category', default=13, type=int, help='training on real dataset')
+    parser.add_argument('--num_category', default=12, type=int, help='training on real dataset')
     parser.add_argument('--epoch', default=20, type=int, help='number of epoch in training')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='learning rate in training')
     parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
@@ -41,8 +41,8 @@ def parse_args():
     parser.add_argument('--SO3_Rotation', action='store_true', default=False, help='arbitrary rotation in SO3')
     parser.add_argument('--DA_method', type=str, default="multi_coral_mmd", help='choose the DA loss function')
     parser.add_argument('--alpha', type=float, default=10, help='set the value of classification loss')
-    parser.add_argument('--lamda', type=float, default=0.5, help='set the value of CORAL loss')
-    parser.add_argument('--beta', type=float, default=0.5, help='set the value of MMD loss')
+    parser.add_argument('--lamda', type=float, default=10, help='set the value of CORAL loss')
+    parser.add_argument('--beta', type=float, default=10, help='set the value of MMD loss')
     return parser.parse_args()
 
 
@@ -55,7 +55,7 @@ def inplace_relu(m):
         m.inplace=True
 
 
-def test(model, loader, num_class=13):
+def test(model, loader, num_class=12):
     mean_correct = []
     class_acc = np.zeros((num_class, 3))
     classifier = model.eval()
@@ -144,10 +144,11 @@ def main(args):
                                      est_normal=args.use_normals)
 
 
-    if args.random_choose_sparse is True: # TODO
-        domain_adaptation_dataset = PCDPointCloudData(tactile_data_path, folder='Train',
-                                                      random_num=True,
-                                                      list_num_point=[10,20,30,40,50])
+    if args.random_choose_sparse is True:
+        raise NotImplementedError("Function Not Implemented") # Not implemented
+        # domain_adaptation_dataset = PCDPointCloudData(tactile_data_path, folder='Train',
+        #                                               random_num=True,
+        #                                               list_num_point=[10,20,30,40,50])
     else:
         domain_adaptation_dataset = PCDPointCloudData(tactile_data_path,
                                                       folder='Train',
@@ -181,7 +182,7 @@ def main(args):
     if args.DA_method == "coral":
         criterion_DA = model.get_coral_loss(DA_alpha=args.alpha, DA_lamda=args.lamda)
     elif args.DA_method == "mmd":
-        criterion_DA = model.get_mmd_loss(DA_alpha=args.alpha, DA_lamda=args.lamda)
+        criterion_DA = model.get_mmd_loss(DA_alpha=args.alpha, DA_beta=args.beta)
     elif args.DA_method == "coral_mmd":
         criterion_DA = model.get_coral_mmd_loss(DA_alpha=args.alpha, DA_beta=args.beta,
                                                 DA_lamda=args.lamda)

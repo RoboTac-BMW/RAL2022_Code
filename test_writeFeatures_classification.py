@@ -16,6 +16,8 @@ import matplotlib.pyplot as plt
 import seaborn as sn
 import pandas as pd
 
+# from tsnecuda import TSNE
+from sklearn.manifold import TSNE
 from datetime import datetime
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -30,9 +32,9 @@ def parse_args():
     parser.add_argument('--gpu', type=str, default='0', help='specify gpu device')
     parser.add_argument('--batch_size', type=int, default=1, help='batch size in training')
     # parser.add_argument('--num_category', default=10, type=int, choices=[10, 40],  help='training on ModelNet10/40')
-    parser.add_argument('--num_category', default=15, type=int, help='training on real dataset')
+    parser.add_argument('--num_category', default=12, type=int, help='training on real dataset')
     parser.add_argument('--sample_point', type=bool, default=True,  help='Sampling on tacitle data')
-    parser.add_argument('--num_point', type=int, default=1024, help='Point Number')
+    parser.add_argument('--num_point', type=int, default=50, help='Point Number')
     parser.add_argument('--log_dir', type=str, required=True, help='Experiment root')
     parser.add_argument('--use_normals', action='store_true', default=False, help='use normals')
     parser.add_argument('--use_uniform_sample', action='store_true', default=False, help='use uniform sampiling')
@@ -42,11 +44,23 @@ def parse_args():
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-def test(model, loader, num_class=15, vote_num=1):
+activation = {}
+def get_activation(name):
+    def hook(model, input, output):
+        # activation [name] = output[0].detach()
+        activation [name] = output.detach()
+    return hook
+
+
+
+def test(model, loader, num_class=12, vote_num=1):
     mean_correct = []
     classifier = model.eval()
     class_acc = np.zeros((num_class, 3))
     print(len(loader))
+    sample_num = len(loader)
+    tSNE_X = np.zeros((sample_num, 256))
+    tSNE_Y = np.zeros((sample_num, 1))
     y_pred = []
     y_true = []
 
@@ -55,9 +69,11 @@ def test(model, loader, num_class=15, vote_num=1):
     all_pred_new = []
     all_true_new = []
     # classes = list(find_classes(data_path).keys())
+    # print(classes)
 
     for j, data in tqdm(enumerate(loader), total=len(loader)):
         if not args.use_cpu:
+            # points, target = points.cuda(), target.cuda()
             points, target = data['pointcloud'].to(device).float(), data['category'].to(device)
 
 
@@ -67,6 +83,7 @@ def test(model, loader, num_class=15, vote_num=1):
         ###################################################################################
         output_new, _ = classifier(points)
         _, preds_new = torch.max(output_new.data, 1)
+        # print(preds_new)
         y_true_new = target.data.cpu().numpy()
         y_pred_new = preds_new.data.cpu().numpy()
 
@@ -77,37 +94,70 @@ def test(model, loader, num_class=15, vote_num=1):
         num_samples += y_pred_new.size
 
 
-        ##################################################################################
-        for _ in range(vote_num):
-            pred, _ = classifier(points)
-            vote_pool += pred
-        pred = vote_pool / vote_num
-        pred_choice = pred.data.max(1)[1]
+        # Output for fc2 feature
+        classifier.fc2.register_forward_hook(get_activation('fc2'))
+        output_tSNE = classifier(points)
+        feature_tSNE = activation['fc2']
+        feature_tSNE_np = feature_tSNE.data.cpu().numpy()
+        # print(".....................")
+        # print(feature_tSNE_np.shape)
+        tSNE_X[j] = feature_tSNE_np[0]
+        tSNE_Y[j] = int(y_true_new)
+        # print(feature_tSNE_np)
 
-        # pred for confusion matrix
-        pred_conf = (torch.max(torch.exp(pred), 1)[1]).data.cpu().numpy()
-        y_pred.extend(pred_conf)
-        y_true.extend(target.data.cpu())
 
-        for cat in np.unique(target.cpu()):
-            classacc = pred_choice[target == cat].eq(target[target == cat].long().data).cpu().sum()
+    print(tSNE_X.shape)
+    print(tSNE_Y.shape)
+    with open('tactile_train_afterDA.npy', 'wb') as f:
+        np.save(f, tSNE_X)
 
-            class_acc[cat, 0] += classacc.item() / float(points[target == cat].size()[0])
-            class_acc[cat, 1] += 1
-        correct = pred_choice.eq(target.long().data).cpu().sum()
-        mean_correct.append(correct.item() / float(points.size()[0]))
+    # with open('vision_train_afterDA.npy', 'wb') as f:
+    #     np.save(f, tSNE_X)
 
-    print(f'Got {num_correct} / {num_samples} with accuracy {float(num_correct)/float(num_samples)*100:.2f}')
+    # with open('tactile_afterDA.npy', 'rb') as f:
+    #     test_mat = np.load(f)
+    #     print(test_mat.shape)
+
+
+    """
+    X_embedded = TSNE(perplexity=30, learning_rate=10.0).fit_transform(tSNE_X)
+    print(X_embedded.shape)
+    classes_name = ['cleaner', 'coffee', 'cup', 'eraser', 'glasses_box', 'jam', 'olive_oil',
+                    'shampoo', 'spray', 'sugar', 'tape', 'wine']
+    # Changing the value of perplexity HERE (5-50):
+    # print(tSNE_Y[:,0])
+    df = pd.DataFrame()
+    df['y'] = tSNE_Y[:,0]
+    df['comp-1'] = X_embedded[:,0]
+    df['comp-2'] = X_embedded[:,1]
+    list_y = df.y.tolist()
+    # print(list_y)
+    # print(type(list_y[0]))
+
+    for i, item in enumerate(list_y):
+        list_y[i] = classes_name[int(item)]
+
+    print(list_y)
+
+    # sn.set(font_scale = 1.3, style="white")
+    # sn.set_theme(style="white")
+    plt.figure(figsize = (12,7))
+    sn.scatterplot(x='comp-1', y='comp-2', hue=list_y,
+                   # palette=sn.color_palette("flare", as_cmap=True),
+                   # palette=sn.color_palette("Spectral", as_cmap=True),
+                   palette = sn.color_palette("Paired"),
+                   data=df).set(xlabel='Component-1', ylabel='Component-2')
+
+    # plt.savefig('/home/prajval/Desktop/tSNE_plot_new/'
+    #             +'tSNE_tactile_' + str(datetime.now()) + '.png')
+    # print("Saved the tSNE plot on Desktop")
+    """
+
+
+
     cf_matrix_new = confusion_matrix(all_true_new, all_pred_new, normalize='true')
-    print(cf_matrix_new)
 
-    # print(mean_correct)
-    class_acc[:, 2] = class_acc[:, 0] / class_acc[:, 1]
-    class_acc = np.mean(class_acc[:, 2])
-    instance_acc = np.mean(mean_correct)
-
-    return instance_acc, class_acc, cf_matrix_new
-
+    return 0.0, 0.0, cf_matrix_new
 
 
 def main(args):
@@ -136,15 +186,15 @@ def main(args):
     '''DATA LOADING'''
     log_string('Load dataset ...')
     # tactile_data_path = 'data/tactile_data_pcd/'
-    # tactile_data_path = 'data/tactile_pcd_10_sampled_21.02/'
+    tactile_data_path = 'data/tactile_pcd_10_sampled_21.02/'
+    visual_data_path = 'data/visual_data_pcd/'
     # tactile_data_path = 'data/visual_data_pcd/'
     # data_path = 'data/modelnet40_normal_resampled/'
     # data_path = Path("mesh_data/ModelNet10")
-    visual_data_path = Path('data/Rotated_visual_data_pcd_bi/')
 
 
-    test_dataset = PCDPointCloudData(visual_data_path,
-                                     folder='Test',
+    test_dataset = PCDPointCloudData(tactile_data_path,
+                                     folder='Train',
                                      sample_method='Voxel',
                                      num_point=args.num_point,
                                      sample=args.sample_point,
@@ -165,21 +215,23 @@ def main(args):
     classifier.load_state_dict(checkpoint['model_state_dict'])
 
     # Load labels:
-    classes = find_classes(visual_data_path)
+    classes = find_classes(tactile_data_path)
     print(classes)
     print(classes.keys)
 
 
+
+
     with torch.no_grad():
-        # instance_acc, class_acc = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
         instance_acc, class_acc, cf_matrix_new = test(classifier.eval(), testDataLoader, vote_num=args.num_votes, num_class=num_class)
         log_string('Test Instance Accuracy: %f, Class Accuracy: %f' % (instance_acc, class_acc))
 
         # Draw confusion matrix
-        # df_cm = pd.DataFrame(cf_matrix_new *10,
-        #                      index = [i for i in classes.keys()], columns = [i for i in classes.keys()])
-        # plt.figure(figsize = (12,7))
-        # sn.heatmap(df_cm, annot=True)
+        df_cm = pd.DataFrame(cf_matrix_new,
+                             index = [i for i in classes.keys()],
+                             columns = [i for i in classes.keys()])
+        plt.figure(figsize = (12,7))
+        sn.heatmap(df_cm, annot=True)
         # plt.savefig(experiment_dir + '/' + str(datetime.now()) + '.png')
 
         # df_cm = pd.DataFrame(cf_matrix_new/np.sum(cf_matrix_old) *10,
