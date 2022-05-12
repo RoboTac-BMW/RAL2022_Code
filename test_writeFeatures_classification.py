@@ -108,7 +108,7 @@ def test(model, loader, num_class=12, vote_num=1):
 
     print(tSNE_X.shape)
     print(tSNE_Y.shape)
-    with open('vision_beforeDA.npy', 'wb') as f:
+    with open('tactile_train_beforeDA.npy', 'wb') as f:
         np.save(f, tSNE_X)
 
     # with open('vision_train_afterDA.npy', 'wb') as f:
@@ -193,8 +193,8 @@ def main(args):
     # data_path = Path("mesh_data/ModelNet10")
 
 
-    test_dataset = PCDPointCloudData(visual_data_path,
-                                     folder='Test',
+    test_dataset = PCDPointCloudData(tactile_data_path,
+                                     folder='Train',
                                      sample_method='Voxel',
                                      num_point=args.num_point,
                                      sample=args.sample_point,
