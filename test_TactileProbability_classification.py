@@ -173,18 +173,19 @@ def main(args):
                                                     shuffle=False, num_workers=10)
 
         probability_sample = get_monte_carlo_predictions(classifier, pcdDataLoader,
-                                             forward_passes=50, n_samples=1, n_classes=12)
+                                             forward_passes=5, n_samples=1, n_classes=12)
         print(probability_sample)
         sample['probability'] = probability_sample
 
     sorted_sample_list = sorted(output_files, key=lambda x: x['pcd_path'], reverse=False)
 
-    saved_file_path = "/home/airocs/Desktop/tactile_output_" + str(args.tmp_label) + str(datetime.now())  +".csv"
+    saved_file_path = "/home/prajval/Desktop/tactile_output_" + str(args.tmp_label) + '_' + str(datetime.now())  +".csv"
+
     with open(saved_file_path, 'w') as f:
         writer = csv.writer(f)
 
         for item in sorted_sample_list:
-            print(item)
+            # print(item)
             writer.writerow(item['probability'])
 
 
