@@ -29,7 +29,7 @@ def parse_args():
     parser.add_argument('--model', default='pointnet_cls', help='model name [default: pointnet_cls]')
     parser.add_argument('--num_category', default=12, type=int, help='training on real dataset')
     parser.add_argument('--epoch', default=50, type=int, help='number of epoch in training')
-    parser.add_argument('--num_ModelNet', default=40, type=int, choices=[0,10,40], help='Pre-trained num_category')
+    parser.add_argument('--num_ModelNet', default=0, type=int, choices=[0,10,40], help='Pre-trained num_category')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='learning rate in training')
     parser.add_argument('--num_point', type=int, default=1024, help='Visual Point Number')
     parser.add_argument('--optimizer', type=str, default='Adam', help='optimizer for training')
@@ -50,15 +50,7 @@ def inplace_relu(m):
         m.inplace=True
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 def test(model, loader, num_class=12):
-=======
-def test(model, loader, num_class=13):
->>>>>>> 81959a71886fd40d0979490f8ae0172a347fcf32
-=======
-def test(model, loader, num_class=15):
->>>>>>> c6b07f95ad887026bb0a53e866edc883f6153f5b
     mean_correct = []
     class_acc = np.zeros((num_class, 3))
     classifier = model.eval()
