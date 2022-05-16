@@ -173,7 +173,7 @@ def main(args):
                                                     shuffle=False, num_workers=10)
 
         probability_sample = get_monte_carlo_predictions(classifier, pcdDataLoader,
-                                             forward_passes=5, n_samples=1, n_classes=12)
+                                             forward_passes=10, n_samples=1, n_classes=12)
         print(probability_sample)
         sample['probability'] = probability_sample
 
